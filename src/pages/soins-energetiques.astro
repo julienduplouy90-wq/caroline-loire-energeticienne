@@ -1,0 +1,123 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { IMG, PRICES, SITE, u } from '../data/site';
+
+const title = 'Soins énergétiques à Bagnères-de-Bigorre | Caroline Loire';
+const description =
+  'Soin énergétique personnalisé à Bagnères-de-Bigorre ou à distance. Reiki, Shamballa et LaHoChi associés selon vos besoins. Tarif 60 €, solidaire 50 €.';
+
+const outils = [
+  ['/reiki', 'Reiki'],
+  ['/shamballa', 'Shamballa'],
+  ['/lahochi', 'LaHoChi'],
+  ['/lithotherapie', 'Lithothérapie'],
+  ['/oracles', 'Oracles'],
+];
+---
+
+<BaseLayout title={title} description={description} image={IMG.soin}>
+  <PageHero
+    eyebrow="Soin énergétique · Hautes-Pyrénées"
+    title="Retrouver un espace de calme et de recentrage"
+    text="Une séance personnalisée pour ralentir, relâcher les tensions et revenir à vous — au cabinet à Bagnères-de-Bigorre ou à distance."
+    image={IMG.soin}
+    imageAlt="Séance de soin énergétique, mains posées près de la tête"
+  />
+
+  <section class="px-4 py-14 md:px-6 md:py-16">
+    <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-12">
+      <div class="space-y-5 text-base leading-relaxed text-ink/85 md:col-span-7">
+        <h2 class="font-display text-2xl text-forest md:text-3xl">
+          En quoi consiste un soin énergétique ?
+        </h2>
+        <p>
+          Lors d’une séance, j’associe de manière intuitive plusieurs outils — notamment le Reiki, le
+          Shamballa et le LaHoChi — selon ce que vous traversez et ce que je ressens. L’objectif n’est
+          pas d’appliquer une technique unique, mais de créer un espace d’écoute et de recentrage
+          adapté à vous.
+        </p>
+        <p>
+          Ces pratiques relèvent du bien-être et du développement personnel. Elles ne remplacent pas
+          un suivi médical ou psychologique.
+        </p>
+
+        <h3 class="font-display pt-2 text-xl text-forest">Déroulement</h3>
+        <ol class="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-peach-deep">
+          <li>Temps d’échange sur ce qui vous amène.</li>
+          <li>Écoute énergétique (centres énergétiques) et échanges éventuels.</li>
+          <li>Installation habillé(e) sur la table de soin, dans le calme.</li>
+          <li>Transmission d’énergies selon mes ressentis.</li>
+          <li>Retour en fin de séance ; un tirage d’oracle peut clôturer le temps ensemble.</li>
+        </ol>
+
+        <h3 class="font-display pt-2 text-xl text-forest">Pour qui ?</h3>
+        <p>
+          Adultes et enfants. Utile notamment en période de fatigue émotionnelle, de surcharge, de
+          transition, ou simplement lorsqu’il devient nécessaire de prendre un temps pour soi.
+        </p>
+      </div>
+
+      <aside class="md:col-span-5">
+        <div
+          class="sticky top-28 rounded-3xl border border-line border-t-2 border-t-peach bg-white p-6 shadow-sm"
+        >
+          <p
+            class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.18em] text-peach-deep uppercase"
+          >
+            <span class="accent-bar" aria-hidden="true"></span>
+            Formule
+          </p>
+          <p class="font-display mt-3 text-3xl text-forest">{PRICES.soin.full} €</p>
+          <p class="text-sm text-slate-soft">ou {PRICES.soin.solidaire} € en tarif solidaire</p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/80">
+            <li>Durée : {PRICES.soin.duration}</li>
+            <li>Présentiel à Bagnères-de-Bigorre</li>
+            <li>À distance possible</li>
+            <li>Enfant : {PRICES.soinEnfant.full} € ({PRICES.soinEnfant.duration})</li>
+          </ul>
+          <a
+            href={u(SITE.bookingPath)}
+            class="mt-6 flex min-h-12 items-center justify-center rounded-full bg-forest text-sm font-medium text-white transition hover:bg-forest-deep"
+          >
+            Prendre rendez-vous
+          </a>
+          <a
+            href={SITE.phoneHref}
+            class="mt-3 flex min-h-11 items-center justify-center text-sm font-medium text-forest underline-offset-4 hover:underline"
+          >
+            Ou appeler le {SITE.phone}
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="bg-sand/50 px-4 py-12 md:px-6">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-display text-2xl text-forest">Outils pouvant être associés</h2>
+      <p class="mt-3 max-w-2xl text-sm text-slate-soft">
+        Ces approches ne sont pas des offres séparées : elles peuvent nourrir le soin énergétique
+        selon le moment.
+      </p>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {
+          outils.map(([to, label]) => (
+            <a
+              href={u(to)}
+              class="rounded-full border border-peach/40 bg-white px-4 py-2 text-sm text-forest transition hover:border-peach hover:bg-peach/20"
+            >
+              {label}
+            </a>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Envie d’un temps pour vous recentrer ?"
+    text="Réservez un soin énergétique ou écrivez-moi pour vérifier que cette formule vous correspond."
+  />
+</BaseLayout>

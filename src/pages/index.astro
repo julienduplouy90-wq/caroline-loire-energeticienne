@@ -1,0 +1,648 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CtaBand from '../components/CtaBand.astro';
+import Faq from '../components/Faq.astro';
+import GoogleRating from '../components/GoogleRating.astro';
+import { GOOGLE_RATING, IMG, PRICES, SITE, u } from '../data/site';
+
+const title = 'Caroline Loire | Énergéticienne à Bagnères-de-Bigorre';
+const description =
+  'Soins énergétiques, chamanisme et formations Reiki à Bagnères-de-Bigorre. Un accompagnement humain pour vous recentrer, dans les Hautes-Pyrénées.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'HealthAndBeautyBusiness',
+  name: SITE.name,
+  description,
+  url: new URL(u('/'), Astro.site).href,
+  image: new URL(IMG.caroline, Astro.site).href,
+  telephone: '+33744733435',
+  email: SITE.email,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: SITE.address,
+    postalCode: SITE.zip,
+    addressLocality: SITE.city,
+    addressRegion: SITE.region,
+    addressCountry: 'FR',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: GOOGLE_RATING.score,
+    reviewCount: GOOGLE_RATING.count,
+  },
+  sameAs: [SITE.instagram, SITE.facebook],
+};
+
+const situations = [
+  {
+    t: 'Je me sens émotionnellement chargé(e).',
+    d: 'Fatigue émotionnelle, surcharge, besoin de déposer ce qui pèse.',
+  },
+  {
+    t: 'Je traverse une période de changement.',
+    d: 'Transition de vie, décision importante, sensation de bascule.',
+  },
+  {
+    t: 'J’ai besoin de ralentir et de me recentrer.',
+    d: 'Envie de calme, de clarté intérieure et d’un temps pour soi.',
+  },
+  {
+    t: 'Je ressens l’envie d’aller explorer plus profondément.',
+    d: 'Schémas qui se répètent, quête de sens, travail plus long.',
+  },
+];
+
+const offers = [
+  {
+    n: '01',
+    title: 'Soin énergétique',
+    lead: 'Retrouver un espace de calme et de recentrage',
+    text: 'Une séance personnalisée mêlant notamment Reiki, Shamballa et LaHoChi, selon vos besoins et mes ressentis. Un temps pour ralentir, relâcher les tensions et revenir à vous.',
+    meta: [
+      `Durée : ${PRICES.soin.duration}`,
+      'Cabinet ou distance',
+      `${PRICES.soin.full} €`,
+      `Tarif solidaire : ${PRICES.soin.solidaire} €`,
+    ],
+    to: '/soins-energetiques',
+    cta: 'Découvrir le soin énergétique',
+    image: IMG.soin,
+    alt: 'Séance de soin énergétique, mains posées près de la tête',
+  },
+  {
+    n: '02',
+    title: 'Chamanisme et énergies',
+    lead: 'Explorer plus en profondeur ce qui demande à évoluer',
+    text: 'Un accompagnement plus long, associant travail chamanique et énergétique, pour les personnes qui souhaitent mettre du sens sur ce qu’elles traversent et ouvrir un nouvel espace intérieur.',
+    meta: [
+      `Durée : ${PRICES.chamanisme.duration}`,
+      'Présentiel à Bagnères-de-Bigorre',
+      `${PRICES.chamanisme.full} €`,
+      `Tarif solidaire : ${PRICES.chamanisme.solidaire} €`,
+    ],
+    to: '/chamanisme',
+    cta: 'Découvrir le chamanisme',
+    image: IMG.dreamcatcher,
+    alt: 'Capteur de rêves en lumière dorée',
+  },
+  {
+    n: '03',
+    title: 'Formations Reiki',
+    lead: 'Apprendre à pratiquer le Reiki à votre tour',
+    text: 'Des formations progressives pour découvrir le Reiki, développer votre pratique personnelle et, selon votre cheminement, apprendre à le transmettre aux autres.',
+    meta: [
+      `1er degré : ${PRICES.reiki1} €`,
+      `2e degré : ${PRICES.reiki2} €`,
+      `3e degré : ${PRICES.reiki3} €`,
+    ],
+    to: '/formations-reiki',
+    cta: 'Découvrir les formations Reiki',
+    image: IMG.rituel,
+    alt: 'Bol, encens et pierres pour un espace de pratique',
+  },
+];
+
+const compare = [
+  {
+    title: 'Soin énergétique',
+    points: [
+      'Besoin de ralentir',
+      'Fatigue ou surcharge émotionnelle',
+      'Envie de se recentrer',
+      'Première découverte de l’énergétique',
+    ],
+  },
+  {
+    title: 'Chamanisme et énergies',
+    points: [
+      'Besoin d’un accompagnement plus long',
+      'Sensation de schémas qui se répètent',
+      'Période de transformation',
+      'Envie d’explorer plus profondément son vécu',
+    ],
+  },
+  {
+    title: 'Formation Reiki',
+    points: [
+      'Envie d’apprendre',
+      'Pratique personnelle',
+      'Développement de la sensibilité énergétique',
+      'Souhait éventuel d’accompagner d’autres personnes',
+    ],
+  },
+];
+
+const steps = [
+  {
+    n: '01',
+    t: 'Un temps d’échange',
+    d: 'Nous commençons par ce qui vous amène et ce que vous souhaitez travailler.',
+  },
+  {
+    n: '02',
+    t: 'Une séance personnalisée',
+    d: 'Je choisis et associe mes outils en fonction de vos besoins et de mes ressentis.',
+  },
+  {
+    n: '03',
+    t: 'Un temps pour vous',
+    d: 'Vous restez habillé(e), confortablement installé(e), dans un cadre calme et bienveillant.',
+  },
+  {
+    n: '04',
+    t: 'Un retour en fin de séance',
+    d: 'Nous prenons quelques minutes pour partager les ressentis et clôturer l’accompagnement.',
+  },
+];
+
+const reikiLevels = [
+  { n: '01', t: 'Premier degré', d: 'Découvrir les fondations et pratiquer sur soi.' },
+  { n: '02', t: 'Deuxième degré', d: 'Approfondir sa pratique et découvrir les symboles.' },
+  { n: '03', t: 'Troisième degré', d: 'Aller vers la maîtrise et le perfectionnement.' },
+];
+
+const faq = [
+  {
+    q: 'Comment choisir entre un soin énergétique et une séance de chamanisme ?',
+    a: 'Le soin énergétique convient souvent pour ralentir, se recentrer ou découvrir l’énergétique. La séance de chamanisme et énergies est plus longue et s’adresse à celles et ceux qui souhaitent explorer plus en profondeur ce qu’ils traversent. Si vous hésitez, écrivez-moi simplement ce que vous vivez : je vous aiderai à choisir.',
+  },
+  {
+    q: 'Comment se déroule une première séance ?',
+    a: 'Nous commençons par un temps d’échange, puis je réalise un temps d’écoute énergétique avant le soin proprement dit. Vous restez habillé(e). En fin de séance, nous prenons un moment pour partager les ressentis.',
+  },
+  {
+    q: 'Dois-je croire à l’énergétique pour prendre rendez-vous ?',
+    a: 'Non. Vous pouvez venir avec vos questions, votre curiosité ou simplement le besoin d’un temps pour vous. L’essentiel est de vous sentir libre et respecté(e) dans votre rythme.',
+  },
+  {
+    q: 'Est-ce que je reste habillé(e) pendant la séance ?',
+    a: 'Oui. Les séances se déroulent habillé(e), confortablement installé(e) sur la table de soin ou, à distance, chez vous.',
+  },
+  {
+    q: 'Les séances sont-elles proposées à distance ?',
+    a: 'Oui pour les soins énergétiques (et certaines formules associées). Les séances de chamanisme et énergies en format long se déroulent en présentiel à Bagnères-de-Bigorre. Une version plus courte à distance peut être proposée selon les besoins.',
+  },
+  {
+    q: 'Caroline accompagne-t-elle les enfants ?',
+    a: 'Oui. Des séances adaptées existent pour les enfants, dans un cadre doux et adapté à leur âge.',
+  },
+  {
+    q: 'Comment fonctionne le tarif solidaire ?',
+    a: 'Pour certaines séances, vous pouvez choisir entre le tarif complet et le tarif solidaire. Aucune justification ne vous sera demandée : je vous fais confiance pour choisir ce qui vous semble juste et équilibré.',
+  },
+  {
+    q: 'Puis-je commencer une formation Reiki sans expérience ?',
+    a: 'Oui. Le premier degré est conçu pour découvrir les fondations, même sans pratique préalable.',
+  },
+  {
+    q: 'Ces séances remplacent-elles un suivi médical ou psychologique ?',
+    a: 'Non. Les accompagnements proposés relèvent du bien-être et du développement personnel. Ils sont complémentaires et ne remplacent jamais l’avis, le diagnostic ou le traitement d’un professionnel de santé ou d’un psychologue.',
+  },
+];
+
+const iconPaths: Record<string, string> = {
+  heart: 'M20.8 5.6a5 5 0 0 0-7.1 0L12 7.3l-1.7-1.7a5 5 0 1 0-7.1 7.1l8.8 8.8 8.8-8.8a5 5 0 0 0 0-7.1Z',
+  users:
+    'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8Zm13 10v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',
+  home: 'M3 10.5 12 3l9 7.5V21a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1V10.5Z',
+  arrow: 'M5 12h14M13 6l6 6-6 6',
+};
+
+const badges = [
+  { t: 'Accompagnement personnalisé', icon: 'heart' },
+  { t: 'Adultes et enfants', icon: 'users' },
+  { t: 'Cabinet à Bagnères-de-Bigorre', icon: 'home' },
+  { t: 'Tarif solidaire disponible', icon: 'arrow' },
+];
+---
+
+<BaseLayout title={title} description={description} image={IMG.caroline} jsonLd={jsonLd}>
+  <!-- HERO -->
+  <section class="relative overflow-hidden pt-24 md:pt-28">
+    <div
+      class="mx-auto grid max-w-6xl items-center gap-6 px-4 pb-8 md:grid-cols-12 md:gap-12 md:px-6 md:pb-16"
+    >
+      <div class="md:col-span-6">
+        <p
+          class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.18em] text-peach-deep uppercase"
+        >
+          <span class="accent-bar" aria-hidden="true"></span>
+          Soins énergétiques, chamanisme et formations Reiki à Bagnères-de-Bigorre
+        </p>
+        <h1
+          class="font-display mt-3 text-[1.85rem] leading-[1.15] font-semibold text-forest md:mt-4 md:text-5xl lg:text-[3.35rem]"
+        >
+          Un espace pour vous recentrer et retrouver votre propre équilibre
+        </h1>
+        <p class="mt-4 max-w-xl text-[0.95rem] leading-relaxed text-ink/80 md:mt-5 md:text-lg">
+          <span class="md:hidden"
+            >Je vous accueille avec écoute et bienveillance pour une séance adaptée à ce que vous
+            traversez.</span
+          >
+          <span class="hidden md:inline"
+            >Lorsque les émotions s’accumulent, que l’énergie semble manquer ou que quelque chose en
+            vous demande à évoluer, il n’est pas toujours facile de savoir par où commencer. Je vous
+            accueille avec écoute et bienveillance pour une séance adaptée à ce que vous traversez.</span
+          >
+        </p>
+        <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
+          <a
+            href="#accompagnements"
+            class="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 py-3 text-sm font-medium text-white transition hover:bg-forest-deep"
+          >
+            Trouver l’accompagnement qui me correspond
+          </a>
+          <a
+            href={u('/formations-reiki')}
+            class="inline-flex min-h-12 items-center justify-center rounded-full border border-forest/25 bg-white px-6 py-3 text-sm font-medium text-forest transition hover:bg-sand"
+          >
+            Découvrir les formations Reiki
+          </a>
+        </div>
+      </div>
+
+      <div class="relative md:col-span-6">
+        <div class="overflow-hidden rounded-[1.75rem] shadow-xl ring-1 ring-line">
+          <img
+            src={IMG.caroline}
+            alt="Portrait de Caroline Loire, énergéticienne à Bagnères-de-Bigorre"
+            class="aspect-[4/5] w-full object-cover object-top sm:aspect-[5/6]"
+            width="900"
+            height="1080"
+            fetchpriority="high"
+          />
+        </div>
+        <div
+          class="absolute right-4 -bottom-4 left-4 rounded-2xl border border-line bg-white/95 p-4 shadow-lg backdrop-blur sm:right-auto sm:left-6 sm:max-w-xs"
+        >
+          <p class="flex items-start gap-2 text-sm font-medium text-forest">
+            <svg
+              class="mt-0.5 h-4 w-4 shrink-0 text-peach-deep"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle
+                cx="12"
+                cy="10"
+                r="3"></circle>
+            </svg>
+            Cabinet à Bagnères-de-Bigorre · Séances à distance possibles
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-y border-line/70 bg-sand/60">
+      <div
+        class="mx-auto grid max-w-6xl gap-3 px-4 py-4 sm:grid-cols-2 md:grid-cols-4 md:gap-4 md:px-6 md:py-6"
+      >
+        {
+          badges.map((b, i) => (
+            <div class="flex items-center gap-3 text-sm font-medium text-forest">
+              <span
+                class:list={[
+                  'inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-full',
+                  i % 2 === 0 ? 'bg-peach/25 text-peach-deep' : 'bg-forest/15 text-forest',
+                ]}
+              >
+                <svg
+                  class="h-4 w-4"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d={iconPaths[b.icon]} />
+                </svg>
+              </span>
+              {b.t}
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- IDENTIFICATION -->
+  <section class="px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <div data-reveal>
+        <span class="accent-bar mb-4" aria-hidden="true"></span>
+        <h2 class="font-display max-w-2xl text-2xl font-semibold text-forest md:text-4xl">
+          Vous sentez que quelque chose demande à bouger ?
+        </h2>
+        <p class="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-ink/80 md:mt-5 md:text-lg">
+          <span class="md:hidden"
+            >Vous pouvez simplement venir avec ce que vous ressentez. Mon rôle est de vous écouter et
+            de vous orienter.</span
+          >
+          <span class="hidden md:inline"
+            >Vous n’avez pas besoin de connaître les différentes pratiques énergétiques ni de savoir
+            quelle méthode choisir. Vous pouvez simplement venir avec ce que vous ressentez, ce que
+            vous traversez et ce que vous souhaitez déposer. Mon rôle est de vous écouter et de vous
+            orienter vers l’accompagnement le plus adapté.</span
+          >
+        </p>
+      </div>
+      <div class="mt-6 grid gap-3 sm:grid-cols-2 md:mt-10 md:gap-4">
+        {
+          situations.map((s) => (
+            <div
+              class="h-full rounded-2xl border border-line border-l-2 border-l-peach bg-white p-4 shadow-sm md:p-6"
+              data-reveal
+            >
+              <p class="font-display text-xl text-forest">{s.t}</p>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{s.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- ACCOMPAGNEMENTS -->
+  <section id="accompagnements" class="scroll-mt-24 bg-sand/50 px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <div data-reveal>
+        <p
+          class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
+        >
+          <span class="accent-bar" aria-hidden="true"></span>
+          Accompagnements
+        </p>
+        <h2 class="font-display mt-3 max-w-2xl text-2xl font-semibold text-forest md:text-4xl">
+          Trois chemins, selon ce dont vous avez besoin aujourd’hui
+        </h2>
+      </div>
+      <div class="mt-8 space-y-6 md:mt-12 md:space-y-10">
+        {
+          offers.map((o, i) => (
+            <article
+              class:list={[
+                'grid items-center gap-8 overflow-hidden rounded-3xl border border-line bg-white shadow-sm lg:grid-cols-2',
+                i % 2 === 1 && 'lg:[&>div:first-child]:order-2',
+              ]}
+              data-reveal
+            >
+              <div class="aspect-[16/11] overflow-hidden lg:aspect-auto lg:h-full">
+                <img src={o.image} alt={o.alt} class="h-full w-full object-cover" loading="lazy" />
+              </div>
+              <div class="p-5 md:p-10">
+                <p
+                  class:list={[
+                    'text-xs font-semibold tracking-[0.2em]',
+                    i % 2 === 0 ? 'text-peach-deep' : 'text-forest',
+                  ]}
+                >
+                  {o.n} — {o.title}
+                </p>
+                <h3 class="font-display mt-3 text-2xl font-medium text-forest md:text-3xl">
+                  {o.lead}
+                </h3>
+                <p class="mt-3 text-sm leading-relaxed text-ink/80 md:mt-4 md:text-base">{o.text}</p>
+                <ul class="mt-5 flex flex-wrap gap-2">
+                  {o.meta.map((m) => (
+                    <li class="rounded-full border border-peach/40 bg-peach/20 px-3 py-1.5 text-xs font-medium text-forest">
+                      {m}
+                    </li>
+                  ))}
+                </ul>
+                <a
+                  href={u(o.to)}
+                  class="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
+                >
+                  {o.cta}
+                  <svg
+                    class="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 12h14M13 6l6 6-6 6" />
+                  </svg>
+                </a>
+              </div>
+            </article>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARATIF -->
+  <section class="px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-display text-2xl font-semibold text-forest md:text-4xl" data-reveal>
+        Quelle approche choisir ?
+      </h2>
+      <div class="mt-6 grid gap-4 md:mt-10 md:grid-cols-3 md:gap-5">
+        {
+          compare.map((c) => (
+            <div
+              class="rounded-2xl border border-line border-t-2 border-t-peach bg-white p-4 md:p-6"
+              data-reveal
+            >
+              <h3 class="font-display text-xl text-forest">{c.title}</h3>
+              <ul class="mt-4 space-y-2.5 text-sm leading-relaxed text-ink/80">
+                {c.points.map((p) => (
+                  <li class="flex gap-2">
+                    <span
+                      class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-peach"
+                      aria-hidden="true"
+                    />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <p class="mt-8 max-w-2xl text-base text-ink/80">
+        Vous hésitez encore ? Contactez-moi et expliquez-moi simplement ce que vous traversez. Je
+        vous aiderai à identifier l’option la plus cohérente.
+      </p>
+      <a
+        href={u('/contact')}
+        class="mt-5 inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest hover:bg-sand"
+      >
+        Poser ma question à Caroline
+      </a>
+    </div>
+  </section>
+
+  <!-- ÉTAPES -->
+  <section class="bg-cream px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-display max-w-xl text-2xl font-semibold text-forest md:text-4xl">
+        Vous savez où vous allez, dès le premier rendez-vous
+      </h2>
+      <ol class="mt-6 grid gap-4 sm:grid-cols-2 md:mt-10 md:gap-6 lg:grid-cols-4">
+        {
+          steps.map((s, i) => (
+            <li class="rounded-2xl bg-white p-4 ring-1 ring-line md:p-6" data-reveal>
+              <span
+                class:list={[
+                  'font-display text-3xl',
+                  i % 2 === 0 ? 'text-peach-deep' : 'text-forest/80',
+                ]}
+              >
+                {s.n}
+              </span>
+              <h3 class="mt-3 font-medium text-forest">{s.t}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{s.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- À PROPOS -->
+  <section class="px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto grid max-w-6xl items-center gap-6 md:grid-cols-2 md:gap-10">
+      <div class="overflow-hidden rounded-3xl shadow-lg ring-1 ring-line" data-reveal>
+        <img
+          src={IMG.cabinet}
+          alt="Cabinet de Caroline Loire à Bagnères-de-Bigorre"
+          class="aspect-[4/3] w-full object-cover"
+          loading="lazy"
+        />
+      </div>
+      <div>
+        <p
+          class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
+        >
+          <span class="accent-bar" aria-hidden="true"></span>
+          À propos
+        </p>
+        <h2 class="font-display mt-3 text-2xl font-semibold text-forest md:text-4xl">
+          Une pratique intuitive, mais un cadre clair
+        </h2>
+        <p class="mt-5 text-base leading-relaxed text-ink/80">
+          Mon chemin dans l’énergétique a commencé en 2006, à travers la danse, le yoga et la
+          méditation. Je me suis ensuite formée au Reiki, au chamanisme et à différentes approches
+          complémentaires. Au fil des années, j’ai construit une pratique personnelle fondée sur
+          l’écoute, l’intuition et l’adaptation à chaque personne.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-ink/80">
+          Je ne cherche pas à appliquer une méthode identique à tout le monde. Je prends le temps de
+          comprendre ce que vous traversez afin de vous proposer un accompagnement cohérent,
+          respectueux et profondément humain.
+        </p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          {
+            [
+              'Maître Reiki praticienne',
+              'Maître Reiki enseignante',
+              'Praticienne en chamanisme',
+              'Cabinet à Bagnères-de-Bigorre',
+            ].map((b) => (
+              <li class="rounded-full border border-peach/40 bg-peach/20 px-3 py-1.5 text-xs font-medium text-forest">
+                {b}
+              </li>
+            ))
+          }
+        </ul>
+        <a
+          href={u('/a-propos')}
+          class="mt-8 inline-flex min-h-11 items-center rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white hover:bg-forest-deep"
+        >
+          Découvrir mon parcours
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEASER REIKI -->
+  <section class="border-y border-line bg-sand/60 px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-6xl">
+      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
+        <div>
+          <p
+            class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
+          >
+            <span class="accent-bar" aria-hidden="true"></span>
+            Formations
+          </p>
+          <h2 class="font-display mt-3 text-2xl font-semibold text-forest md:text-4xl">
+            Apprendre le Reiki, pas à pas
+          </h2>
+        </div>
+        <a
+          href={u('/formations-reiki')}
+          class="inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest hover:bg-white"
+        >
+          Voir le programme des formations
+        </a>
+      </div>
+      <div class="mt-6 grid gap-4 md:mt-10 md:grid-cols-3">
+        {
+          reikiLevels.map((l, i) => (
+            <div
+              class="rounded-2xl border border-line border-t-2 border-t-peach bg-white p-5 md:p-7"
+              data-reveal
+            >
+              <span
+                class:list={[
+                  'font-display text-4xl',
+                  i % 2 === 0 ? 'text-peach-deep' : 'text-forest/70',
+                ]}
+              >
+                {l.n}
+              </span>
+              <h3 class="font-display mt-3 text-2xl text-forest">{l.t}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{l.d}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <GoogleRating />
+
+  <!-- SOLIDAIRE -->
+  <section class="px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-3xl rounded-3xl border border-peach/40 bg-white p-6 md:p-10">
+      <span class="accent-bar mb-4" aria-hidden="true"></span>
+      <h2 class="font-display text-2xl font-semibold text-forest md:text-3xl">Tarifs solidaires</h2>
+      <p class="mt-3 text-sm leading-relaxed text-ink/80 md:mt-4 md:text-base">
+        Je souhaite que mes accompagnements restent accessibles, tout en respectant la valeur de mon
+        travail. Pour certaines séances, vous pouvez donc choisir entre le tarif complet et le tarif
+        solidaire. Aucune justification ne vous sera demandée : je vous fais confiance pour choisir
+        ce qui vous semble juste et équilibré.
+      </p>
+      <a
+        href={u('/tarifs')}
+        class="mt-6 inline-flex text-sm font-medium text-forest underline-offset-4 hover:underline"
+      >
+        Voir tous les tarifs
+      </a>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="bg-cream px-4 py-10 md:px-6 md:py-20">
+    <div class="mx-auto max-w-3xl">
+      <span class="accent-bar mb-4" aria-hidden="true"></span>
+      <h2 class="font-display text-2xl font-semibold text-forest md:text-4xl">
+        Questions fréquentes
+      </h2>
+      <Faq items={faq} />
+    </div>
+  </section>
+
+  <CtaBand />
+</BaseLayout>

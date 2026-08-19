@@ -1,0 +1,55 @@
+---
+import { GOOGLE_RATING, SITE } from '../data/site';
+
+const score = GOOGLE_RATING.score;
+const filled = Math.round(score);
+---
+
+<section class="bg-forest-darker px-4 py-10 text-white md:px-6 md:py-20">
+  <div class="mx-auto max-w-4xl text-center" data-reveal>
+    <p class="text-xs font-semibold tracking-[0.2em] text-peach uppercase">Avis Google</p>
+    <h2 class="font-display mt-3 text-2xl font-semibold md:text-4xl">
+      Ce qu’en disent celles et ceux qui sont venus
+    </h2>
+
+    <div
+      class="mx-auto mt-8 flex w-fit items-center gap-5 rounded-2xl border border-white/15 bg-white/5 px-6 py-5"
+    >
+      <div>
+        <span class="font-display text-4xl font-medium text-[#FFD700]">
+          {score.toFixed(1).replace('.', ',')}
+        </span>
+        <span class="text-sm text-white/60"> /5</span>
+      </div>
+      <div class="h-12 w-px bg-white/15" aria-hidden="true"></div>
+      <div class="text-left">
+        <div class="flex items-center gap-0.5" aria-label={`${score} sur 5 étoiles`}>
+          {
+            Array.from({ length: 5 }).map((_, i) => (
+              <svg
+                class={i < filled ? 'h-[18px] w-[18px] text-[#FFD700]' : 'h-[18px] w-[18px] text-white/25'}
+                viewBox="0 0 24 24"
+                fill={i < filled ? 'currentColor' : 'none'}
+                stroke="currentColor"
+                stroke-width="1.5"
+                aria-hidden="true"
+              >
+                <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.8l6.5-.9L12 3Z" />
+              </svg>
+            ))
+          }
+        </div>
+        <p class="mt-1.5 text-sm text-white/80">{GOOGLE_RATING.count} avis Google</p>
+      </div>
+    </div>
+
+    <a
+      href={SITE.googleReviewsUrl}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="mt-8 inline-flex min-h-11 items-center rounded-full bg-peach px-6 py-2.5 text-sm font-semibold text-ink transition hover:bg-white"
+    >
+      Lire les avis sur Google
+    </a>
+  </div>
+</section>

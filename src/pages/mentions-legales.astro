@@ -1,0 +1,56 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../data/site';
+
+const title = 'Mentions légales | Caroline Loire';
+const description =
+  'Mentions légales du site de Caroline Loire, énergéticienne à Bagnères-de-Bigorre.';
+---
+
+<BaseLayout title={title} description={description}>
+  <article class="mx-auto max-w-3xl px-4 pt-28 pb-20 md:px-6">
+    <h1 class="font-display text-4xl text-forest">Mentions légales</h1>
+    <div class="mt-8 space-y-6 text-sm leading-relaxed text-ink/85">
+      <section>
+        <h2 class="font-display text-xl text-forest">Éditeur</h2>
+        <p class="mt-2">
+          Caroline Loire — {SITE.fullAddress}<br />
+          Tél. : {SITE.phone}<br />
+          E-mail : {SITE.email}<br />
+          Directrice de la publication : Caroline Loire
+        </p>
+        <p class="mt-2 text-slate-soft">
+          Statut juridique, numéro SIRET et forme d’entreprise : à compléter avant la mise en ligne
+          définitive.
+        </p>
+      </section>
+      <section>
+        <h2 class="font-display text-xl text-forest">Hébergement</h2>
+        <p class="mt-2">
+          Site hébergé par GitHub Pages — GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco,
+          CA 94107, États-Unis. <a
+            href="https://github.com"
+            class="text-forest underline"
+            rel="noopener noreferrer"
+            target="_blank">github.com</a
+          >
+        </p>
+      </section>
+      <section>
+        <h2 class="font-display text-xl text-forest">Propriété intellectuelle</h2>
+        <p class="mt-2">
+          Textes, photographies, logos et éléments graphiques sont protégés. Toute reproduction non
+          autorisée est interdite.
+        </p>
+      </section>
+      <section>
+        <h2 class="font-display text-xl text-forest">Activité</h2>
+        <p class="mt-2">
+          Les accompagnements proposés relèvent du bien-être et du développement personnel. Ils ne
+          constituent pas des actes de médecine ou de psychologie et ne se substituent pas à un suivi
+          de santé.
+        </p>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

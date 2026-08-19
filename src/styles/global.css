@@ -1,0 +1,108 @@
+@import 'tailwindcss';
+
+/* ------------------------------------------------------------------
+   Charte graphique Caroline Loire
+   Bleu canard #6B999E/#4DA0A8 · Terracotta pêche #E3B09A/#EEB1A0
+   Blanc crème #FBF7F4 · Noir charcoal #1A1A1A · Nude clair #F1DDD4
+   ------------------------------------------------------------------ */
+@theme {
+  --color-forest: #4da0a8;
+  --color-forest-deep: #428187;
+  --color-forest-darker: #143b40;
+  --color-peach: #eeb1a0;
+  --color-peach-deep: #b95f3d;
+  --color-sand: #fdf3ef;
+  --color-cream: #fbf7f4;
+  --color-line: #f1ddd4;
+  --color-ink: #1a1a1a;
+  --color-slate-soft: #5b5b5b;
+  --color-ivory: #ffffff;
+
+  --font-sans: 'Inter', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Poppins', ui-sans-serif, system-ui, sans-serif;
+
+  --radius-3xl: 1.5rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: var(--font-sans);
+    background-color: var(--color-ivory);
+    color: var(--color-ink);
+    overflow-x: clip;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-forest);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  a {
+    transition:
+      color 200ms ease,
+      background-color 200ms ease,
+      border-color 200ms ease;
+  }
+}
+
+@utility font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.01em;
+}
+
+@utility tracking-logo {
+  letter-spacing: 0.18em;
+}
+
+/* Petit trait décoratif pêche, placé avant un eyebrow ou un titre. */
+@utility accent-bar {
+  display: inline-block;
+  width: 2.25rem;
+  height: 2px;
+  border-radius: 9999px;
+  background-color: var(--color-peach);
+}
+
+/* Apparition douce au scroll (progressive enhancement : sans JS, tout reste visible). */
+[data-reveal] {
+  opacity: 1;
+}
+
+.js [data-reveal] {
+  opacity: 0;
+  transform: translateY(16px);
+  transition:
+    opacity 600ms cubic-bezier(0.22, 1, 0.36, 1),
+    transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.js [data-reveal].is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .js [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

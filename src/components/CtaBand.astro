@@ -1,0 +1,51 @@
+---
+import { SITE, u } from '../data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+  primaryLabel?: string;
+  primaryTo?: string;
+  secondaryLabel?: string;
+  secondaryTo?: string;
+}
+
+const {
+  title = 'Vous n’avez pas besoin d’avoir toutes les réponses pour faire le premier pas',
+  text = 'Prenez rendez-vous ou écrivez-moi quelques mots sur ce que vous traversez. Je vous répondrai avec simplicité.',
+  primaryLabel = 'Prendre rendez-vous',
+  primaryTo = SITE.bookingPath,
+  secondaryLabel = 'Appeler Caroline',
+  secondaryTo = SITE.phoneHref,
+} = Astro.props;
+
+const secondaryHref = secondaryTo.startsWith('tel:') || secondaryTo.startsWith('mailto:')
+  ? secondaryTo
+  : u(secondaryTo);
+---
+
+<section class="bg-forest px-4 py-10 text-white md:px-6 md:py-16">
+  <div class="mx-auto max-w-3xl text-center">
+    <span class="accent-bar mb-5" aria-hidden="true"></span>
+    <h2 class="font-display text-2xl leading-snug font-semibold md:text-4xl">{title}</h2>
+    <p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/80 md:mt-4 md:text-base">{text}</p>
+    <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row md:mt-8">
+      <a
+        href={u(primaryTo)}
+        class="inline-flex min-h-12 items-center justify-center rounded-full bg-peach px-7 py-3 text-sm font-semibold text-ink transition hover:bg-white"
+      >
+        {primaryLabel}
+      </a>
+      {
+        secondaryLabel && (
+          <a
+            href={secondaryHref}
+            class="inline-flex min-h-12 items-center justify-center rounded-full border border-white/70 px-7 py-3 text-sm font-medium text-white transition hover:bg-white hover:text-forest"
+          >
+            {secondaryLabel}
+          </a>
+        )
+      }
+    </div>
+  </div>
+</section>

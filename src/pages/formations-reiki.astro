@@ -1,0 +1,131 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { IMG, PRICES, u } from '../data/site';
+
+const title = 'Formation Reiki à Bagnères-de-Bigorre | Caroline Loire';
+const description =
+  'Formation Reiki Usui à Bagnères-de-Bigorre avec une maître Reiki enseignante. 1er degré 180 €, 2e 280 €, 3e 380 €. Hautes-Pyrénées.';
+
+const levels = [
+  {
+    n: '01',
+    title: 'Premier degré — Les fondations du Reiki',
+    price: PRICES.reiki1,
+    points: [
+      'Bases de la canalisation énergétique',
+      'Les cinq principes de la philosophie du Reiki',
+      'Les chakras et corps énergétiques',
+      'Pratiquer sur soi',
+      'Partager l’énergie pour accompagner l’autre',
+    ],
+  },
+  {
+    n: '02',
+    title: 'Deuxième degré — Approfondissement',
+    price: PRICES.reiki2,
+    points: [
+      'Purification et rechargement des personnes, lieux et objets',
+      'Symboles et leur utilisation',
+      'Outils pour enrichir la pratique',
+      'Travail à distance',
+      'Travail avec un cristal',
+    ],
+  },
+  {
+    n: '03',
+    title: 'Troisième degré — Maîtrise et perfectionnement',
+    price: PRICES.reiki3,
+    points: [
+      'Approfondir les cinq principes',
+      'Symbole du maître praticien',
+      'Techniques japonaises avancées',
+      'Grille de cristaux',
+      'Intervention psycho-énergétique',
+    ],
+  },
+];
+---
+
+<BaseLayout title={title} description={description} image={IMG.rituel}>
+  <PageHero
+    eyebrow="Formations Reiki · Hautes-Pyrénées"
+    title="Apprendre à pratiquer le Reiki à votre tour"
+    text="Des formations progressives pour découvrir le Reiki, développer votre pratique personnelle et, selon votre cheminement, apprendre à le transmettre."
+    image={IMG.rituel}
+    imageAlt="Espace de pratique avec bol et pierres"
+  />
+
+  <section class="px-4 py-14 md:px-6 md:py-16">
+    <div class="mx-auto max-w-3xl space-y-5 text-base leading-relaxed text-ink/85">
+      <h2 class="font-display text-2xl text-forest md:text-3xl">Transmettre ce qui m’a transformée</h2>
+      <p>
+        Après des années de pratique, j’ai souhaité partager ce que le Reiki m’apporte au quotidien.
+        En tant que maître Reiki enseignante, j’accompagne chaque élève à son rythme, avec une
+        transmission claire, incarnée et respectueuse.
+      </p>
+      <p>
+        Le Reiki utilisé en séance fait partie des outils du soin énergétique. Les formations, elles,
+        constituent une offre à part entière pour celles et ceux qui souhaitent apprendre et
+        pratiquer.
+      </p>
+      <p class="text-sm text-slate-soft">
+        Aucune expérience préalable n’est requise pour le premier degré. Les formations ne remplacent
+        pas un cursus de santé.
+      </p>
+    </div>
+
+    <div class="mx-auto mt-12 max-w-6xl space-y-6">
+      {
+        levels.map((l, i) => (
+          <article
+            class="grid gap-6 rounded-3xl border border-line border-t-2 border-t-peach bg-white p-6 md:grid-cols-12 md:p-8"
+            data-reveal
+          >
+            <div class="md:col-span-8">
+              <span
+                class:list={[
+                  'font-display text-3xl',
+                  i % 2 === 0 ? 'text-peach-deep' : 'text-forest/70',
+                ]}
+              >
+                {l.n}
+              </span>
+              <h3 class="font-display mt-2 text-2xl text-forest">{l.title}</h3>
+              <ul class="mt-4 space-y-2 text-sm text-ink/80">
+                {l.points.map((p) => (
+                  <li class="flex gap-2">
+                    <span class="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-peach" aria-hidden="true" />
+                    {p}
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div class="flex flex-col justify-between rounded-2xl border border-peach/40 bg-sand/70 p-5 md:col-span-4">
+              <div>
+                <p class="text-xs tracking-wider text-slate-soft uppercase">Tarif</p>
+                <p class="font-display mt-1 text-4xl text-forest">{l.price} €</p>
+              </div>
+              <a
+                href={u('/contact')}
+                class="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-forest px-4 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
+              >
+                Demander les prochaines dates
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </section>
+
+  <CtaBand
+    title="Prêt(e) à commencer le Reiki ?"
+    text="Écrivez-moi pour connaître les prochaines sessions à Bagnères-de-Bigorre ou poser vos questions sur le parcours."
+    primaryLabel="Poser une question"
+    primaryTo="/contact"
+    secondaryLabel="Voir les soins énergétiques"
+    secondaryTo="/soins-energetiques"
+  />
+</BaseLayout>

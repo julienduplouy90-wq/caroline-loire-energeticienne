@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://julienduplouy90-wq.github.io/caroline-loire-energeticienne/sitemap-index.xml

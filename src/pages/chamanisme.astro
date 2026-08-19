@@ -1,0 +1,124 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { IMG, PRICES, SITE, u } from '../data/site';
+
+const title = 'Séance de chamanisme à Bagnères-de-Bigorre | Caroline Loire';
+const description =
+  'Séance de chamanisme et énergies à Bagnères-de-Bigorre. Accompagnement de 2 h à 2 h 30, 100 € ou 80 € en tarif solidaire.';
+
+const soins = [
+  {
+    t: 'Remontée d’un animal de pouvoir',
+    d: 'Chaque esprit animal porte une qualité particulière. Son énergie peut accompagner une période où ces qualités sont nécessaires.',
+  },
+  {
+    t: 'Extraction',
+    d: 'Lorsque des difficultés créent des failles dans le corps énergétique, ce travail vise à libérer ce qui s’y est engouffré et perturbe le fonctionnement.',
+  },
+  {
+    t: 'Recouvrement d’âme',
+    d: 'Après certains chocs, une part de soi peut se sentir absente ou épuisée. Ce soin vise à retrouver une sensation d’unité intérieure.',
+  },
+  {
+    t: 'Psychopompe',
+    d: 'Destiné uniquement aux personnes défuntes, pour les accompagner vers le monde d’en haut. Je ne le pratique jamais en cabinet.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} image={IMG.dreamcatcher}>
+  <PageHero
+    eyebrow="Chamanisme et énergies · Bagnères-de-Bigorre"
+    title="Explorer plus en profondeur ce qui demande à évoluer"
+    text="Un accompagnement plus long, associant travail chamanique et énergétique, pour mettre du sens sur ce que vous traversez."
+    image={IMG.dreamcatcher}
+    imageAlt="Capteur de rêves en lumière naturelle"
+  />
+
+  <section class="px-4 py-14 md:px-6 md:py-16">
+    <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-12">
+      <div class="space-y-5 text-base leading-relaxed text-ink/85 md:col-span-7">
+        <h2 class="font-display text-2xl text-forest md:text-3xl">Ma pratique du chamanisme</h2>
+        <p>
+          Le chamanisme que je pratique s’inscrit dans une lignée issue de la culture amérindienne
+          traditionnelle, étudiée et réintroduite en Occident par l’anthropologue Michael Harner. Il
+          m’a été transmis par Jacqueline Libert, qui a beaucoup voyagé et échangé avec des chamanes
+          américains avant de transmettre son savoir.
+        </p>
+        <p>
+          Dans cette approche, il existe trois mondes non ordinaires : le monde d’en haut, le monde
+          du milieu et le monde d’en bas. Le praticien facilite la communication entre ces espaces,
+          ramène des informations et effectue des soins spécifiques en se laissant guider.
+        </p>
+        <p>
+          Cette séance est profonde. Il est important de se sentir prêt(e) avant de l’aborder. Elle
+          ne remplace pas un suivi médical ou psychologique.
+        </p>
+
+        <h3 class="font-display pt-2 text-xl text-forest">Déroulement d’une séance</h3>
+        <p>
+          Après un bref échange, j’effectue un temps d’écoute énergétique des centres (chakras). Vous
+          vous installez habillé(e) sur la table de soin. J’utilise notamment mon tambour et mon
+          hochet, puis je poursuis avec une transmission d’énergies (Reiki et Shamballa selon les
+          ressentis). En fin de séance, je prépare souvent un mélange de Fleurs de Bach, je restitue
+          les informations captées et je clôture par un tirage d’oracle.
+        </p>
+
+        <h3 class="font-display pt-2 text-xl text-forest">Les grands soins possibles</h3>
+        <div class="grid gap-4 sm:grid-cols-2">
+          {
+            soins.map((s) => (
+              <div class="rounded-2xl border border-line border-t-2 border-t-peach bg-white p-5">
+                <h4 class="font-medium text-forest">{s.t}</h4>
+                <p class="mt-2 text-sm text-slate-soft">{s.d}</p>
+              </div>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="md:col-span-5">
+        <div
+          class="sticky top-28 rounded-3xl border border-line border-t-2 border-t-peach bg-white p-6 shadow-sm"
+        >
+          <p
+            class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.18em] text-peach-deep uppercase"
+          >
+            <span class="accent-bar" aria-hidden="true"></span>
+            Formule
+          </p>
+          <p class="font-display mt-3 text-3xl text-forest">{PRICES.chamanisme.full} €</p>
+          <p class="text-sm text-slate-soft">
+            ou {PRICES.chamanisme.solidaire} € en tarif solidaire
+          </p>
+          <ul class="mt-5 space-y-2 text-sm text-ink/80">
+            <li>Durée : {PRICES.chamanisme.duration}</li>
+            <li>Présentiel à Bagnères-de-Bigorre</li>
+            <li>
+              Enfant : {PRICES.chamanismeEnfant.full} € ({PRICES.chamanismeEnfant.duration})
+            </li>
+          </ul>
+          <a
+            href={u(SITE.bookingPath)}
+            class="mt-6 flex min-h-12 items-center justify-center rounded-full bg-forest text-sm font-medium text-white transition hover:bg-forest-deep"
+          >
+            Prendre rendez-vous
+          </a>
+          <a
+            href={u('/soins-energetiques')}
+            class="mt-3 flex min-h-11 items-center justify-center text-sm font-medium text-forest underline-offset-4 hover:underline"
+          >
+            Préférer un soin énergétique plus court
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Vous sentez que quelque chose demande un travail plus profond ?"
+    text="Contactez-moi pour vérifier ensemble si une séance de chamanisme et énergies est adaptée à votre moment."
+  />
+</BaseLayout>

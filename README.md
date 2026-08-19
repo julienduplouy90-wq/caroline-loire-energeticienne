@@ -1,0 +1,68 @@
+# Caroline Loire — énergéticienne à Bagnères-de-Bigorre
+
+Site vitrine statique construit avec [Astro](https://astro.build) et Tailwind CSS 4,
+hébergé sur GitHub Pages.
+
+**En ligne :** https://julienduplouy90-wq.github.io/caroline-loire-energeticienne/
+
+## Installation
+
+```bash
+npm install
+```
+
+## Développement
+
+```bash
+npm run dev
+```
+
+Le site est servi sur http://localhost:4321/caroline-loire-energeticienne (le chemin
+`/caroline-loire-energeticienne` est la « base » du site de projet GitHub Pages).
+
+## Mise en ligne
+
+```bash
+npm run deploy
+```
+
+La commande construit le site puis pousse le contenu de `dist/` sur la branche `gh-pages`,
+que GitHub Pages sert. Le code source reste sur `main` ; la branche `gh-pages` est générée
+et ne doit jamais être éditée à la main.
+
+## Structure
+
+```
+public/images/        Photos et logos (aucun CDN externe)
+src/data/site.ts      Coordonnées, navigation, tarifs, helpers d'URL
+src/data/resources.ts Contenu des 8 pages « Ressources »
+src/layouts/          Gabarit de page (SEO, en-tête, pied de page)
+src/components/       En-tête, pied de page, héros, bandeau CTA, FAQ, note Google
+src/pages/            Une page = un fichier ; `[slug].astro` génère les ressources
+src/styles/global.css Charte graphique (tokens Tailwind `@theme`)
+scripts/              Script de publication sur gh-pages
+```
+
+## Modifier le contenu
+
+- **Coordonnées, tarifs, menu** → `src/data/site.ts`
+- **Pages Ressources** (Reiki, Shamballa, LaHoChi…) → `src/data/resources.ts`
+- **Texte d'une page** → le fichier correspondant dans `src/pages/`
+- **Couleurs et polices** → le bloc `@theme` de `src/styles/global.css`
+
+## Formulaire de contact
+
+Le site est statique : il n'y a pas de serveur pour recevoir les messages.
+
+- **Par défaut** : le formulaire ouvre le logiciel de messagerie du visiteur avec un message
+  pré-rempli adressé à `carolinenergies@yahoo.com`.
+- **Option recommandée** : créer un formulaire gratuit sur [Formspree](https://formspree.io),
+  puis coller l'URL de l'endpoint dans `SITE.formEndpoint` (`src/data/site.ts`). Les messages
+  arrivent alors directement par e-mail, sans quitter le site.
+
+## Points à compléter avant la mise en ligne publique
+
+- Statut juridique et numéro SIRET dans les mentions légales.
+- Horaires d'ouverture du cabinet.
+- Avis clients nominatifs : seule la note globale Google (4,9/5 · 31 avis) est affichée,
+  faute de textes d'avis réels disponibles.
