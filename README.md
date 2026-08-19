@@ -22,13 +22,12 @@ Le site est servi sur http://localhost:4321/caroline-loire-energeticienne (le ch
 
 ## Mise en ligne
 
-```bash
-npm run deploy
-```
+Le déploiement est **automatique** : chaque `push` sur `main` déclenche le workflow
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et le
+publie sur GitHub Pages. Aucune commande manuelle n'est nécessaire.
 
-La commande construit le site puis pousse le contenu de `dist/` sur la branche `gh-pages`,
-que GitHub Pages sert. Le code source reste sur `main` ; la branche `gh-pages` est générée
-et ne doit jamais être éditée à la main.
+Pour relancer un déploiement sans modifier le code : onglet **Actions** du dépôt →
+*Déployer sur GitHub Pages* → **Run workflow**.
 
 ## Structure
 
@@ -40,7 +39,7 @@ src/layouts/          Gabarit de page (SEO, en-tête, pied de page)
 src/components/       En-tête, pied de page, héros, bandeau CTA, FAQ, note Google
 src/pages/            Une page = un fichier ; `[slug].astro` génère les ressources
 src/styles/global.css Charte graphique (tokens Tailwind `@theme`)
-scripts/              Script de publication sur gh-pages
+.github/workflows/    Déploiement automatique sur GitHub Pages
 ```
 
 ## Modifier le contenu
