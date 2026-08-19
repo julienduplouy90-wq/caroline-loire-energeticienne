@@ -12,7 +12,7 @@ hébergé sur **GitHub Pages**.
 | -------------- | ----------------------------------------------------------------------- |
 | Framework      | Astro 7 (sortie statique, zéro JS par défaut)                            |
 | Styles         | Tailwind CSS 4 via `@tailwindcss/vite`, thème dans `src/styles/global.css` |
-| Hébergement    | GitHub Pages, branche `gh-pages` (build publié par `npm run deploy`)      |
+| Hébergement    | GitHub Pages, déploiement automatique par GitHub Actions à chaque push sur `main` |
 | Base URL       | `/caroline-loire-energeticienne` (site de projet GitHub Pages)            |
 | Formulaire     | 100 % statique : `mailto:` par défaut, Formspree si `SITE.formEndpoint` est renseigné |
 
@@ -22,8 +22,10 @@ hébergé sur **GitHub Pages**.
 npm run dev      # serveur local (http://localhost:4321/caroline-loire-energeticienne)
 npm run build    # génère dist/
 npm run preview  # prévisualise dist/
-npm run deploy   # build + publication sur la branche gh-pages
 ```
+
+La mise en ligne est automatique : tout push sur `main` déclenche
+`.github/workflows/deploy.yml`, qui construit le site et le publie sur GitHub Pages.
 
 ## Charte graphique
 
@@ -72,7 +74,7 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 ## Git
 
 - Une modification = une branche `claude/...`, jamais de commit direct sur `main`.
-- `main` porte le code source ; `gh-pages` porte uniquement le build (générée, ne pas éditer).
+- `main` est la branche de production : tout ce qui y est fusionné part en ligne automatiquement.
 - Aucun secret dans le dépôt (celui-ci est public — contrainte de GitHub Pages en offre gratuite).
 
 ## À compléter avant une mise en ligne définitive
