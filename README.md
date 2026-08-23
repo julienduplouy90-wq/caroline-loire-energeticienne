@@ -1,9 +1,13 @@
 # Caroline Loire — énergéticienne à Bagnères-de-Bigorre
 
 Site vitrine statique construit avec [Astro](https://astro.build) et Tailwind CSS 4,
-hébergé chez Hostinger.
+hébergé chez Hostinger sur le **domaine temporaire Hostinger de Caroline** (à renseigner dans
+`astro.config.mjs`).
 
-**Domaine :** https://carolineloire-energeticienne.fr (bascule DNS à faire, voir plus bas)
+> ⚠ Le domaine historique `carolineloire-energeticienne.fr` et son site WordPress (o2switch)
+> **ne doivent pas être touchés** : ni DNS, ni redirection, ni suppression. Ce dépôt n'y fait
+> jamais référence comme cible. Tant que ce site vit sur un domaine temporaire, il est en
+> `noindex` (`INDEXABLE = false` dans `src/data/site.ts`, `robots.txt` en Disallow).
 
 ## Installation
 
@@ -31,38 +35,33 @@ Pour relancer un déploiement sans modifier le code : onglet **Actions** du dép
 
 ### Première mise en place (à faire une fois)
 
-1. **hPanel Hostinger** → Sites web → Ajouter un site → « Domaine existant »
-   `carolineloire-energeticienne.fr` (hébergement de Caroline, ou plan Elyo avec le domaine
-   rattaché).
+1. **hPanel Hostinger** → le site web de Caroline (domaine temporaire `xxx.hostingersite.com`)
+   → noter l'URL exacte et la coller dans `site` (`astro.config.mjs`).
 2. hPanel → Fichiers → **Comptes FTP** → créer un compte dédié, noter l'hôte, l'identifiant et
    le mot de passe.
 3. GitHub → dépôt → Settings → Secrets and variables → Actions → **New repository secret** :
    `FTP_SERVEUR`, `FTP_UTILISATEUR`, `FTP_MOTDEPASSE`. (Variable facultative `FTP_DOSSIER` si le
    site n'est pas dans `/public_html/`.)
-4. Actions → lancer le workflow à la main → vérifier le site sur l'URL temporaire Hostinger
-   (ou via le fichier `hosts` local) : pages, images, formulaire, `/tarifs` → `/tarifs/`.
-5. hPanel → Sécurité → **SSL** : activer le certificat gratuit (Let's Encrypt) pour le domaine et
-   `www`.
-6. **DNS** (chez le registrar actuel du domaine — aujourd'hui le site tourne chez o2switch, IP
-   `109.234.161.194`) : soit pointer les serveurs de noms vers Hostinger (`ns1.dns-parking.com`,
-   `ns2.dns-parking.com`), soit garder le registrar et changer l'enregistrement **A** de `@` et
-   le **CNAME** de `www` vers les valeurs indiquées dans hPanel. Attention : si des **e-mails**
-   sont rattachés au domaine, reporter les enregistrements MX / SPF avant de changer les serveurs
-   de noms, sinon les mails s'arrêtent.
-7. Après propagation (quelques heures) : tester https://carolineloire-energeticienne.fr,
-   la version `www` (doit rediriger sans www), une ancienne URL WordPress
-   (`/energetique/` → `/soins-energetiques/`), puis soumettre le nouveau sitemap dans Google
-   Search Console (`https://carolineloire-energeticienne.fr/sitemap-index.xml`).
-8. Seulement ensuite : résilier / couper l'ancien WordPress o2switch (Amelia, WooCommerce).
+4. Actions → lancer le workflow à la main → vérifier : pages, images, formulaire, `/tarifs` →
+   `/tarifs/`, et que `<meta name="robots" content="noindex">` est bien présent.
+5. hPanel → Sécurité → **SSL** : certificat gratuit actif sur le domaine temporaire.
 
-Le fichier [`public/.htaccess`](public/.htaccess) force HTTPS et le domaine sans `www`, redirige
-en 301 toutes les anciennes adresses WordPress (boutique, `/energetique/`, `/enseignement/`…) et
-sert `404.html`.
+Le fichier [`public/.htaccess`](public/.htaccess) force HTTPS, sert `404.html` et règle le cache.
+Il ne contient **aucune** redirection de domaine.
+
+### Le jour où un vrai domaine est décidé (pas maintenant)
+
+Ce sera un choix explicite de Caroline et Julien, jamais automatique : `site` dans
+`astro.config.mjs`, `INDEXABLE = true`, `robots.txt` en `Allow: /` + ligne `Sitemap`, puis
+sitemap dans Google Search Console. Si ce domaine devait un jour être `carolineloire-energeticienne.fr`,
+les anciennes adresses WordPress (`/energetique/`, `/enseignement/`, boutique…) devraient être
+redirigées en 301 — liste dans l'historique git de `public/.htaccess` (commit « Héberger le site
+sur carolineloire-energeticienne.fr »).
 
 ## Structure
 
 ```
-public/.htaccess      HTTPS, domaine sans www, redirections 301 de l'ancien WordPress, 404
+public/.htaccess      HTTPS, 404, cache (aucune redirection de domaine)
 public/images/        Photos et logos (aucun CDN externe)
 src/data/site.ts      Coordonnées, navigation, tarifs, helpers d'URL
 src/data/resources.ts Contenu des 8 pages « Ressources »

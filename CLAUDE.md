@@ -4,8 +4,11 @@ Site vitrine de **Caroline Loire**, énergéticienne, praticienne en chamanisme 
 enseignante à Bagnères-de-Bigorre (Hautes-Pyrénées).
 
 Reprise de l'ancien site Hostinger Horizons (React + PocketBase) en site **statique Astro**,
-hébergé chez **Hostinger** sur `carolineloire-energeticienne.fr` (remplace le WordPress o2switch
-historique).
+hébergé chez **Hostinger** sur le domaine temporaire de Caroline.
+
+**Interdit : toucher au WordPress historique** (`carolineloire-energeticienne.fr`, o2switch) —
+ni DNS, ni redirection, ni référence comme domaine cible. Il reste le site de référence tant que
+Julien et Caroline n'ont pas décidé autrement ; ce site est donc en `noindex` (`INDEXABLE`).
 
 ## Stack
 
@@ -14,7 +17,8 @@ historique).
 | Framework      | Astro 7 (sortie statique, zéro JS par défaut)                            |
 | Styles         | Tailwind CSS 4 via `@tailwindcss/vite`, thème dans `src/styles/global.css` |
 | Hébergement    | Hostinger (`public_html`), envoi FTPS par GitHub Actions à chaque push sur `main` (secrets `FTP_*`) |
-| URLs           | Racine du domaine, **barre oblique finale** (`/tarifs/`) comme l'ancien WordPress ; `.htaccess` : HTTPS, www → apex, 301 des anciennes adresses |
+| URLs           | Racine du domaine, **barre oblique finale** (`/tarifs/`) ; `.htaccess` : HTTPS, 404, cache — aucune redirection de domaine |
+| Indexation     | `INDEXABLE = false` (`src/data/site.ts`) → `noindex` + `robots.txt` Disallow tant que le domaine est temporaire |
 | Formulaire     | Embed Systeme.io si `SYSTEME_CONTACT_FORM_EMBED` est renseigné ; sinon statique (`mailto:` / Formspree via `SITE.formEndpoint`) |
 | Conversion     | Systeme.io (calendrier, CRM, emails) — config `src/data/systeme.ts`, doc `docs/systeme-io/` |
 | Mesure         | Aucun outil chargé par défaut ; événements `clic_prendre_rdv`, `clic_reiki`, `clic_formation`, `formulaire_envoye` émis via `data-track` / `window.clTrack` (GA4 optionnel dans `src/data/analytics.ts`) |
@@ -70,8 +74,8 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 - **Liens internes** : toujours `u('/chemin')` depuis `src/data/site.ts` (ajoute la barre oblique
   finale attendue par `trailingSlash: 'always'`) — jamais de `href` brut. Pour les fichiers de
   `public/`, utiliser `asset('...')`.
-- **Anciennes URLs WordPress** : toute page renommée doit recevoir une ligne `Redirect 301` dans
-  `public/.htaccess` (les URLs déjà indexées par Google ne doivent jamais tomber en 404).
+- **Anciennes URLs WordPress** : aucune redirection à écrire tant que ce site n'est pas sur le
+  domaine historique (et ce n'est pas prévu).
 - **Données centralisées** : coordonnées, navigation et tarifs dans `src/data/site.ts` ;
   contenu des pages Ressources dans `src/data/resources.ts` ; URLs et réglages Systeme.io dans
   `src/data/systeme.ts` ; identifiants de mesure dans `src/data/analytics.ts`. Modifier la
@@ -96,5 +100,5 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 
 - Statut juridique et numéro SIRET dans les mentions légales.
 - Horaires d'ouverture (non communiqués à ce jour).
-- Hostinger : compte FTP + secrets GitHub `FTP_SERVEUR` / `FTP_UTILISATEUR` / `FTP_MOTDEPASSE`,
-  puis bascule DNS du domaine (actuellement o2switch) — voir README, section Hébergement.
+- Hostinger : URL du domaine temporaire dans `astro.config.mjs`, compte FTP + secrets GitHub
+  `FTP_SERVEUR` / `FTP_UTILISATEUR` / `FTP_MOTDEPASSE` — voir README, section Hébergement.

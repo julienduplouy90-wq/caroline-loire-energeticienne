@@ -64,7 +64,7 @@ Ces deux polices sont disponibles dans l'éditeur Systeme.io (Google Fonts).
 ## Structure conseillée d'une page Systeme.io
 
 1. En-tête minimal : monogramme + « CAROLINE LOIRE » (Poppins, interlettrage +18 %) à gauche,
-   lien « ← Retour au site » à droite (vers `https://carolineloire-energeticienne.fr`).
+   lien « ← Retour au site » à droite (vers l'URL du site principal en vigueur).
 2. Eyebrow + titre H1 Poppins `#4DA0A8` + 1–2 phrases d'intro.
 3. Le bloc utile (calendrier ou formulaire) dans une carte blanche.
 4. Rappel tarif complet / solidaire, adresse du cabinet.

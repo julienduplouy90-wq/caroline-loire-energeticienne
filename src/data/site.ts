@@ -17,6 +17,15 @@ export function asset(path: string): string {
   return `${BASE}/${path.replace(/^\/+/, '')}`;
 }
 
+/**
+ * Indexation par Google. `false` tant que le site est servi sur le domaine
+ * temporaire Hostinger : l'ancien WordPress (carolineloire-energeticienne.fr)
+ * reste le site de référence et ne doit pas être concurrencé par un doublon.
+ * Passer à `true` (et mettre à jour `site` dans astro.config.mjs + robots.txt)
+ * le jour où ce site prend un vrai domaine.
+ */
+export const INDEXABLE = false;
+
 export const SITE = {
   name: 'Caroline Loire',
   tagline: 'Énergéticienne · Praticienne en chamanisme · Maître Reiki enseignante',

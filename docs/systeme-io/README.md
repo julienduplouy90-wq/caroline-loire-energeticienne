@@ -130,7 +130,7 @@ Contenu minimal de chaque page Systeme.io :
 | `/seance-chamanisme` | Idem avec « Chamanisme et énergies ».                                                                                         |
 | `/formations-reiki`  | Présentation des 3 degrés, **formulaire** (prénom, e-mail, téléphone facultatif, degré souhaité = liste déroulante, case consentement), bouton « Recevoir le programme et les prochaines dates ». |
 | `/reiki-1` `/reiki-2` `/reiki-3` | Page d'inscription du degré : programme, tarif, prochaines dates, formulaire ou bouton de paiement (acompte ou totalité, § 7). |
-| Page de remerciement | Une par tunnel : « Merci, c'est noté » + bouton « Retour au site » → `https://carolineloire-energeticienne.fr`.               |
+| Page de remerciement | Une par tunnel : « Merci, c'est noté » + bouton « Retour au site » → URL du site principal (domaine temporaire Hostinger, ou WordPress tant qu'il reste la référence — à trancher).               |
 
 Dans les paramètres de chaque page Systeme.io : **cocher « Ne pas indexer »** (noindex) — les
 pages SEO restent sur le site principal.
@@ -244,16 +244,17 @@ Alternative sans cookie ni bannière : Plausible / Umami (script léger) — les
 **Rien à faire côté Systeme.io pour démarrer** : `rdv-carolineloire-energeticienne.systeme.io`
 est un sous-domaine fourni par Systeme.io, déjà « Prêt ». Aucune modification DNS n'a été faite.
 
-1. **Domaine principal → Hostinger.** Le site est prêt (`site` = domaine, `base: '/'`, URLs avec
-   barre oblique finale, `.htaccess` avec HTTPS + www → apex + 301 des anciennes adresses
-   WordPress, workflow FTPS). Il reste : compte FTP Hostinger + secrets GitHub, SSL, puis
-   bascule DNS du registrar (aujourd'hui o2switch, IP 109.234.161.194). Pas à pas dans le
-   README du dépôt, section « Mise en ligne (Hostinger) ».
-2. **Sous-domaine personnalisé (optionnel, plus « marque »)** : `rdv.carolineloire-energeticienne.fr`.
-   Dans Systeme.io : Paramètres → Domaines personnalisés → Ajouter → Systeme.io indique
-   l'enregistrement **CNAME** à créer chez le registrar (`rdv` → cible fournie par Systeme.io).
-   Ensuite, remplacer le domaine dans `SYSTEME_URLS`. Ne pas le faire tant que le DNS du
-   domaine principal n'est pas stabilisé.
+1. **Site principal → Hostinger, sur le domaine temporaire de Caroline.** Le WordPress
+   historique (`carolineloire-energeticienne.fr`, o2switch) **n'est pas touché** : pas de DNS,
+   pas de redirection. Le site Astro est donc en `noindex` tant qu'il vit sur le domaine
+   temporaire. Il reste : URL temporaire dans `astro.config.mjs`, compte FTP + secrets GitHub,
+   SSL. Pas à pas dans le README du dépôt, section « Mise en ligne (Hostinger) ».
+   Conséquence pour Systeme.io : les liens « Retour au site » des pages Systeme.io doivent
+   pointer vers le domaine temporaire (ou vers le WordPress, au choix de Julien) — à trancher
+   avant de créer les pages.
+2. **Sous-domaine personnalisé** (`rdv.carolineloire-energeticienne.fr`) : **exclu pour
+   l'instant**, cela exigerait un enregistrement CNAME dans les DNS du domaine WordPress, qu'on
+   ne touche pas. Le sous-domaine `…systeme.io` suffit.
 3. **E-mails d'envoi** : pour que les emails automatiques partent de `contact@carolineloire-energeticienne.fr`
    (plutôt que de `carolinenergies@yahoo.com` — Yahoo rejette souvent l'envoi via des tiers,
    DMARC strict), créer cette adresse chez l'hébergeur mail et, dans Systeme.io → Paramètres →
@@ -319,7 +320,7 @@ Systeme.io → CRM → Calendrier
   `consent-nouvelles` ; lien de désinscription automatique de Systeme.io dans chaque email.
 - Politique de confidentialité du site mise à jour (sous-traitant Systeme.io, finalités,
   durées, droits). Dans Systeme.io, ajouter sous chaque formulaire un lien vers
-  `https://carolineloire-energeticienne.fr/politique-de-confidentialite`.
+  la page `/politique-de-confidentialite/` du site principal.
 - Conservation : contacts sans interaction depuis 3 ans → suppression (règle manuelle annuelle
   ou automatisation simple sur un tag `inactif`).
 
@@ -375,10 +376,10 @@ Tests de bout en bout
 [ ] supprimer le contact test
 
 Domaine / hébergement
-[x] site configuré pour carolineloire-energeticienne.fr chez Hostinger (config, .htaccess, workflow, mentions légales)
-[ ] hPanel : ajouter le domaine, compte FTP, SSL ; GitHub : secrets FTP_SERVEUR / FTP_UTILISATEUR / FTP_MOTDEPASSE
-[ ] DNS du registrar → Hostinger (reporter les MX si des e-mails existent sur le domaine)
-[ ] Search Console : nouveau sitemap, vérifier les 301 des anciennes URLs
+[x] site configuré pour Hostinger (base '/', workflow FTPS, .htaccess sans redirection, noindex, mentions légales)
+[ ] coller l'URL du domaine temporaire Hostinger dans astro.config.mjs (`site`)
+[ ] hPanel : compte FTP, SSL ; GitHub : secrets FTP_SERVEUR / FTP_UTILISATEUR / FTP_MOTDEPASSE
+[ ] NE PAS toucher au WordPress / DNS de carolineloire-energeticienne.fr
 [ ] mentions légales : SIRET, statut
 [ ] sous-domaine rdv.carolineloire-energeticienne.fr (CNAME) — optionnel, après migration
 [ ] désactiver Amelia / WooCommerce sur l'ancien WordPress seulement après bascule complète

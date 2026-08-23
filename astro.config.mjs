@@ -3,12 +3,14 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Site publié à la racine du domaine de Caroline, hébergé chez Hostinger
-// (envoi FTPS de `dist/` par .github/workflows/deploy.yml).
-// URLs avec barre oblique finale (/tarifs/), comme l'ancien WordPress :
-// les adresses déjà indexées par Google restent valables sans redirection.
+// Hébergé chez Hostinger (envoi FTPS de `dist/` par .github/workflows/deploy.yml)
+// sur le domaine temporaire Hostinger de Caroline. Le domaine historique
+// carolineloire-energeticienne.fr (WordPress chez o2switch) n'est PAS touché.
+//
+// Quand un vrai domaine sera décidé : changer `site` ici et passer
+// `INDEXABLE` à true dans src/data/site.ts.
 export default defineConfig({
-  site: 'https://carolineloire-energeticienne.fr',
+  site: 'https://A-RENSEIGNER.hostingersite.com',
   base: '/',
   trailingSlash: 'always',
   integrations: [sitemap()],
