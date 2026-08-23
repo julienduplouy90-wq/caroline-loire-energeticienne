@@ -247,8 +247,8 @@ est un sous-domaine fourni par Systeme.io, déjà « Prêt ». Aucune modificati
 1. **Site principal → Hostinger, sur le domaine temporaire de Caroline.** Le WordPress
    historique (`carolineloire-energeticienne.fr`, o2switch) **n'est pas touché** : pas de DNS,
    pas de redirection. Le site Astro est donc en `noindex` tant qu'il vit sur le domaine
-   temporaire. Il reste : URL temporaire dans `astro.config.mjs`, compte FTP + secrets GitHub,
-   SSL. Pas à pas dans le README du dépôt, section « Mise en ligne (Hostinger) ».
+   temporaire (`purple-raven-386267.hostingersite.com`). Déploiement Git Hostinger en place,
+   sans secret — voir le README du dépôt, section « Mise en ligne (Hostinger) ».
    Conséquence pour Systeme.io : les liens « Retour au site » des pages Systeme.io doivent
    pointer vers le domaine temporaire (ou vers le WordPress, au choix de Julien) — à trancher
    avant de créer les pages.
@@ -377,8 +377,8 @@ Tests de bout en bout
 
 Domaine / hébergement
 [x] site configuré pour Hostinger (base '/', workflow FTPS, .htaccess sans redirection, noindex, mentions légales)
-[ ] coller l'URL du domaine temporaire Hostinger dans astro.config.mjs (`site`)
-[ ] hPanel : compte FTP, SSL ; GitHub : secrets FTP_SERVEUR / FTP_UTILISATEUR / FTP_MOTDEPASSE
+[x] site PHP/HTML purple-raven-386267.hostingersite.com créé, déploiement Git Hostinger branché
+[ ] vérifier le SSL du domaine temporaire dans hPanel
 [ ] NE PAS toucher au WordPress / DNS de carolineloire-energeticienne.fr
 [ ] mentions légales : SIRET, statut
 [ ] sous-domaine rdv.carolineloire-energeticienne.fr (CNAME) — optionnel, après migration

@@ -1,8 +1,8 @@
 # Caroline Loire — énergéticienne à Bagnères-de-Bigorre
 
 Site vitrine statique construit avec [Astro](https://astro.build) et Tailwind CSS 4,
-hébergé chez Hostinger sur le **domaine temporaire Hostinger de Caroline** (à renseigner dans
-`astro.config.mjs`).
+hébergé chez Hostinger sur le domaine temporaire **https://purple-raven-386267.hostingersite.com**
+(site PHP/HTML créé le 23/08/2026 dans le plan Unlimited).
 
 > ⚠ Le domaine historique `carolineloire-energeticienne.fr` et son site WordPress (o2switch)
 > **ne doivent pas être touchés** : ni DNS, ni redirection, ni suppression. Ce dépôt n'y fait
@@ -25,30 +25,29 @@ Le site est servi sur http://localhost:4321.
 
 ## Mise en ligne (Hostinger)
 
-Le déploiement est **automatique** : chaque `push` sur `main` déclenche le workflow
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et envoie
-`dist/` en FTPS dans `public_html` chez Hostinger. Aucune commande manuelle, aucun fichier
-modifié à la main sur le serveur.
+Le déploiement est **automatique**, en deux temps, sans aucun mot de passe :
 
-Pour relancer un déploiement sans modifier le code : onglet **Actions** du dépôt →
-*Construire et déployer sur Hostinger* → **Run workflow**.
+1. chaque `push` sur `main` déclenche le workflow
+   [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et pousse
+   le contenu de `dist/` sur la branche **`hostinger`** du dépôt ;
+2. Hostinger (hPanel → site → Avancé → **Git**) suit cette branche et la déploie dans
+   `public_html` dès qu'il reçoit le webhook GitHub.
 
-### Première mise en place (à faire une fois)
+Pour relancer une publication sans modifier le code : onglet **Actions** → *Construire et
+publier pour Hostinger* → **Run workflow**. Pour redéployer côté Hostinger : hPanel → Avancé →
+Git → **Déployer**.
 
-1. **hPanel Hostinger** → Sites web. Attention : `caroline-loire-energy-540040.hostingersite.com`
-   est un site **Hostinger Horizons** (constructeur IA, l'ancienne maquette dont ce site est
-   issu) : il n'a ni FTP ni `public_html`, on ne peut pas y déposer le build Astro. Il faut un
-   site de type **PHP/HTML** (« Ajouter un site web » → site vide, ou l'un des sites vides déjà
-   créés dans le plan Unlimited) → noter son domaine temporaire `xxx.hostingersite.com` et le
-   coller dans `site` (`astro.config.mjs`).
-2. hPanel → Fichiers → **Comptes FTP** → créer un compte dédié, noter l'hôte, l'identifiant et
-   le mot de passe.
-3. GitHub → dépôt → Settings → Secrets and variables → Actions → **New repository secret** :
-   `FTP_SERVEUR`, `FTP_UTILISATEUR`, `FTP_MOTDEPASSE`. (Variable facultative `FTP_DOSSIER` si le
-   site n'est pas dans `/public_html/`.)
-4. Actions → lancer le workflow à la main → vérifier : pages, images, formulaire, `/tarifs` →
-   `/tarifs/`, et que `<meta name="robots" content="noindex">` est bien présent.
-5. hPanel → Sécurité → **SSL** : certificat gratuit actif sur le domaine temporaire.
+### Mise en place (faite le 23/08/2026)
+
+- Site PHP/HTML `purple-raven-386267.hostingersite.com` créé dans hPanel (le site Horizons
+  `caroline-loire-energy-540040` n'a pas de `public_html` et n'est pas utilisable pour Astro ;
+  il est laissé tel quel).
+- hPanel → Avancé → Git : dépôt `julienduplouy90-wq/caroline-loire-energeticienne`, branche
+  `hostinger`, répertoire `public_html`.
+- Webhook Hostinger ajouté dans GitHub (Settings → Webhooks) : chaque push sur `hostinger`
+  redéploie.
+- Si le dépôt passe en **privé** : hPanel → Git → copier la clé SSH → GitHub → Settings →
+  Deploy keys (lecture seule), puis remplacer l'URL HTTPS par l'URL SSH dans hPanel.
 
 Le fichier [`public/.htaccess`](public/.htaccess) force HTTPS, sert `404.html` et règle le cache.
 Il ne contient **aucune** redirection de domaine.
@@ -76,7 +75,7 @@ src/layouts/          Gabarit de page (SEO, en-tête, pied de page)
 src/components/       En-tête, pied de page, héros, bandeau CTA, FAQ, note Google
 src/pages/            Une page = un fichier ; `[slug].astro` génère les ressources
 src/styles/global.css Charte graphique (tokens Tailwind `@theme`)
-.github/workflows/    Construction + envoi FTPS vers Hostinger
+.github/workflows/    Construction + publication de dist/ sur la branche hostinger
 ```
 
 ## Modifier le contenu

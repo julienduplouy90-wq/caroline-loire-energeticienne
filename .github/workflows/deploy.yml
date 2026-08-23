@@ -1,16 +1,24 @@
-name: Construire et déployer sur Hostinger
+name: Construire et publier pour Hostinger
+
+# À chaque push sur main : construit le site et pousse le contenu de `dist/`
+# sur la branche `hostinger`. Hostinger (hPanel → Avancé → Git) suit cette
+# branche et la déploie dans public_html via son webhook. Aucun mot de passe
+# FTP, aucun secret à créer.
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 concurrency:
   group: deploiement
   cancel-in-progress: true
 
 jobs:
-  deployer:
+  publier:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -23,25 +31,11 @@ jobs:
       - run: npm ci
       - run: npm run build
 
-      # Secrets à créer dans le dépôt (Settings → Secrets and variables → Actions) :
-      #   FTP_SERVEUR      hôte FTP Hostinger (ex. ftp.carolineloire-energeticienne.fr ou IP)
-      #   FTP_UTILISATEUR  compte FTP créé dans hPanel → Fichiers → Comptes FTP
-      #   FTP_MOTDEPASSE   son mot de passe
-      # Variable facultative : FTP_DOSSIER (défaut /public_html/).
-      - name: Envoi FTPS vers public_html
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Pousser dist/ sur la branche hostinger
+        uses: peaceiris/actions-gh-pages@v4
         with:
-          server: ${{ secrets.FTP_SERVEUR }}
-          username: ${{ secrets.FTP_UTILISATEUR }}
-          password: ${{ secrets.FTP_MOTDEPASSE }}
-          protocol: ftps
-          port: 21
-          local-dir: ./dist/
-          server-dir: ${{ vars.FTP_DOSSIER || '/public_html/' }}
-          # Ne supprime pas ce qui n'appartient pas au site (fichiers de
-          # vérification Google, dossiers créés par Hostinger, etc.).
-          dangerous-clean-slate: false
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: hostinger
+          force_orphan: true
+          commit_message: 'Build ${{ github.sha }}'

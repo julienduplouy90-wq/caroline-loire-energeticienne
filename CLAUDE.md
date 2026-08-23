@@ -16,7 +16,7 @@ Julien et Caroline n'ont pas décidé autrement ; ce site est donc en `noindex` 
 | -------------- | ----------------------------------------------------------------------- |
 | Framework      | Astro 7 (sortie statique, zéro JS par défaut)                            |
 | Styles         | Tailwind CSS 4 via `@tailwindcss/vite`, thème dans `src/styles/global.css` |
-| Hébergement    | Hostinger (`public_html`), envoi FTPS par GitHub Actions à chaque push sur `main` (secrets `FTP_*`) |
+| Hébergement    | Hostinger, domaine temporaire `purple-raven-386267.hostingersite.com`. GitHub Actions pousse `dist/` sur la branche `hostinger` ; hPanel → Git la déploie dans `public_html` (webhook). Aucun secret. |
 | URLs           | Racine du domaine, **barre oblique finale** (`/tarifs/`) ; `.htaccess` : HTTPS, 404, cache — aucune redirection de domaine |
 | Indexation     | `INDEXABLE = false` (`src/data/site.ts`) → `noindex` + `robots.txt` Disallow tant que le domaine est temporaire |
 | Formulaire     | Embed Systeme.io si `SYSTEME_CONTACT_FORM_EMBED` est renseigné ; sinon statique (`mailto:` / Formspree via `SITE.formEndpoint`) |
@@ -32,8 +32,9 @@ npm run preview  # prévisualise dist/
 ```
 
 La mise en ligne est automatique : tout push sur `main` déclenche
-`.github/workflows/deploy.yml`, qui construit le site et l'envoie en FTPS chez Hostinger.
-Jamais de fichier modifié à la main sur le serveur : tout passe par le dépôt.
+`.github/workflows/deploy.yml`, qui construit le site et pousse `dist/` sur la branche
+`hostinger`, que Hostinger déploie. Jamais de fichier modifié à la main sur le serveur, jamais
+de commit à la main sur la branche `hostinger` : tout passe par `main`.
 
 ## Charte graphique
 
@@ -92,13 +93,12 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 
 - Une modification = une branche `claude/...`, jamais de commit direct sur `main`.
 - `main` est la branche de production : tout ce qui y est fusionné part en ligne automatiquement.
-- Aucun secret dans le dépôt : les identifiants FTP vivent dans les secrets GitHub Actions.
-  Le dépôt peut repasser en **privé** dès que GitHub Pages n'est plus utilisé (règle : un dépôt
-  privé par cliente).
+- Aucun secret dans le dépôt ni dans GitHub Actions (déploiement par branche `hostinger`).
+  Le dépôt peut repasser en **privé** (règle : un dépôt privé par cliente) : il faudra alors une
+  clé de déploiement SSH dans hPanel → Git (voir README).
 
 ## À compléter avant une mise en ligne définitive
 
 - Statut juridique et numéro SIRET dans les mentions légales.
 - Horaires d'ouverture (non communiqués à ce jour).
-- Hostinger : URL du domaine temporaire dans `astro.config.mjs`, compte FTP + secrets GitHub
-  `FTP_SERVEUR` / `FTP_UTILISATEUR` / `FTP_MOTDEPASSE` — voir README, section Hébergement.
+- Hostinger : déploiement Git en place (voir README, section Mise en ligne).
