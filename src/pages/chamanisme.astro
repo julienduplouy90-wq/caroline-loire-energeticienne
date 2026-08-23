@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { IMG, PRICES, SITE, u } from '../data/site';
+import { TRACK, systemeHref } from '../data/systeme';
 
 const title = 'Séance de chamanisme à Bagnères-de-Bigorre | Caroline Loire';
 const description =
@@ -101,7 +102,9 @@ const soins = [
             </li>
           </ul>
           <a
-            href={u(SITE.bookingPath)}
+            href={systemeHref(['shamanicSession', 'booking'], SITE.bookingPath, 'page-chamanisme')}
+            data-track={TRACK.booking}
+            data-track-label="page-chamanisme"
             class="mt-6 flex min-h-12 items-center justify-center rounded-full bg-forest text-sm font-medium text-white transition hover:bg-forest-deep"
           >
             Prendre rendez-vous
@@ -118,6 +121,7 @@ const soins = [
   </section>
 
   <CtaBand
+    primaryKey={['shamanicSession', 'booking']}
     title="Vous sentez que quelque chose demande un travail plus profond ?"
     text="Contactez-moi pour vérifier ensemble si une séance de chamanisme et énergies est adaptée à votre moment."
   />

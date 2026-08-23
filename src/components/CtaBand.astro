@@ -1,11 +1,21 @@
 ---
 import { SITE, u } from '../data/site';
+import { systemeHref, type SystemeKey, type TrackEvent, TRACK } from '../data/systeme';
 
 interface Props {
   title?: string;
   text?: string;
   primaryLabel?: string;
+  /** Page interne de repli (et destination si aucune clé Systeme.io). */
   primaryTo?: string;
+  /**
+   * Clé Systeme.io du bouton principal : si l'URL correspondante est
+   * renseignée dans src/data/systeme.ts, le bouton y mène ; sinon il reste
+   * sur `primaryTo`. `null` = lien interne uniquement.
+   */
+  primaryKey?: SystemeKey | SystemeKey[] | null;
+  /** Événement de conversion mesuré au clic (null = aucun). */
+  primaryTrack?: TrackEvent | null;
   secondaryLabel?: string;
   secondaryTo?: string;
 }
@@ -15,9 +25,13 @@ const {
   text = 'Prenez rendez-vous ou écrivez-moi quelques mots sur ce que vous traversez. Je vous répondrai avec simplicité.',
   primaryLabel = 'Prendre rendez-vous',
   primaryTo = SITE.bookingPath,
+  primaryKey = 'booking',
+  primaryTrack = TRACK.booking,
   secondaryLabel = 'Appeler Caroline',
   secondaryTo = SITE.phoneHref,
 } = Astro.props;
+
+const primaryHref = primaryKey ? systemeHref(primaryKey, primaryTo, 'bandeau') : u(primaryTo);
 
 const secondaryHref = secondaryTo.startsWith('tel:') || secondaryTo.startsWith('mailto:')
   ? secondaryTo
@@ -31,7 +45,9 @@ const secondaryHref = secondaryTo.startsWith('tel:') || secondaryTo.startsWith('
     <p class="mx-auto mt-3 max-w-2xl text-sm leading-relaxed text-white/80 md:mt-4 md:text-base">{text}</p>
     <div class="mt-6 flex flex-col items-center justify-center gap-3 sm:flex-row md:mt-8">
       <a
-        href={u(primaryTo)}
+        href={primaryHref}
+        data-track={primaryTrack ?? undefined}
+        data-track-label={primaryTrack ? 'bandeau' : undefined}
         class="inline-flex min-h-12 items-center justify-center rounded-full bg-peach px-7 py-3 text-sm font-semibold text-ink transition hover:bg-white"
       >
         {primaryLabel}
