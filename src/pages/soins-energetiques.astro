@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { IMG, PRICES, SITE, u } from '../data/site';
+import { TRACK, systemeHref } from '../data/systeme';
 
 const title = 'Soins énergétiques à Bagnères-de-Bigorre | Caroline Loire';
 const description =
@@ -78,10 +79,12 @@ const outils = [
             <li>Enfant : {PRICES.soinEnfant.full} € ({PRICES.soinEnfant.duration})</li>
           </ul>
           <a
-            href={u(SITE.bookingPath)}
+            href={systemeHref(['energeticSession', 'booking'], SITE.bookingPath, 'page-soins')}
+            data-track={TRACK.booking}
+            data-track-label="page-soins"
             class="mt-6 flex min-h-12 items-center justify-center rounded-full bg-forest text-sm font-medium text-white transition hover:bg-forest-deep"
           >
-            Prendre rendez-vous
+            Réserver un soin énergétique
           </a>
           <a
             href={SITE.phoneHref}
@@ -119,5 +122,7 @@ const outils = [
   <CtaBand
     title="Envie d’un temps pour vous recentrer ?"
     text="Réservez un soin énergétique ou écrivez-moi pour vérifier que cette formule vous correspond."
+    primaryLabel="Réserver un soin énergétique"
+    primaryKey={['energeticSession', 'booking']}
   />
 </BaseLayout>

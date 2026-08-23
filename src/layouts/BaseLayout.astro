@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileBar from '../components/MobileBar.astro';
 import { IMG, SITE, asset } from '../data/site';
+import { ANALYTICS } from '../data/analytics';
 
 interface Props {
   title: string;
@@ -53,6 +54,28 @@ const ogImage = new URL(image, Astro.site).href;
     <script is:inline>
       document.documentElement.classList.add('js');
     </script>
+
+    {
+      /* Google Analytics 4 — chargé uniquement si un identifiant est renseigné
+         dans src/data/analytics.ts (et qu'une bannière de consentement existe). */
+      ANALYTICS.gaMeasurementId && (
+        <>
+          <script
+            is:inline
+            async
+            src={`https://www.googletagmanager.com/gtag/js?id=${ANALYTICS.gaMeasurementId}`}
+          />
+          <script is:inline define:vars={{ gaId: ANALYTICS.gaMeasurementId }}>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() {
+              dataLayer.push(arguments);
+            }
+            gtag('js', new Date());
+            gtag('config', gaId, { anonymize_ip: true });
+          </script>
+        </>
+      )
+    }
   </head>
   <body class="min-h-dvh bg-white text-ink">
     <a
@@ -65,6 +88,34 @@ const ogImage = new URL(image, Astro.site).href;
     <main id="contenu" class="pb-20 md:pb-0"><slot /></main>
     <Footer />
     <MobileBar />
+
+    <script is:inline>
+      /* Suivi des conversions — indépendant de l'outil de mesure.
+         Tout élément portant `data-track="nom_evenement"` émet l'événement au
+         clic ; `window.clTrack(nom, params)` permet de l'émettre à la main
+         (ex. formulaire envoyé). GA4 (gtag), GTM (dataLayer) et Meta Pixel
+         (fbq) le reçoivent s'ils sont installés. */
+      (function () {
+        window.dataLayer = window.dataLayer || [];
+        function track(name, params) {
+          if (!name) return;
+          var data = Object.assign({ event: name }, params || {});
+          if (typeof window.gtag === 'function') window.gtag('event', name, params || {});
+          else window.dataLayer.push(data);
+          if (typeof window.fbq === 'function') window.fbq('trackCustom', name, params || {});
+        }
+        window.clTrack = track;
+        document.addEventListener('click', function (e) {
+          var el = e.target && e.target.closest ? e.target.closest('[data-track]') : null;
+          if (!el) return;
+          track(el.getAttribute('data-track'), {
+            label: el.getAttribute('data-track-label') || undefined,
+            page: location.pathname,
+            destination: el.getAttribute('href') || undefined,
+          });
+        });
+      })();
+    </script>
 
     <script>
       const targets = document.querySelectorAll('[data-reveal]');

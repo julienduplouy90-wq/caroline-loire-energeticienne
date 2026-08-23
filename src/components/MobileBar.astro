@@ -1,5 +1,6 @@
 ---
-import { SITE, u } from '../data/site';
+import { SITE } from '../data/site';
+import { TRACK, systemeHref } from '../data/systeme';
 ---
 
 <div
@@ -16,7 +17,9 @@ import { SITE, u } from '../data/site';
       Appeler
     </a>
     <a
-      href={u(SITE.bookingPath)}
+      href={systemeHref('booking', SITE.bookingPath, 'barre-mobile')}
+      data-track={TRACK.booking}
+      data-track-label="barre-mobile"
       class="inline-flex h-12 items-center justify-center gap-2 rounded-full bg-peach text-sm font-semibold text-ink transition hover:bg-white"
     >
       <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">

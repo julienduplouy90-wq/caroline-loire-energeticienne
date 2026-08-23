@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, PRICES, u } from '../data/site';
+import { IMG, PRICES } from '../data/site';
+import { TRACK, hasSysteme, systemeHref, type SystemeKey } from '../data/systeme';
 
 const title = 'Formation Reiki à Bagnères-de-Bigorre | Caroline Loire';
 const description =
@@ -13,6 +14,7 @@ const levels = [
     n: '01',
     title: 'Premier degré — Les fondations du Reiki',
     price: PRICES.reiki1,
+    key: 'reiki1' as SystemeKey,
     points: [
       'Bases de la canalisation énergétique',
       'Les cinq principes de la philosophie du Reiki',
@@ -25,6 +27,7 @@ const levels = [
     n: '02',
     title: 'Deuxième degré — Approfondissement',
     price: PRICES.reiki2,
+    key: 'reiki2' as SystemeKey,
     points: [
       'Purification et rechargement des personnes, lieux et objets',
       'Symboles et leur utilisation',
@@ -37,6 +40,7 @@ const levels = [
     n: '03',
     title: 'Troisième degré — Maîtrise et perfectionnement',
     price: PRICES.reiki3,
+    key: 'reiki3' as SystemeKey,
     points: [
       'Approfondir les cinq principes',
       'Symbole du maître praticien',
@@ -108,10 +112,12 @@ const levels = [
                 <p class="font-display mt-1 text-4xl text-forest">{l.price} €</p>
               </div>
               <a
-                href={u('/contact')}
+                href={systemeHref([l.key, 'reikiInfo'], '/contact', `formations-${l.key}`)}
+                data-track={TRACK.reiki}
+                data-track-label={l.key}
                 class="mt-6 inline-flex min-h-11 items-center justify-center rounded-full bg-forest px-4 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
               >
-                Demander les prochaines dates
+                {hasSysteme([l.key, 'reikiInfo']) ? 'S’inscrire ou demander les dates' : 'Demander les prochaines dates'}
               </a>
             </div>
           </article>
@@ -123,8 +129,10 @@ const levels = [
   <CtaBand
     title="Prêt(e) à commencer le Reiki ?"
     text="Écrivez-moi pour connaître les prochaines sessions à Bagnères-de-Bigorre ou poser vos questions sur le parcours."
-    primaryLabel="Poser une question"
+    primaryLabel={hasSysteme('reikiInfo') ? 'Recevoir le programme et les dates' : 'Poser une question'}
     primaryTo="/contact"
+    primaryKey="reikiInfo"
+    primaryTrack={TRACK.formation}
     secondaryLabel="Voir les soins énergétiques"
     secondaryTo="/soins-energetiques"
   />

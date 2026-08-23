@@ -14,7 +14,9 @@ hébergé sur **GitHub Pages**.
 | Styles         | Tailwind CSS 4 via `@tailwindcss/vite`, thème dans `src/styles/global.css` |
 | Hébergement    | GitHub Pages, déploiement automatique par GitHub Actions à chaque push sur `main` |
 | Base URL       | `/caroline-loire-energeticienne` (site de projet GitHub Pages)            |
-| Formulaire     | 100 % statique : `mailto:` par défaut, Formspree si `SITE.formEndpoint` est renseigné |
+| Formulaire     | Embed Systeme.io si `SYSTEME_CONTACT_FORM_EMBED` est renseigné ; sinon statique (`mailto:` / Formspree via `SITE.formEndpoint`) |
+| Conversion     | Systeme.io (calendrier, CRM, emails) — config `src/data/systeme.ts`, doc `docs/systeme-io/` |
+| Mesure         | Aucun outil chargé par défaut ; événements `clic_prendre_rdv`, `clic_reiki`, `clic_formation`, `formulaire_envoye` émis via `data-track` / `window.clTrack` (GA4 optionnel dans `src/data/analytics.ts`) |
 
 ## Commandes
 
@@ -56,15 +58,21 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 3. **Mention bien-être obligatoire.** Toute page décrivant une pratique rappelle que les
    accompagnements ne remplacent pas un avis ou un traitement médical ou psychologique
    (constante `DISCLAIMER` dans `src/data/site.ts`).
-4. **Pas de calendrier de réservation** : aucun outil tiers n'est configuré. Les CTA « Prendre
-   rendez-vous » pointent vers `/contact`, puis téléphone ou e-mail réels.
+4. **Réservation via Systeme.io** (sous-domaine `rdv-carolineloire-energeticienne.systeme.io`).
+   Toutes les URLs Systeme.io vivent dans `src/data/systeme.ts` (`SYSTEME_URLS`) et les CTA
+   passent par `systemeHref()` : tant qu'une URL est vide, le CTA retombe sur `/contact`.
+   Jamais d'URL Systeme.io en dur dans un composant. Doc complète : `docs/systeme-io/`.
 
 ## Conventions techniques
 
 - **Liens internes** : toujours `u('/chemin')` depuis `src/data/site.ts` — jamais de `href` brut,
   sinon la base GitHub Pages saute. Pour les fichiers de `public/`, utiliser `asset('...')`.
 - **Données centralisées** : coordonnées, navigation et tarifs dans `src/data/site.ts` ;
-  contenu des pages Ressources dans `src/data/resources.ts`. Modifier la donnée, pas le gabarit.
+  contenu des pages Ressources dans `src/data/resources.ts` ; URLs et réglages Systeme.io dans
+  `src/data/systeme.ts` ; identifiants de mesure dans `src/data/analytics.ts`. Modifier la
+  donnée, pas le gabarit.
+- **CTA mesurés** : poser `data-track="<événement>"` (+ `data-track-label`) sur le lien ; le
+  script de `BaseLayout.astro` fait le reste. Ne pas appeler `gtag` directement.
 - **Images** : servies depuis `public/images/`, jamais depuis un CDN externe.
 - **Animations** : attribut `data-reveal` sur l'élément à faire apparaître. Un filet de sécurité
   affiche tout au bout de 2,5 s si l'IntersectionObserver ne se déclenche pas.

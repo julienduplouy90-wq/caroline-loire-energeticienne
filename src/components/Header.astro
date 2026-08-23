@@ -1,5 +1,6 @@
 ---
 import { IMG, NAV, SITE, u } from '../data/site';
+import { TRACK, systemeHref } from '../data/systeme';
 
 const current = Astro.url.pathname.replace(/\/+$/, '') || u('/').replace(/\/+$/, '');
 const isActive = (to: string) => {
@@ -45,7 +46,9 @@ const isActive = (to: string) => {
 
     <div class="flex items-center gap-2">
       <a
-        href={u(SITE.bookingPath)}
+        href={systemeHref('booking', SITE.bookingPath, 'header')}
+        data-track={TRACK.booking}
+        data-track-label="header"
         class="hidden rounded-full bg-forest px-4 py-2.5 text-sm font-medium text-white shadow-sm transition hover:bg-forest-deep sm:inline-flex"
       >
         Prendre rendez-vous
@@ -86,8 +89,10 @@ const isActive = (to: string) => {
         ))
       }
       <a
-        href={u(SITE.bookingPath)}
+        href={systemeHref('booking', SITE.bookingPath, 'menu-mobile')}
         data-close-menu
+        data-track={TRACK.booking}
+        data-track-label="menu-mobile"
         class="mt-2 rounded-full bg-forest px-4 py-3 text-center text-base font-medium text-white"
       >
         Prendre rendez-vous

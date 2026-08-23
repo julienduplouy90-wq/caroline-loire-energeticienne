@@ -4,6 +4,7 @@ import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import GoogleRating from '../components/GoogleRating.astro';
 import { GOOGLE_RATING, IMG, PRICES, SITE, u } from '../data/site';
+import { TRACK } from '../data/systeme';
 
 const title = 'Caroline Loire | Énergéticienne à Bagnères-de-Bigorre';
 const description =
@@ -255,6 +256,8 @@ const badges = [
           </a>
           <a
             href={u('/formations-reiki')}
+            data-track={TRACK.formation}
+            data-track-label="accueil-hero"
             class="inline-flex min-h-12 items-center justify-center rounded-full border border-forest/25 bg-white px-6 py-3 text-sm font-medium text-forest transition hover:bg-sand"
           >
             Découvrir les formations Reiki
@@ -582,6 +585,8 @@ const badges = [
         </div>
         <a
           href={u('/formations-reiki')}
+          data-track={TRACK.formation}
+          data-track-label="accueil-formations"
           class="inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest hover:bg-white"
         >
           Voir le programme des formations
