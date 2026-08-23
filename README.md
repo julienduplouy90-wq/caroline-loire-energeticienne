@@ -35,8 +35,12 @@ Pour relancer un déploiement sans modifier le code : onglet **Actions** du dép
 
 ### Première mise en place (à faire une fois)
 
-1. **hPanel Hostinger** → le site web de Caroline (domaine temporaire `xxx.hostingersite.com`)
-   → noter l'URL exacte et la coller dans `site` (`astro.config.mjs`).
+1. **hPanel Hostinger** → Sites web. Attention : `caroline-loire-energy-540040.hostingersite.com`
+   est un site **Hostinger Horizons** (constructeur IA, l'ancienne maquette dont ce site est
+   issu) : il n'a ni FTP ni `public_html`, on ne peut pas y déposer le build Astro. Il faut un
+   site de type **PHP/HTML** (« Ajouter un site web » → site vide, ou l'un des sites vides déjà
+   créés dans le plan Unlimited) → noter son domaine temporaire `xxx.hostingersite.com` et le
+   coller dans `site` (`astro.config.mjs`).
 2. hPanel → Fichiers → **Comptes FTP** → créer un compte dédié, noter l'hôte, l'identifiant et
    le mot de passe.
 3. GitHub → dépôt → Settings → Secrets and variables → Actions → **New repository secret** :
