@@ -1,9 +1,13 @@
 # Caroline Loire — énergéticienne à Bagnères-de-Bigorre
 
 Site vitrine statique construit avec [Astro](https://astro.build) et Tailwind CSS 4,
-hébergé sur GitHub Pages.
+hébergé chez Hostinger sur le domaine temporaire **https://purple-raven-386267.hostingersite.com**
+(site PHP/HTML créé le 23/08/2026 dans le plan Unlimited).
 
-**En ligne :** https://julienduplouy90-wq.github.io/caroline-loire-energeticienne/
+> ⚠ Le domaine historique `carolineloire-energeticienne.fr` et son site WordPress (o2switch)
+> **ne doivent pas être touchés** : ni DNS, ni redirection, ni suppression. Ce dépôt n'y fait
+> jamais référence comme cible. Tant que ce site vit sur un domaine temporaire, il est en
+> `noindex` (`INDEXABLE = false` dans `src/data/site.ts`, `robots.txt` en Disallow).
 
 ## Installation
 
@@ -17,21 +21,50 @@ npm install
 npm run dev
 ```
 
-Le site est servi sur http://localhost:4321/caroline-loire-energeticienne (le chemin
-`/caroline-loire-energeticienne` est la « base » du site de projet GitHub Pages).
+Le site est servi sur http://localhost:4321.
 
-## Mise en ligne
+## Mise en ligne (Hostinger)
 
-Le déploiement est **automatique** : chaque `push` sur `main` déclenche le workflow
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et le
-publie sur GitHub Pages. Aucune commande manuelle n'est nécessaire.
+Le déploiement est **automatique**, en deux temps, sans aucun mot de passe :
 
-Pour relancer un déploiement sans modifier le code : onglet **Actions** du dépôt →
-*Déployer sur GitHub Pages* → **Run workflow**.
+1. chaque `push` sur `main` déclenche le workflow
+   [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et pousse
+   le contenu de `dist/` sur la branche **`hostinger`** du dépôt ;
+2. Hostinger (hPanel → site → Avancé → **Git**) suit cette branche et la déploie dans
+   `public_html` dès qu'il reçoit le webhook GitHub.
+
+Pour relancer une publication sans modifier le code : onglet **Actions** → *Construire et
+publier pour Hostinger* → **Run workflow**. Pour redéployer côté Hostinger : hPanel → Avancé →
+Git → **Déployer**.
+
+### Mise en place (faite le 23/08/2026)
+
+- Site PHP/HTML `purple-raven-386267.hostingersite.com` créé dans hPanel (le site Horizons
+  `caroline-loire-energy-540040` n'a pas de `public_html` et n'est pas utilisable pour Astro ;
+  il est laissé tel quel).
+- hPanel → Avancé → Git : dépôt `julienduplouy90-wq/caroline-loire-energeticienne`, branche
+  `hostinger`, répertoire `public_html`.
+- Webhook Hostinger ajouté dans GitHub (Settings → Webhooks) : chaque push sur `hostinger`
+  redéploie.
+- Si le dépôt passe en **privé** : hPanel → Git → copier la clé SSH → GitHub → Settings →
+  Deploy keys (lecture seule), puis remplacer l'URL HTTPS par l'URL SSH dans hPanel.
+
+Le fichier [`public/.htaccess`](public/.htaccess) force HTTPS, sert `404.html` et règle le cache.
+Il ne contient **aucune** redirection de domaine.
+
+### Le jour où un vrai domaine est décidé (pas maintenant)
+
+Ce sera un choix explicite de Caroline et Julien, jamais automatique : `site` dans
+`astro.config.mjs`, `INDEXABLE = true`, `robots.txt` en `Allow: /` + ligne `Sitemap`, puis
+sitemap dans Google Search Console. Si ce domaine devait un jour être `carolineloire-energeticienne.fr`,
+les anciennes adresses WordPress (`/energetique/`, `/enseignement/`, boutique…) devraient être
+redirigées en 301 — liste dans l'historique git de `public/.htaccess` (commit « Héberger le site
+sur carolineloire-energeticienne.fr »).
 
 ## Structure
 
 ```
+public/.htaccess      HTTPS, 404, cache (aucune redirection de domaine)
 public/images/        Photos et logos (aucun CDN externe)
 src/data/site.ts      Coordonnées, navigation, tarifs, helpers d'URL
 src/data/resources.ts Contenu des 8 pages « Ressources »
@@ -42,7 +75,7 @@ src/layouts/          Gabarit de page (SEO, en-tête, pied de page)
 src/components/       En-tête, pied de page, héros, bandeau CTA, FAQ, note Google
 src/pages/            Une page = un fichier ; `[slug].astro` génère les ressources
 src/styles/global.css Charte graphique (tokens Tailwind `@theme`)
-.github/workflows/    Déploiement automatique sur GitHub Pages
+.github/workflows/    Construction + publication de dist/ sur la branche hostinger
 ```
 
 ## Modifier le contenu

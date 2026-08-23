@@ -1,15 +1,30 @@
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-/** Lien interne : `u('/tarifs')` → `/caroline-loire-energeticienne/tarifs`. */
+/**
+ * Lien interne : `u('/tarifs')` → `/tarifs/` (barre oblique finale, cf.
+ * `trailingSlash: 'always'` dans astro.config.mjs). Les ancres sont
+ * conservées : `u('/tarifs#reiki')` → `/tarifs/#reiki`.
+ */
 export function u(path = '/'): string {
-  const clean = path.replace(/^\/+|\/+$/g, '');
-  return clean ? `${BASE}/${clean}` : `${BASE}/`;
+  const [p, hash] = path.split('#');
+  const clean = p.replace(/^\/+|\/+$/g, '');
+  const href = clean ? `${BASE}/${clean}/` : `${BASE}/`;
+  return hash ? `${href}#${hash}` : href;
 }
 
 /** Fichier de `public/` : `asset('images/logo.png')`. */
 export function asset(path: string): string {
   return `${BASE}/${path.replace(/^\/+/, '')}`;
 }
+
+/**
+ * Indexation par Google. `false` tant que le site est servi sur le domaine
+ * temporaire Hostinger : l'ancien WordPress (carolineloire-energeticienne.fr)
+ * reste le site de référence et ne doit pas être concurrencé par un doublon.
+ * Passer à `true` (et mettre à jour `site` dans astro.config.mjs + robots.txt)
+ * le jour où ce site prend un vrai domaine.
+ */
+export const INDEXABLE = false;
 
 export const SITE = {
   name: 'Caroline Loire',
