@@ -18,13 +18,12 @@ export function asset(path: string): string {
 }
 
 /**
- * Indexation par Google. `false` tant que le site est servi sur le domaine
- * temporaire Hostinger : l'ancien WordPress (carolineloire-energeticienne.fr)
- * reste le site de référence et ne doit pas être concurrencé par un doublon.
- * Passer à `true` (et mettre à jour `site` dans astro.config.mjs + robots.txt)
- * le jour où ce site prend un vrai domaine.
+ * Indexation par Google. `true` : le site est servi sur le domaine principal
+ * carolineloire-energeticienne.fr et remplace l'ancien WordPress.
+ * Repasser à `false` (+ robots.txt en Disallow) si le site devait revenir sur
+ * un domaine temporaire.
  */
-export const INDEXABLE = false;
+export const INDEXABLE = true;
 
 export const SITE = {
   name: 'Caroline Loire',
