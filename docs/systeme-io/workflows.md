@@ -13,23 +13,26 @@ minuscules avec tirets.
 
 ## Tags
 
-| Tag                        | Posé par                                  | Sens                                                   |
-| -------------------------- | ----------------------------------------- | ------------------------------------------------------ |
-| `rdv-reserve`              | W1 (déclencheur réservation)              | A réservé une séance (retiré en fin de W2)             |
-| `seance-realisee`          | **Caroline, à la main** après la séance   | Séance effectuée → lance W2 puis W3                    |
-| `avis-demande`             | W3                                        | A reçu la demande d'avis (ne jamais la renvoyer)       |
-| `client-actif`             | W3 (fin)                                  | Client ayant réalisé ≥ 1 séance                        |
-| `prospect-contact`         | Formulaire de contact                     | A écrit sans réserver → lance W4                       |
-| `relance-terminee`         | W4 (fin)                                  | Fin de la séquence prospect (jamais relancé à nouveau) |
-| `interet-reiki`            | Formulaire formations                     | Intérêt général Reiki → lance W5                       |
-| `interet-reiki-1` / `-2` / `-3` / `-4` | Formulaire formations (champ « degré ») | Degré visé                                   |
-| `inscrit-reiki-1` / `-2` / `-3` / `-4` | Paiement / inscription (page reiki-N) ou Caroline | Inscrit à la formation              |
-| `formation-realisee`       | Caroline, à la main                       | A suivi la formation (email E5.5)                      |
-| `consent-nouvelles`        | Case facultative des formulaires          | Accepte les emails commerciaux (newsletter, dates)     |
-| `ne-plus-relancer`         | Caroline, à la main                       | Stop toute relance (sert de condition de sortie)       |
+⚠ **L'offre gratuite Systeme.io est limitée à 10 tags** (vérifié le 23/08/2026 : « Votre plan ne
+vous permet pas de créer plus de tags »). Les 10 tags ci-dessous sont **créés** dans le compte.
+Le degré Reiki souhaité ne fait donc pas l'objet d'un tag : il se note dans la fiche contact ou
+dans le pipeline.
 
-Tags **de segmentation par offre** (posés automatiquement par le calendrier si possible, sinon
-par Caroline) : `seance-energetique`, `seance-chamanisme`, `seance-enfant`.
+| Tag                 | Posé par                                  | Sens                                                   |
+| ------------------- | ----------------------------------------- | ------------------------------------------------------ |
+| `rdv-reserve`       | W1 (déclencheur réservation)              | A réservé une séance (retiré en fin de W2)             |
+| `seance-realisee`   | **Caroline, à la main** après la séance   | Séance effectuée → lance W2 puis W3                    |
+| `avis-demande`      | W3                                        | A reçu la demande d'avis (ne jamais la renvoyer)       |
+| `client-actif`      | W3 (fin)                                  | Client ayant réalisé ≥ 1 séance                        |
+| `prospect-contact`  | Formulaire de contact                     | A écrit sans réserver → lance W4                       |
+| `relance-terminee`  | W4 (fin)                                  | Fin de la séquence prospect (jamais relancé à nouveau) |
+| `interet-reiki`     | Formulaire `/formations-reiki` (**règle en place**) | Intérêt formation → lance W5                 |
+| `inscrit-reiki`     | Caroline (ou paiement)                    | Inscrit à une formation, degré noté dans la fiche      |
+| `consent-nouvelles` | Case facultative des formulaires          | Accepte les emails commerciaux (newsletter, dates)     |
+| `ne-plus-relancer`  | Caroline, à la main                       | Stop toute relance (condition de sortie)               |
+
+Si le compte passe à une offre payante : ajouter `interet-reiki-1/2/3`, `inscrit-reiki-1/2/3`,
+`formation-realisee`, `seance-energetique`, `seance-chamanisme`, `seance-enfant`.
 
 ---
 
@@ -169,23 +172,23 @@ E4.2 et E4.3 sont des emails **commerciaux** : ils partent uniquement si le cont
 
 ```text
 Nom          W5 – Intérêt Reiki
-Déclencheur  Tag ajouté : interet-reiki   (formulaire de la page /formations-reiki ; le champ « degré » pose aussi interet-reiki-N)
+Déclencheur  Tag ajouté : interet-reiki   (formulaire de la page /formations-reiki — règle déjà en place)
 Conditions   pas de tag  ne-plus-relancer
 Actions
   1. Envoyer l'email E5.1 Programme et modalités des formations   (immédiat ; contient les 3 degrés, tarifs, format, prochaines dates si connues, CTA inscription → page reiki-N)
   2. Attendre        5 jours
-  3. Condition       tag inscrit-reiki-* présent ?  OUI → aller à l'étape 6
+  3. Condition       tag inscrit-reiki présent ?  OUI → aller à l'étape 6
   4. Envoyer l'email E5.2 Questions fréquentes avant de se lancer   (si consent-nouvelles)
   5. Fin (Caroline prend le relais par téléphone / email ; pas de 3e relance)
 
-  Branche inscription (déclencheur séparé possible : « Tag ajouté : inscrit-reiki-1/2/3 » ou « Achat du produit Reiki N »)
+  Branche inscription (déclencheur séparé possible : « Tag ajouté : inscrit-reiki » ou « Achat du produit Reiki N »)
   6. Envoyer l'email E5.3 Confirmation d'inscription             (immédiat après paiement / validation)
   7. Attendre        jusqu'à 3 jours avant la date de formation   (date = champ personnalisé « date_formation » ou workflow lancé à la main par Caroline)
   8. Envoyer l'email E5.4 Rappel avant la formation               (lieu, horaires, quoi apporter)
-  9. Attendre        2 jours après la formation (ou déclencheur tag formation-realisee)
+  9. Attendre        2 jours après la formation (lancé à la main par Caroline)
  10. Envoyer l'email E5.5 Après la formation                      (ressources, pratique des 21 jours, degré suivant sans pression)
 Délais       immédiat · J+5 · J-3 · J+2
-Tags         + interet-reiki(-N) · + inscrit-reiki-N · + formation-realisee
+Tags         + interet-reiki · + inscrit-reiki
 Emails       E5.1, E5.2, E5.3, E5.4, E5.5
 ```
 
