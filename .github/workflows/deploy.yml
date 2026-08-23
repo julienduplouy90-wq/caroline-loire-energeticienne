@@ -1,41 +1,47 @@
-name: Déployer sur GitHub Pages
+name: Construire et déployer sur Hostinger
 
 on:
   push:
     branches: [main]
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: pages
+  group: deploiement
   cancel-in-progress: true
 
 jobs:
-  build:
+  deployer:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 24
           cache: npm
+
       - run: npm ci
       - run: npm run build
-      - uses: actions/configure-pages@v5
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
 
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      # Secrets à créer dans le dépôt (Settings → Secrets and variables → Actions) :
+      #   FTP_SERVEUR      hôte FTP Hostinger (ex. ftp.carolineloire-energeticienne.fr ou IP)
+      #   FTP_UTILISATEUR  compte FTP créé dans hPanel → Fichiers → Comptes FTP
+      #   FTP_MOTDEPASSE   son mot de passe
+      # Variable facultative : FTP_DOSSIER (défaut /public_html/).
+      - name: Envoi FTPS vers public_html
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: ${{ secrets.FTP_SERVEUR }}
+          username: ${{ secrets.FTP_UTILISATEUR }}
+          password: ${{ secrets.FTP_MOTDEPASSE }}
+          protocol: ftps
+          port: 21
+          local-dir: ./dist/
+          server-dir: ${{ vars.FTP_DOSSIER || '/public_html/' }}
+          # Ne supprime pas ce qui n'appartient pas au site (fichiers de
+          # vérification Google, dossiers créés par Hostinger, etc.).
+          dangerous-clean-slate: false
+          exclude: |
+            **/.git*
+            **/.git*/**
+            **/node_modules/**

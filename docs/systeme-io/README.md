@@ -241,17 +241,14 @@ Alternative sans cookie ni bannière : Plausible / Umami (script léger) — les
 
 ## 8. Configuration DNS
 
-**Rien à faire pour démarrer** : `rdv-carolineloire-energeticienne.systeme.io` est un
-sous-domaine fourni par Systeme.io, déjà « Prêt ». Aucune modification DNS n'a été faite.
+**Rien à faire côté Systeme.io pour démarrer** : `rdv-carolineloire-energeticienne.systeme.io`
+est un sous-domaine fourni par Systeme.io, déjà « Prêt ». Aucune modification DNS n'a été faite.
 
-À vérifier / décider plus tard :
-
-1. **Domaine principal.** `carolineloire-energeticienne.fr` pointe toujours sur o2switch
-   (WordPress). Pour mettre ce site Astro sur Hostinger : chez Hostinger, ajouter le domaine,
-   puis chez le registrar changer les enregistrements A / CNAME (ou les serveurs de noms) vers
-   Hostinger. Avant cela : `astro.config.mjs` → `site: 'https://carolineloire-energeticienne.fr'`,
-   `base: '/'`, et mettre à jour `public/robots.txt` (URL du sitemap). **Non fait** : cela
-   casserait la version GitHub Pages actuelle.
+1. **Domaine principal → Hostinger.** Le site est prêt (`site` = domaine, `base: '/'`, URLs avec
+   barre oblique finale, `.htaccess` avec HTTPS + www → apex + 301 des anciennes adresses
+   WordPress, workflow FTPS). Il reste : compte FTP Hostinger + secrets GitHub, SSL, puis
+   bascule DNS du registrar (aujourd'hui o2switch, IP 109.234.161.194). Pas à pas dans le
+   README du dépôt, section « Mise en ligne (Hostinger) ».
 2. **Sous-domaine personnalisé (optionnel, plus « marque »)** : `rdv.carolineloire-energeticienne.fr`.
    Dans Systeme.io : Paramètres → Domaines personnalisés → Ajouter → Systeme.io indique
    l'enregistrement **CNAME** à créer chez le registrar (`rdv` → cible fournie par Systeme.io).
@@ -377,9 +374,12 @@ Tests de bout en bout
 [ ] demande Reiki → tag interet-reiki-1 + email récapitulatif
 [ ] supprimer le contact test
 
-Domaine / hébergement (décisions de Julien)
-[ ] migration du domaine principal o2switch → Hostinger (astro.config base '/', robots.txt, DNS)
-[ ] mentions légales : hébergeur Hostinger, SIRET, statut
+Domaine / hébergement
+[x] site configuré pour carolineloire-energeticienne.fr chez Hostinger (config, .htaccess, workflow, mentions légales)
+[ ] hPanel : ajouter le domaine, compte FTP, SSL ; GitHub : secrets FTP_SERVEUR / FTP_UTILISATEUR / FTP_MOTDEPASSE
+[ ] DNS du registrar → Hostinger (reporter les MX si des e-mails existent sur le domaine)
+[ ] Search Console : nouveau sitemap, vérifier les 301 des anciennes URLs
+[ ] mentions légales : SIRET, statut
 [ ] sous-domaine rdv.carolineloire-energeticienne.fr (CNAME) — optionnel, après migration
 [ ] désactiver Amelia / WooCommerce sur l'ancien WordPress seulement après bascule complète
 ```

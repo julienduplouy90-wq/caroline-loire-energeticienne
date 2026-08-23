@@ -4,7 +4,8 @@ Site vitrine de **Caroline Loire**, énergéticienne, praticienne en chamanisme 
 enseignante à Bagnères-de-Bigorre (Hautes-Pyrénées).
 
 Reprise de l'ancien site Hostinger Horizons (React + PocketBase) en site **statique Astro**,
-hébergé sur **GitHub Pages**.
+hébergé chez **Hostinger** sur `carolineloire-energeticienne.fr` (remplace le WordPress o2switch
+historique).
 
 ## Stack
 
@@ -12,8 +13,8 @@ hébergé sur **GitHub Pages**.
 | -------------- | ----------------------------------------------------------------------- |
 | Framework      | Astro 7 (sortie statique, zéro JS par défaut)                            |
 | Styles         | Tailwind CSS 4 via `@tailwindcss/vite`, thème dans `src/styles/global.css` |
-| Hébergement    | GitHub Pages, déploiement automatique par GitHub Actions à chaque push sur `main` |
-| Base URL       | `/caroline-loire-energeticienne` (site de projet GitHub Pages)            |
+| Hébergement    | Hostinger (`public_html`), envoi FTPS par GitHub Actions à chaque push sur `main` (secrets `FTP_*`) |
+| URLs           | Racine du domaine, **barre oblique finale** (`/tarifs/`) comme l'ancien WordPress ; `.htaccess` : HTTPS, www → apex, 301 des anciennes adresses |
 | Formulaire     | Embed Systeme.io si `SYSTEME_CONTACT_FORM_EMBED` est renseigné ; sinon statique (`mailto:` / Formspree via `SITE.formEndpoint`) |
 | Conversion     | Systeme.io (calendrier, CRM, emails) — config `src/data/systeme.ts`, doc `docs/systeme-io/` |
 | Mesure         | Aucun outil chargé par défaut ; événements `clic_prendre_rdv`, `clic_reiki`, `clic_formation`, `formulaire_envoye` émis via `data-track` / `window.clTrack` (GA4 optionnel dans `src/data/analytics.ts`) |
@@ -21,13 +22,14 @@ hébergé sur **GitHub Pages**.
 ## Commandes
 
 ```bash
-npm run dev      # serveur local (http://localhost:4321/caroline-loire-energeticienne)
+npm run dev      # serveur local (http://localhost:4321)
 npm run build    # génère dist/
 npm run preview  # prévisualise dist/
 ```
 
 La mise en ligne est automatique : tout push sur `main` déclenche
-`.github/workflows/deploy.yml`, qui construit le site et le publie sur GitHub Pages.
+`.github/workflows/deploy.yml`, qui construit le site et l'envoie en FTPS chez Hostinger.
+Jamais de fichier modifié à la main sur le serveur : tout passe par le dépôt.
 
 ## Charte graphique
 
@@ -65,8 +67,11 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 
 ## Conventions techniques
 
-- **Liens internes** : toujours `u('/chemin')` depuis `src/data/site.ts` — jamais de `href` brut,
-  sinon la base GitHub Pages saute. Pour les fichiers de `public/`, utiliser `asset('...')`.
+- **Liens internes** : toujours `u('/chemin')` depuis `src/data/site.ts` (ajoute la barre oblique
+  finale attendue par `trailingSlash: 'always'`) — jamais de `href` brut. Pour les fichiers de
+  `public/`, utiliser `asset('...')`.
+- **Anciennes URLs WordPress** : toute page renommée doit recevoir une ligne `Redirect 301` dans
+  `public/.htaccess` (les URLs déjà indexées par Google ne doivent jamais tomber en 404).
 - **Données centralisées** : coordonnées, navigation et tarifs dans `src/data/site.ts` ;
   contenu des pages Ressources dans `src/data/resources.ts` ; URLs et réglages Systeme.io dans
   `src/data/systeme.ts` ; identifiants de mesure dans `src/data/analytics.ts`. Modifier la
@@ -83,11 +88,13 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 
 - Une modification = une branche `claude/...`, jamais de commit direct sur `main`.
 - `main` est la branche de production : tout ce qui y est fusionné part en ligne automatiquement.
-- Aucun secret dans le dépôt (celui-ci est public — contrainte de GitHub Pages en offre gratuite).
+- Aucun secret dans le dépôt : les identifiants FTP vivent dans les secrets GitHub Actions.
+  Le dépôt peut repasser en **privé** dès que GitHub Pages n'est plus utilisé (règle : un dépôt
+  privé par cliente).
 
 ## À compléter avant une mise en ligne définitive
 
 - Statut juridique et numéro SIRET dans les mentions légales.
 - Horaires d'ouverture (non communiqués à ce jour).
-- Nom de domaine personnalisé : renseigner `site` dans `astro.config.mjs`, repasser `base` à `/`,
-  et ajouter un fichier `CNAME` dans `public/`.
+- Hostinger : compte FTP + secrets GitHub `FTP_SERVEUR` / `FTP_UTILISATEUR` / `FTP_MOTDEPASSE`,
+  puis bascule DNS du domaine (actuellement o2switch) — voir README, section Hébergement.

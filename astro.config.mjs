@@ -3,14 +3,14 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Site publié sur GitHub Pages (projet) :
-// https://julienduplouy90-wq.github.io/caroline-loire-energeticienne/
-// Pour un nom de domaine personnalisé plus tard : mettre `site` sur le domaine
-// et repasser `base` à '/'.
+// Site publié à la racine du domaine de Caroline, hébergé chez Hostinger
+// (envoi FTPS de `dist/` par .github/workflows/deploy.yml).
+// URLs avec barre oblique finale (/tarifs/), comme l'ancien WordPress :
+// les adresses déjà indexées par Google restent valables sans redirection.
 export default defineConfig({
-  site: 'https://julienduplouy90-wq.github.io',
-  base: '/caroline-loire-energeticienne',
-  trailingSlash: 'ignore',
+  site: 'https://carolineloire-energeticienne.fr',
+  base: '/',
+  trailingSlash: 'always',
   integrations: [sitemap()],
   vite: {
     plugins: [tailwindcss()],

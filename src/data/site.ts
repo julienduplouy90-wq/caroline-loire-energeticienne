@@ -1,9 +1,15 @@
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
-/** Lien interne : `u('/tarifs')` → `/caroline-loire-energeticienne/tarifs`. */
+/**
+ * Lien interne : `u('/tarifs')` → `/tarifs/` (barre oblique finale, cf.
+ * `trailingSlash: 'always'` dans astro.config.mjs). Les ancres sont
+ * conservées : `u('/tarifs#reiki')` → `/tarifs/#reiki`.
+ */
 export function u(path = '/'): string {
-  const clean = path.replace(/^\/+|\/+$/g, '');
-  return clean ? `${BASE}/${clean}` : `${BASE}/`;
+  const [p, hash] = path.split('#');
+  const clean = p.replace(/^\/+|\/+$/g, '');
+  const href = clean ? `${BASE}/${clean}/` : `${BASE}/`;
+  return hash ? `${href}#${hash}` : href;
 }
 
 /** Fichier de `public/` : `asset('images/logo.png')`. */

@@ -1,9 +1,9 @@
 # Caroline Loire — énergéticienne à Bagnères-de-Bigorre
 
 Site vitrine statique construit avec [Astro](https://astro.build) et Tailwind CSS 4,
-hébergé sur GitHub Pages.
+hébergé chez Hostinger.
 
-**En ligne :** https://julienduplouy90-wq.github.io/caroline-loire-energeticienne/
+**Domaine :** https://carolineloire-energeticienne.fr (bascule DNS à faire, voir plus bas)
 
 ## Installation
 
@@ -17,21 +17,52 @@ npm install
 npm run dev
 ```
 
-Le site est servi sur http://localhost:4321/caroline-loire-energeticienne (le chemin
-`/caroline-loire-energeticienne` est la « base » du site de projet GitHub Pages).
+Le site est servi sur http://localhost:4321.
 
-## Mise en ligne
+## Mise en ligne (Hostinger)
 
 Le déploiement est **automatique** : chaque `push` sur `main` déclenche le workflow
-[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et le
-publie sur GitHub Pages. Aucune commande manuelle n'est nécessaire.
+[`.github/workflows/deploy.yml`](.github/workflows/deploy.yml), qui construit le site et envoie
+`dist/` en FTPS dans `public_html` chez Hostinger. Aucune commande manuelle, aucun fichier
+modifié à la main sur le serveur.
 
 Pour relancer un déploiement sans modifier le code : onglet **Actions** du dépôt →
-*Déployer sur GitHub Pages* → **Run workflow**.
+*Construire et déployer sur Hostinger* → **Run workflow**.
+
+### Première mise en place (à faire une fois)
+
+1. **hPanel Hostinger** → Sites web → Ajouter un site → « Domaine existant »
+   `carolineloire-energeticienne.fr` (hébergement de Caroline, ou plan Elyo avec le domaine
+   rattaché).
+2. hPanel → Fichiers → **Comptes FTP** → créer un compte dédié, noter l'hôte, l'identifiant et
+   le mot de passe.
+3. GitHub → dépôt → Settings → Secrets and variables → Actions → **New repository secret** :
+   `FTP_SERVEUR`, `FTP_UTILISATEUR`, `FTP_MOTDEPASSE`. (Variable facultative `FTP_DOSSIER` si le
+   site n'est pas dans `/public_html/`.)
+4. Actions → lancer le workflow à la main → vérifier le site sur l'URL temporaire Hostinger
+   (ou via le fichier `hosts` local) : pages, images, formulaire, `/tarifs` → `/tarifs/`.
+5. hPanel → Sécurité → **SSL** : activer le certificat gratuit (Let's Encrypt) pour le domaine et
+   `www`.
+6. **DNS** (chez le registrar actuel du domaine — aujourd'hui le site tourne chez o2switch, IP
+   `109.234.161.194`) : soit pointer les serveurs de noms vers Hostinger (`ns1.dns-parking.com`,
+   `ns2.dns-parking.com`), soit garder le registrar et changer l'enregistrement **A** de `@` et
+   le **CNAME** de `www` vers les valeurs indiquées dans hPanel. Attention : si des **e-mails**
+   sont rattachés au domaine, reporter les enregistrements MX / SPF avant de changer les serveurs
+   de noms, sinon les mails s'arrêtent.
+7. Après propagation (quelques heures) : tester https://carolineloire-energeticienne.fr,
+   la version `www` (doit rediriger sans www), une ancienne URL WordPress
+   (`/energetique/` → `/soins-energetiques/`), puis soumettre le nouveau sitemap dans Google
+   Search Console (`https://carolineloire-energeticienne.fr/sitemap-index.xml`).
+8. Seulement ensuite : résilier / couper l'ancien WordPress o2switch (Amelia, WooCommerce).
+
+Le fichier [`public/.htaccess`](public/.htaccess) force HTTPS et le domaine sans `www`, redirige
+en 301 toutes les anciennes adresses WordPress (boutique, `/energetique/`, `/enseignement/`…) et
+sert `404.html`.
 
 ## Structure
 
 ```
+public/.htaccess      HTTPS, domaine sans www, redirections 301 de l'ancien WordPress, 404
 public/images/        Photos et logos (aucun CDN externe)
 src/data/site.ts      Coordonnées, navigation, tarifs, helpers d'URL
 src/data/resources.ts Contenu des 8 pages « Ressources »
@@ -42,7 +73,7 @@ src/layouts/          Gabarit de page (SEO, en-tête, pied de page)
 src/components/       En-tête, pied de page, héros, bandeau CTA, FAQ, note Google
 src/pages/            Une page = un fichier ; `[slug].astro` génère les ressources
 src/styles/global.css Charte graphique (tokens Tailwind `@theme`)
-.github/workflows/    Déploiement automatique sur GitHub Pages
+.github/workflows/    Construction + envoi FTPS vers Hostinger
 ```
 
 ## Modifier le contenu
