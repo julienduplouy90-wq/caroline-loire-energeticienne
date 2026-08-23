@@ -66,9 +66,9 @@ hébergé chez o2switch**, pas sur Hostinger ni sur ce dépôt :
   **aucune disponibilité** renseignée. À reprendre (§ 9).
 - Aucun tunnel, aucun site web, aucun workflow. 1 contact. Passerelle de paiement : aucune
   connectée a priori (page Stripe non connectée visible).
-- **Offre gratuite** : limite observée de **10 tags** (les workflows / règles sont aussi limités
-  sur cette offre — à vérifier dans Paramètres → Mon plan avant de créer les 5 workflows ; un
-  passage à l'offre Startup lève ces limites).
+- **Offre Startup (17 €/mois)** sur l'espace de Caroline : 5 000 contacts, 10 tunnels, **10 tags
+  (tous utilisés)**, **5 workflows**, 10 règles d'automatisation, 10 campagnes email, 5 domaines.
+  Les 5 workflows prévus rentrent pile ; au-delà, offre Webinaire (47 €/mois).
 
 ### Fait le 23/08/2026 dans Systeme.io (espace « Caroline Loire »)
 
@@ -367,7 +367,7 @@ Pages (tunnel « Site — conversion »)
 [ ] appliquer charte.md (logo, couleurs, polices, boutons)
 
 CRM
-[x] créer les tags (10 — limite de l'offre gratuite)
+[x] créer les tags (10 — limite de l'offre Startup)
 [ ] créer les 2 pipelines (workflows.md § Pipelines)
 
 Workflows

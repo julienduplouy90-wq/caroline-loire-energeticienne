@@ -13,8 +13,9 @@ minuscules avec tirets.
 
 ## Tags
 
-⚠ **L'offre gratuite Systeme.io est limitée à 10 tags** (vérifié le 23/08/2026 : « Votre plan ne
-vous permet pas de créer plus de tags »). Les 10 tags ci-dessous sont **créés** dans le compte.
+⚠ **L'espace de Caroline est sur l'offre Startup (17 €/mois) : 10 tags maximum, 5 workflows,
+10 règles d'automatisation** (vérifié le 23/08/2026 dans Paramètres → Mon plan). Les 10 tags
+ci-dessous sont **créés** ; les 5 workflows prévus tiennent juste dans la limite.
 Le degré Reiki souhaité ne fait donc pas l'objet d'un tag : il se note dans la fiche contact ou
 dans le pipeline.
 
@@ -31,7 +32,7 @@ dans le pipeline.
 | `consent-nouvelles` | Case facultative des formulaires          | Accepte les emails commerciaux (newsletter, dates)     |
 | `ne-plus-relancer`  | Caroline, à la main                       | Stop toute relance (condition de sortie)               |
 
-Si le compte passe à une offre payante : ajouter `interet-reiki-1/2/3`, `inscrit-reiki-1/2/3`,
+Si l'espace passe à l'offre Webinaire (47 €/mois : 100 tags, 20 workflows) : ajouter `interet-reiki-1/2/3`, `inscrit-reiki-1/2/3`,
 `formation-realisee`, `seance-energetique`, `seance-chamanisme`, `seance-enfant`.
 
 ---
