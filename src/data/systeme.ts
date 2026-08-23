@@ -35,13 +35,13 @@ export const SYSTEME_DOMAIN = 'https://rdv-carolineloire-energeticienne.systeme.
  */
 export const SYSTEME_URLS = {
   /** Page de réservation générale (choix du type de séance). */
-  booking: '',
+  booking: 'https://rdv-carolineloire-energeticienne.systeme.io/reservation',
   /** Réservation directe d'un soin énergétique. */
   energeticSession: '',
   /** Réservation directe d'une séance chamanisme et énergies. */
   shamanicSession: '',
   /** Page d'information / demande de programme pour les formations Reiki. */
-  reikiInfo: '',
+  reikiInfo: 'https://rdv-carolineloire-energeticienne.systeme.io/formations-reiki',
   reiki1: '',
   reiki2: '',
   reiki3: '',

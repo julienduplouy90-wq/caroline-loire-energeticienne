@@ -66,6 +66,21 @@ hébergé chez o2switch**, pas sur Hostinger ni sur ce dépôt :
   **aucune disponibilité** renseignée. À reprendre (§ 9).
 - Aucun tunnel, aucun site web, aucun workflow. 1 contact. Passerelle de paiement : aucune
   connectée a priori (page Stripe non connectée visible).
+- **Offre gratuite** : limite observée de **10 tags** (les workflows / règles sont aussi limités
+  sur cette offre — à vérifier dans Paramètres → Mon plan avant de créer les 5 workflows ; un
+  passage à l'offre Startup lève ces limites).
+
+### Fait le 23/08/2026 dans Systeme.io (espace « Caroline Loire »)
+
+- Tunnel **« Site — Réservation et formations »** (domaine `rdv-carolineloire-energeticienne.systeme.io`).
+- Page **`/reservation`** (type Page de capture) : titre, élément Calendrier relié à l'événement
+  « Séance énergétique » (prénom, nom, e-mail, téléphone), message de confirmation, Poppins /
+  Inter, couleur `#4DA0A8`, SEO + **noindex**.
+- Page **`/formations-reiki`** (Page de capture) : titre, formulaire prénom / nom / e-mail /
+  téléphone + case consentement, bouton « Recevoir le programme et les dates », **règle :
+  ajouter le tag `interet-reiki`**, message de confirmation, noindex.
+- **10 tags** créés (voir `workflows.md`).
+- Les deux URLs sont renseignées dans `src/data/systeme.ts` (`booking`, `reikiInfo`).
 
 ---
 
@@ -342,8 +357,9 @@ Calendrier
 [ ] rappel intégré du calendrier : 24 h avant (ou le laisser au workflow 1, pas les deux)
 
 Pages (tunnel « Site — conversion »)
-[ ] /reservation (élément Calendrier) + page de remerciement
-[ ] /formations-reiki (formulaire + tag interet-reiki + degré) + page de remerciement
+[x] /reservation (élément Calendrier, confirmation intégrée)
+[x] /formations-reiki (formulaire + tag interet-reiki, confirmation intégrée)
+[ ] ajouter à ces 2 pages : logo, texte d'intro, tarifs, lien « Retour au site », lien politique de confidentialité
 [ ] /reiki-1, /reiki-2, /reiki-3 (inscription / paiement) — optionnel au démarrage
 [ ] /seance-energetique, /seance-chamanisme — optionnel
 [ ] formulaire de contact (embed) → coller dans SYSTEME_CONTACT_FORM_EMBED
@@ -351,7 +367,7 @@ Pages (tunnel « Site — conversion »)
 [ ] appliquer charte.md (logo, couleurs, polices, boutons)
 
 CRM
-[ ] créer les tags (workflows.md § Tags)
+[x] créer les tags (10 — limite de l'offre gratuite)
 [ ] créer les 2 pipelines (workflows.md § Pipelines)
 
 Workflows
@@ -363,7 +379,7 @@ Workflows
 [ ] créer les emails (emails.md) et relire avec Caroline
 
 Site
-[ ] coller les URLs publiées dans src/data/systeme.ts (SYSTEME_URLS) — d'abord booking et reikiInfo
+[x] booking et reikiInfo collés dans src/data/systeme.ts
 [ ] optionnel : GOOGLE_REVIEW_WRITE_URL, ANALYTICS.gaMeasurementId (avec bannière) 
 [ ] build, PR, merge → déploiement
 
