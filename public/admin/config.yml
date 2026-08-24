@@ -1,0 +1,86 @@
+# Sveltia CMS — contenu de base du site Caroline Loire.
+#
+# Chaque « Publier » fait un commit sur GitHub ; l'action « Construire et
+# publier pour Hostinger » reconstruit le site et le met en ligne. Compter
+# deux à trois minutes entre la publication et la mise à jour du site.
+#
+# Connexion : « Se connecter avec un jeton d'accès » (jeton GitHub à créer
+# une fois), ou bouton GitHub en un clic si l'authentificateur de l'agence
+# est déployé (renseigner alors base_url ci-dessous).
+
+backend:
+  name: github
+  repo: julienduplouy90-wq/caroline-loire-energeticienne
+  branch: main
+  # base_url: https://authentificateur-de-l-agence.workers.dev
+  commit_messages:
+    create: 'Ajoute {{collection}} depuis le CMS'
+    update: 'Modifie {{collection}} depuis le CMS'
+    delete: 'Supprime {{collection}} depuis le CMS'
+    uploadMedia: 'Ajoute l’image {{path}} depuis le CMS'
+    deleteMedia: 'Supprime l’image {{path}} depuis le CMS'
+
+locale: fr-FR
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: contenu
+    label: Contenu du site
+    files:
+      - name: base
+        label: Coordonnées, tarifs et avis
+        file: src/data/contenu.json
+        fields:
+          - name: coordonnees
+            label: Coordonnées
+            widget: object
+            fields:
+              - { name: nom, label: Nom, widget: string }
+              - { name: sousTitre, label: Sous-titre (métier), widget: string }
+              - { name: adresse, label: Adresse, widget: string }
+              - { name: codePostal, label: Code postal, widget: string }
+              - { name: ville, label: Ville, widget: string }
+              - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35' }
+              - { name: email, label: Email, widget: string }
+              - { name: instagram, label: Lien Instagram, widget: string }
+              - { name: facebook, label: Lien Facebook, widget: string }
+          - name: avisGoogle
+            label: Avis Google
+            widget: object
+            fields:
+              - { name: score, label: Note (sur 5), widget: number, value_type: float, step: 0.1 }
+              - { name: nombre, label: Nombre d’avis, widget: number, value_type: int }
+          - name: tarifs
+            label: Tarifs
+            widget: object
+            fields:
+              - name: soin
+                label: Soin énergétique
+                widget: object
+                fields:
+                  - { name: full, label: Tarif plein (€), widget: number, value_type: int }
+                  - { name: solidaire, label: Tarif solidaire (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - name: soinEnfant
+                label: Soin enfant
+                widget: object
+                fields:
+                  - { name: full, label: Tarif (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - name: chamanisme
+                label: Soin chamanique
+                widget: object
+                fields:
+                  - { name: full, label: Tarif plein (€), widget: number, value_type: int }
+                  - { name: solidaire, label: Tarif solidaire (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - name: chamanismeEnfant
+                label: Soin chamanique enfant
+                widget: object
+                fields:
+                  - { name: full, label: Tarif (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - { name: reiki1, label: 'Formation Reiki 1 (€)', widget: number, value_type: int }
+              - { name: reiki2, label: 'Formation Reiki 2 (€)', widget: number, value_type: int }
+              - { name: reiki3, label: 'Formation Reiki 3 (€)', widget: number, value_type: int }
