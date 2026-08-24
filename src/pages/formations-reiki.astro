@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, PRICES } from '../data/site';
+import { IMG, PRICES, asset } from '../data/site';
 import { TRACK, hasSysteme, systemeHref, type SystemeKey } from '../data/systeme';
+import page from '../data/pages/formations-reiki.json';
 
 const title = 'Formation Reiki à Bagnères-de-Bigorre | Caroline Loire';
 const description =
-  'Formation Reiki Usui à Bagnères-de-Bigorre avec une maître Reiki enseignante. 1er degré 180 €, 2e 280 €, 3e 380 €. Hautes-Pyrénées.';
+  `Formation Reiki Usui à Bagnères-de-Bigorre avec une maître Reiki enseignante. 1er degré ${PRICES.reiki1} €, 2e ${PRICES.reiki2} €, 3e ${PRICES.reiki3} €. Hautes-Pyrénées.`;
 
 const levels = [
   {
@@ -54,11 +55,11 @@ const levels = [
 
 <BaseLayout title={title} description={description} image={IMG.rituel}>
   <PageHero
-    eyebrow="Formations Reiki · Hautes-Pyrénées"
-    title="Apprendre à pratiquer le Reiki à votre tour"
-    text="Des formations progressives pour découvrir le Reiki, développer votre pratique personnelle et, selon votre cheminement, apprendre à le transmettre."
-    image={IMG.rituel}
-    imageAlt="Espace de pratique avec bol et pierres"
+    eyebrow={page.surtitre}
+    title={page.titre}
+    text={page.texte}
+    image={asset(page.photo)}
+    imageAlt={page.photoAlt}
   />
 
   <section class="px-4 py-14 md:px-6 md:py-16">

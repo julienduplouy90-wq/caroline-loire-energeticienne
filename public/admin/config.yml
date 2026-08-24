@@ -1,18 +1,17 @@
-# Sveltia CMS — contenu de base du site Caroline Loire.
+# Sveltia CMS — organisé comme le site : une rubrique par page.
+#
+# La première rubrique regroupe ce qui apparaît sur TOUTES les pages
+# (coordonnées, tarifs) : modifié une fois, changé partout.
+# Les rubriques suivantes suivent l'ordre du menu du site.
 #
 # Chaque « Publier » fait un commit sur GitHub ; l'action « Construire et
-# publier pour Hostinger » reconstruit le site et le met en ligne. Compter
-# deux à trois minutes entre la publication et la mise à jour du site.
-#
-# Connexion : « Se connecter avec un jeton d'accès » (jeton GitHub à créer
-# une fois), ou bouton GitHub en un clic si l'authentificateur de l'agence
-# est déployé (renseigner alors base_url ci-dessous).
+# publier pour Hostinger » reconstruit le site et le met en ligne toute seule.
+# Compter deux à trois minutes entre « Publier » et la mise à jour du site.
 
 backend:
   name: github
   repo: julienduplouy90-wq/caroline-loire-energeticienne
   branch: main
-  # base_url: https://authentificateur-de-l-agence.workers.dev
   commit_messages:
     create: 'Ajoute {{collection}} depuis le CMS'
     update: 'Modifie {{collection}} depuis le CMS'
@@ -20,16 +19,19 @@ backend:
     uploadMedia: 'Ajoute l’image {{path}} depuis le CMS'
     deleteMedia: 'Supprime l’image {{path}} depuis le CMS'
 
-locale: fr-FR
+publish_mode: simple
+locale: fr
 media_folder: public/images
 public_folder: /images
 
 collections:
-  - name: contenu
-    label: Contenu du site
+  # ------------------------------------------------ VALABLE SUR TOUTES LES PAGES
+  - name: partout
+    label: '⭐ Sur tout le site'
+    description: Coordonnées et tarifs. Modifiés ici, ils changent sur toutes les pages du site en même temps.
     files:
       - name: base
-        label: Coordonnées, tarifs et avis
+        label: Coordonnées et tarifs
         file: src/data/contenu.json
         fields:
           - name: coordonnees
@@ -45,15 +47,10 @@ collections:
               - { name: email, label: Email, widget: string }
               - { name: instagram, label: Lien Instagram, widget: string }
               - { name: facebook, label: Lien Facebook, widget: string }
-          - name: avisGoogle
-            label: Avis Google
-            widget: object
-            fields:
-              - { name: score, label: Note (sur 5), widget: number, value_type: float, step: 0.1 }
-              - { name: nombre, label: Nombre d’avis, widget: number, value_type: int }
           - name: tarifs
             label: Tarifs
             widget: object
+            hint: Ces montants s’affichent sur la page Tarifs, sur les pages de chaque accompagnement et sur l’accueil.
             fields:
               - name: soin
                 label: Soin énergétique
@@ -81,6 +78,108 @@ collections:
                 fields:
                   - { name: full, label: Tarif (€), widget: number, value_type: int }
                   - { name: duration, label: Durée, widget: string }
-              - { name: reiki1, label: 'Formation Reiki 1 (€)', widget: number, value_type: int }
-              - { name: reiki2, label: 'Formation Reiki 2 (€)', widget: number, value_type: int }
-              - { name: reiki3, label: 'Formation Reiki 3 (€)', widget: number, value_type: int }
+              - { name: reiki1, label: 'Formation Reiki 1er degré (€)', widget: number, value_type: int }
+              - { name: reiki2, label: 'Formation Reiki 2e degré (€)', widget: number, value_type: int }
+              - { name: reiki3, label: 'Formation Reiki 3e degré (€)', widget: number, value_type: int }
+          - name: avisGoogle
+            label: Avis Google
+            widget: object
+            fields:
+              - { name: score, label: Note sur 5, widget: number, value_type: float, step: 0.1 }
+              - { name: nombre, label: Nombre d’avis, widget: number, value_type: int }
+
+  # ------------------------------------------------------------------- ACCUEIL
+  - name: page_accueil
+    label: '1. Page Accueil'
+    description: Le grand titre en haut de la page d’accueil.
+    files:
+      - name: accueil
+        label: Page Accueil
+        file: src/data/pages/accueil.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction (ordinateur), widget: text }
+          - { name: texteMobile, label: Texte d’introduction (téléphone), widget: text, hint: 'Version courte, affichée sur les petits écrans.' }
+
+  # -------------------------------------------------------- SOINS ÉNERGÉTIQUES
+  - name: page_soins
+    label: '2. Page Soins énergétiques'
+    files:
+      - name: soins
+        label: Page Soins énergétiques
+        file: src/data/pages/soins-energetiques.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo, widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string, hint: 'Lue par Google et par les lecteurs d’écran.' }
+
+  # ---------------------------------------------------------------- CHAMANISME
+  - name: page_chamanisme
+    label: '3. Page Chamanisme'
+    files:
+      - name: chamanisme
+        label: Page Chamanisme
+        file: src/data/pages/chamanisme.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo, widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string }
+
+  # ----------------------------------------------------------- FORMATIONS REIKI
+  - name: page_reiki
+    label: '4. Page Formations Reiki'
+    files:
+      - name: reiki
+        label: Page Formations Reiki
+        file: src/data/pages/formations-reiki.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo, widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string }
+
+  # ----------------------------------------------------------------- À PROPOS
+  - name: page_apropos
+    label: '5. Page À propos'
+    files:
+      - name: apropos
+        label: Page À propos
+        file: src/data/pages/a-propos.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo (portrait), widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string }
+
+  # ------------------------------------------------------------------- TARIFS
+  - name: page_tarifs
+    label: '6. Page Tarifs'
+    description: Le titre de la page. Les montants se modifient dans « ⭐ Sur tout le site ».
+    files:
+      - name: tarifs
+        label: Page Tarifs
+        file: src/data/pages/tarifs.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+
+  # ------------------------------------------------------------------ CONTACT
+  - name: page_contact
+    label: '7. Page Contact'
+    description: Le titre de la page. Le téléphone et l’email se modifient dans « ⭐ Sur tout le site ».
+    files:
+      - name: contact
+        label: Page Contact
+        file: src/data/pages/contact.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }

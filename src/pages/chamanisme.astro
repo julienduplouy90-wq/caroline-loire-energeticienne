@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, PRICES, SITE, u } from '../data/site';
+import { IMG, PRICES, SITE, u, asset } from '../data/site';
 import { TRACK, systemeHref } from '../data/systeme';
+import page from '../data/pages/chamanisme.json';
 
 const title = 'Séance de chamanisme à Bagnères-de-Bigorre | Caroline Loire';
 const description =
-  'Séance de chamanisme et énergies à Bagnères-de-Bigorre. Accompagnement de 2 h à 2 h 30, 100 € ou 80 € en tarif solidaire.';
+  `Séance de chamanisme et énergies à Bagnères-de-Bigorre. Accompagnement de ${PRICES.chamanisme.duration}, ${PRICES.chamanisme.full} € ou ${PRICES.chamanisme.solidaire} € en tarif solidaire.`;
 
 const soins = [
   {
@@ -31,11 +32,11 @@ const soins = [
 
 <BaseLayout title={title} description={description} image={IMG.dreamcatcher}>
   <PageHero
-    eyebrow="Chamanisme et énergies · Bagnères-de-Bigorre"
-    title="Explorer plus en profondeur ce qui demande à évoluer"
-    text="Un accompagnement plus long, associant travail chamanique et énergétique, pour mettre du sens sur ce que vous traversez."
-    image={IMG.dreamcatcher}
-    imageAlt="Capteur de rêves en lumière naturelle"
+    eyebrow={page.surtitre}
+    title={page.titre}
+    text={page.texte}
+    image={asset(page.photo)}
+    imageAlt={page.photoAlt}
   />
 
   <section class="px-4 py-14 md:px-6 md:py-16">

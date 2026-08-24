@@ -2,7 +2,8 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, SITE, u } from '../data/site';
+import { IMG, SITE, u, asset } from '../data/site';
+import page from '../data/pages/a-propos.json';
 
 const title = 'À propos de Caroline Loire | Énergéticienne Bagnères-de-Bigorre';
 const description =
@@ -20,11 +21,11 @@ const qualifications = [
 
 <BaseLayout title={title} description={description} image={IMG.caroline}>
   <PageHero
-    eyebrow="À propos"
-    title="Une pratique intuitive, mais un cadre clair"
-    text="Énergéticienne, praticienne en chamanisme et maître Reiki enseignante à Bagnères-de-Bigorre."
-    image={IMG.caroline}
-    imageAlt="Portrait de Caroline Loire, énergéticienne à Bagnères-de-Bigorre"
+    eyebrow={page.surtitre}
+    title={page.titre}
+    text={page.texte}
+    image={asset(page.photo)}
+    imageAlt={page.photoAlt}
   />
 
   <section class="px-4 py-14 md:px-6 md:py-16">

@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import { IMG, SITE, u } from '../data/site';
 import { SYSTEME_CONTACT_FORM_EMBED, TRACK, hasSysteme, systemeHref } from '../data/systeme';
+import page from '../data/pages/contact.json';
 
 const title = 'Contact | Caroline Loire énergéticienne à Bagnères-de-Bigorre';
 const description = `Contactez Caroline Loire à Bagnères-de-Bigorre : ${SITE.phone}, ${SITE.email}, ${SITE.address}.`;
@@ -23,11 +24,7 @@ const mapSrc =
 ---
 
 <BaseLayout title={title} description={description} image={IMG.carte}>
-  <PageHero
-    eyebrow="Contact"
-    title="Vous n’avez pas besoin d’avoir toutes les réponses pour faire le premier pas"
-    text="Écrivez-moi quelques mots sur ce que vous traversez, ou appelez-moi directement. Je vous répondrai avec simplicité."
-  />
+  <PageHero eyebrow={page.surtitre} title={page.titre} text={page.texte} />
 
   <section class="px-4 py-14 md:px-6 md:py-16">
     <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-12">

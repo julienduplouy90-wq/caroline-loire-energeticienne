@@ -4,6 +4,7 @@ import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { IMG, PRICES, SITE, u } from '../data/site';
 import { TRACK, systemeHref } from '../data/systeme';
+import page from '../data/pages/tarifs.json';
 
 const title = 'Tarifs des soins énergétiques à Bagnères-de-Bigorre | Caroline Loire';
 const description =
@@ -55,11 +56,7 @@ const formations = [
 ---
 
 <BaseLayout title={title} description={description} image={IMG.carte}>
-  <PageHero
-    eyebrow="Honoraires"
-    title="Des tarifs clairs, avec une option solidaire"
-    text="Je tiens à ce que mes accompagnements restent accessibles, tout en respectant la valeur de mon travail."
-  />
+  <PageHero eyebrow={page.surtitre} title={page.titre} text={page.texte} />
 
   <section class="px-4 py-12 md:px-6">
     <div
