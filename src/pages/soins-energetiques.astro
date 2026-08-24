@@ -2,12 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, PRICES, SITE, u } from '../data/site';
+import { IMG, PRICES, SITE, u, asset } from '../data/site';
 import { TRACK, systemeHref } from '../data/systeme';
+import page from '../data/pages/soins-energetiques.json';
 
 const title = 'Soins énergétiques à Bagnères-de-Bigorre | Caroline Loire';
 const description =
-  'Soin énergétique personnalisé à Bagnères-de-Bigorre ou à distance. Reiki, Shamballa et LaHoChi associés selon vos besoins. Tarif 60 €, solidaire 50 €.';
+  `Soin énergétique personnalisé à Bagnères-de-Bigorre ou à distance. Reiki, Shamballa et LaHoChi associés selon vos besoins. Tarif ${PRICES.soin.full} €, solidaire ${PRICES.soin.solidaire} €.`;
 
 const outils = [
   ['/reiki', 'Reiki'],
@@ -20,11 +21,11 @@ const outils = [
 
 <BaseLayout title={title} description={description} image={IMG.soin}>
   <PageHero
-    eyebrow="Soin énergétique · Hautes-Pyrénées"
-    title="Retrouver un espace de calme et de recentrage"
-    text="Une séance personnalisée pour ralentir, relâcher les tensions et revenir à vous — au cabinet à Bagnères-de-Bigorre ou à distance."
-    image={IMG.soin}
-    imageAlt="Séance de soin énergétique, mains posées près de la tête"
+    eyebrow={page.surtitre}
+    title={page.titre}
+    text={page.texte}
+    image={asset(page.photo)}
+    imageAlt={page.photoAlt}
   />
 
   <section class="px-4 py-14 md:px-6 md:py-16">

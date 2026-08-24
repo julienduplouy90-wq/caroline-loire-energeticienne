@@ -5,6 +5,7 @@ import Faq from '../components/Faq.astro';
 import GoogleRating from '../components/GoogleRating.astro';
 import { GOOGLE_RATING, IMG, PRICES, SITE, u } from '../data/site';
 import { TRACK } from '../data/systeme';
+import page from '../data/pages/accueil.json';
 
 const title = 'Caroline Loire | Énergéticienne à Bagnères-de-Bigorre';
 const description =
@@ -229,23 +230,16 @@ const badges = [
           class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.18em] text-peach-deep uppercase"
         >
           <span class="accent-bar" aria-hidden="true"></span>
-          Soins énergétiques, chamanisme et formations Reiki à Bagnères-de-Bigorre
+          {page.surtitre}
         </p>
         <h1
           class="font-display mt-3 text-[1.85rem] leading-[1.15] font-semibold text-forest md:mt-4 md:text-5xl lg:text-[3.35rem]"
         >
-          Un espace pour vous recentrer et retrouver votre propre équilibre
+          {page.titre}
         </h1>
         <p class="mt-4 max-w-xl text-[0.95rem] leading-relaxed text-ink/80 md:mt-5 md:text-lg">
-          <span class="md:hidden"
-            >Je vous accueille avec écoute et bienveillance pour une séance adaptée à ce que vous
-            traversez.</span
-          >
-          <span class="hidden md:inline"
-            >Lorsque les émotions s’accumulent, que l’énergie semble manquer ou que quelque chose en
-            vous demande à évoluer, il n’est pas toujours facile de savoir par où commencer. Je vous
-            accueille avec écoute et bienveillance pour une séance adaptée à ce que vous traversez.</span
-          >
+          <span class="md:hidden">{page.texteMobile}</span>
+          <span class="hidden md:inline">{page.texte}</span>
         </p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
           <a
