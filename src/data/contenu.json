@@ -15,10 +15,24 @@
     "nombre": 31
   },
   "tarifs": {
-    "soin": { "full": 60, "solidaire": 50, "duration": "1 h à 1 h 30" },
-    "soinEnfant": { "full": 40, "duration": "environ 1 h" },
-    "chamanisme": { "full": 100, "solidaire": 80, "duration": "2 h à 2 h 30" },
-    "chamanismeEnfant": { "full": 40, "duration": "environ 1 h" },
+    "soin": {
+      "full": 70,
+      "solidaire": 50,
+      "duration": "1 h à 1 h 30"
+    },
+    "soinEnfant": {
+      "full": 40,
+      "duration": "environ 1 h"
+    },
+    "chamanisme": {
+      "full": 100,
+      "solidaire": 80,
+      "duration": "2 h à 2 h 30"
+    },
+    "chamanismeEnfant": {
+      "full": 40,
+      "duration": "environ 1 h"
+    },
     "reiki1": 180,
     "reiki2": 280,
     "reiki3": 380
