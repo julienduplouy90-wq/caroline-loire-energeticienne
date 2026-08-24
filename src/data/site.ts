@@ -1,3 +1,5 @@
+import contenu from './contenu.json';
+
 const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 /**
@@ -26,20 +28,24 @@ export function asset(path: string): string {
  */
 export const INDEXABLE = false;
 
+// Les valeurs de base (coordonnées, tarifs, note Google) vivent dans
+// contenu.json, modifiable depuis le CMS (/admin) sans toucher au code.
+const C = contenu.coordonnees;
+
 export const SITE = {
-  name: 'Caroline Loire',
-  tagline: 'Énergéticienne · Praticienne en chamanisme · Maître Reiki enseignante',
-  city: 'Bagnères-de-Bigorre',
+  name: C.nom,
+  tagline: C.sousTitre,
+  city: C.ville,
   region: 'Hautes-Pyrénées',
-  address: '20 rue Justin Daléas',
-  zip: '65200',
-  fullAddress: '20 rue Justin Daléas, 65200 Bagnères-de-Bigorre',
-  phone: '07 44 73 34 35',
-  phoneHref: 'tel:+33744733435',
-  email: 'carolinenergies@yahoo.com',
-  emailHref: 'mailto:carolinenergies@yahoo.com',
-  instagram: 'https://www.instagram.com/caroline.loire.energeticienne/',
-  facebook: 'https://www.facebook.com/profile.php?id=61552328472223',
+  address: C.adresse,
+  zip: C.codePostal,
+  fullAddress: `${C.adresse}, ${C.codePostal} ${C.ville}`,
+  phone: C.telephone,
+  phoneHref: 'tel:+33' + C.telephone.replace(/\D/g, '').replace(/^0/, ''),
+  email: C.email,
+  emailHref: `mailto:${C.email}`,
+  instagram: C.instagram,
+  facebook: C.facebook,
   googleReviewsUrl: 'https://share.google/KVNhPcXqVOGVyyrhT',
   /**
    * Aucun calendrier de réservation n'est configuré (confirmé au brief) :
@@ -55,7 +61,7 @@ export const SITE = {
 };
 
 /** Note globale Google réelle (fiche Caroline Loire). */
-export const GOOGLE_RATING = { score: 4.9, count: 31 };
+export const GOOGLE_RATING = { score: contenu.avisGoogle.score, count: contenu.avisGoogle.nombre };
 
 export const IMG = {
   logo: asset('images/logo.png'),
@@ -90,15 +96,7 @@ export const RESOURCES = [
   { to: '/hypnose', label: 'Hypnose' },
 ];
 
-export const PRICES = {
-  soin: { full: 60, solidaire: 50, duration: '1 h à 1 h 30' },
-  soinEnfant: { full: 40, duration: 'environ 1 h' },
-  chamanisme: { full: 100, solidaire: 80, duration: '2 h à 2 h 30' },
-  chamanismeEnfant: { full: 40, duration: 'environ 1 h' },
-  reiki1: 180,
-  reiki2: 280,
-  reiki3: 380,
-};
+export const PRICES = contenu.tarifs;
 
 export const DISCLAIMER =
   'Les accompagnements proposés relèvent du bien-être et du développement personnel. Ils ne se substituent pas à un avis, un diagnostic ou un traitement médical ou psychologique.';
