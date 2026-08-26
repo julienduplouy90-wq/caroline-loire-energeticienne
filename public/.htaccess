@@ -1,16 +1,33 @@
 # Caroline Loire — site statique Astro hébergé chez Hostinger (Apache / LiteSpeed)
-# Aucune redirection de domaine ici : l'ancien site WordPress
-# (carolineloire-energeticienne.fr, o2switch) n'est pas concerné.
 
-# --- HTTPS ----------------------------------------------------------------
+# --- HTTPS + domaine canonique sans www -------------------------------------
 RewriteEngine On
-RewriteCond %{HTTPS} off
-RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+RewriteCond %{HTTPS} off [OR]
+RewriteCond %{HTTP_HOST} ^www\. [NC]
+RewriteRule ^ https://carolineloire-energeticienne.fr%{REQUEST_URI} [L,R=301]
 
-# --- Page 404 -------------------------------------------------------------
+# --- Anciennes adresses WordPress → nouvelles pages (301) ---------------------
+# Pages
+Redirect 301 /energetique/ /soins-energetiques/
+Redirect 301 /enseignement/ /formations-reiki/
+Redirect 301 /tarifs-des-soins-energetiques-a-bagneres-de-bigorre/ /tarifs/
+Redirect 301 /contactez-caroline-loire-a-bagneres-de-bigorre/ /contact/
+Redirect 301 /a-propos-de-caroline-loire-a-bagneres-de-bigorre/ /a-propos/
+Redirect 301 /les-oracles/ /oracles/
+Redirect 301 /les-fleurs-de-bach/ /fleurs-de-bach/
+Redirect 301 /politique-de-cookies-ue/ /politique-de-confidentialite/
+# Boutique WooCommerce (séances, forfaits, carte cadeau) → tarifs
+RedirectMatch 301 ^/(boutique|produit|categorie-produit|panier|commander|mon-compte)(/.*)?$ /tarifs/
+# Blog de démonstration WordPress
+RedirectMatch 301 ^/(2023|category|author)(/.*)?$ /
+# Pages identiques sur l'ancien et le nouveau site (aucune redirection nécessaire) :
+# /, /a-propos/, /chamanisme/, /reiki/, /tarifs/, /contact/, /mentions-legales/,
+# /politique-de-confidentialite/
+
+# --- Page 404 -----------------------------------------------------------------
 ErrorDocument 404 /404.html
 
-# --- Cache navigateur -----------------------------------------------------
+# --- Cache navigateur ---------------------------------------------------------
 <IfModule mod_expires.c>
   ExpiresActive On
   # Le HTML est toujours revalidé : sans cela, une modification publiée
@@ -24,7 +41,7 @@ ErrorDocument 404 /404.html
   ExpiresByType image/svg+xml "access plus 1 year"
 </IfModule>
 
-# --- En-têtes de sécurité -------------------------------------------------
+# --- En-têtes de sécurité -----------------------------------------------------
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"

@@ -3,14 +3,12 @@ import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
-// Hébergé chez Hostinger (envoi FTPS de `dist/` par .github/workflows/deploy.yml)
-// sur le domaine temporaire Hostinger de Caroline. Le domaine historique
-// carolineloire-energeticienne.fr (WordPress chez o2switch) n'est PAS touché.
-//
-// Quand un vrai domaine sera décidé : changer `site` ici et passer
-// `INDEXABLE` à true dans src/data/site.ts.
+// Hébergé chez Hostinger sur carolineloire-energeticienne.fr (déploiement
+// Git : branche `hostinger` → public_html). Cette configuration remplace
+// l'ancien WordPress o2switch : les anciennes adresses sont redirigées en 301
+// par public/.htaccess.
 export default defineConfig({
-  site: 'https://purple-raven-386267.hostingersite.com',
+  site: 'https://carolineloire-energeticienne.fr',
   base: '/',
   trailingSlash: 'always',
   integrations: [sitemap()],
