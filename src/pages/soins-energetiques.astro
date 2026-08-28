@@ -10,6 +10,31 @@ const title = 'Soins énergétiques à Bagnères-de-Bigorre | Caroline Loire';
 const description =
   `Soin énergétique personnalisé à Bagnères-de-Bigorre ou à distance. Reiki, Shamballa et LaHoChi associés selon vos besoins. Tarif ${PRICES.soin.full} €, solidaire ${PRICES.soin.solidaire} €.`;
 
+/*
+ * Ce que peut apporter un soin énergétique suivi dans le temps (demande de
+ * Caroline, août 2026 : jusqu'ici sa communication ne parlait que du soin
+ * « en cas de crise »). Ton volontairement non commercial : aucune promesse
+ * de résultat, aucun forfait, aucune fréquence imposée.
+ */
+const regularite = [
+  {
+    t: 'Entretenir l’équilibre',
+    d: 'Plutôt que de rattraper une surcharge accumulée pendant des mois, on l’accompagne au fur et à mesure, tant qu’elle est encore légère.',
+  },
+  {
+    t: 'Mieux se connaître',
+    d: 'Au fil des séances, on repère plus vite ce qui pèse et ce qui fait du bien. C’est souvent là que les choses bougent vraiment.',
+  },
+  {
+    t: 'Traverser les périodes chargées',
+    d: 'Quand la vie s’accélère, un rendez-vous déjà posé dans l’agenda devient un point d’appui — un endroit où déposer.',
+  },
+  {
+    t: 'Un temps qui vous appartient',
+    d: 'Une heure pour vous, sans rien avoir à prouver ni à expliquer. C’est souvent la première chose que l’on sacrifie, et la plus précieuse.',
+  },
+];
+
 const outils = [
   ['/reiki', 'Reiki'],
   ['/shamballa', 'Shamballa'],
@@ -40,18 +65,19 @@ const outils = [
           pas d’appliquer une technique unique, mais de créer un espace d’écoute et de recentrage
           adapté à vous.
         </p>
-        <p>
-          Ces pratiques relèvent du bien-être et du développement personnel. Elles ne remplacent pas
-          un suivi médical ou psychologique.
-        </p>
-
         <h3 class="font-display pt-2 text-xl text-forest">Déroulement</h3>
         <ol class="list-decimal space-y-2 pl-5 marker:font-semibold marker:text-peach-deep">
           <li>Temps d’échange sur ce qui vous amène.</li>
-          <li>Écoute énergétique (centres énergétiques) et échanges éventuels.</li>
+          <li>
+            Un scanner énergétique : je passe le long du corps et je ressens l’état de vos
+            chakras.
+          </li>
           <li>Installation habillé(e) sur la table de soin, dans le calme.</li>
           <li>Transmission d’énergies selon mes ressentis.</li>
-          <li>Retour en fin de séance ; un tirage d’oracle peut clôturer le temps ensemble.</li>
+          <li>
+            Retour en fin de séance ; le tirage d’une carte d’oracle peut clôturer le temps
+            ensemble.
+          </li>
         </ol>
 
         <h3 class="font-display pt-2 text-xl text-forest">Pour qui ?</h3>
@@ -102,8 +128,8 @@ const outils = [
     <div class="mx-auto max-w-6xl">
       <h2 class="font-display text-2xl text-forest">Outils pouvant être associés</h2>
       <p class="mt-3 max-w-2xl text-sm text-slate-soft">
-        Ces approches ne sont pas des offres séparées : elles peuvent nourrir le soin énergétique
-        selon le moment.
+        Ces approches font partie du même soin : j’y fais appel selon ce que je ressens sur le
+        moment.
       </p>
       <div class="mt-6 flex flex-wrap gap-2">
         {
@@ -117,6 +143,45 @@ const outils = [
           ))
         }
       </div>
+    </div>
+  </section>
+
+  <!-- RÉGULARITÉ -->
+  <section class="px-4 py-14 md:px-6 md:py-16">
+    <div class="mx-auto max-w-6xl">
+      <div data-reveal>
+        <span class="accent-bar mb-4" aria-hidden="true"></span>
+        <h2 class="font-display max-w-2xl text-2xl font-semibold text-forest md:text-3xl">
+          Et si l’on n’attendait pas que tout déborde ?
+        </h2>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink/80">
+          On pense souvent au soin énergétique quand quelque chose ne va plus : une fatigue qui
+          dure, une émotion qui prend toute la place, une période qui pèse. C’est légitime — et
+          c’est souvent comme cela que l’on se rencontre. Mais un soin peut aussi être un
+          rendez-vous que l’on se donne, simplement pour rester en lien avec soi.
+        </p>
+      </div>
+
+      <div class="mt-8 grid gap-4 sm:grid-cols-2 md:mt-10">
+        {
+          regularite.map((r) => (
+            <div
+              class="h-full rounded-2xl border border-line border-l-2 border-l-peach bg-white p-5 shadow-sm md:p-6"
+              data-reveal
+            >
+              <h3 class="font-display text-xl text-forest">{r.t}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{r.d}</p>
+            </div>
+          ))
+        }
+      </div>
+
+      <p class="mt-8 max-w-2xl text-base leading-relaxed text-ink/80">
+        Il n’y a ni forfait, ni abonnement, ni engagement : revenir reste toujours votre choix. Le
+        rythme se décide ensemble, et il change avec les saisons de votre vie. Certaines personnes
+        reviennent quelques fois dans l’année, d’autres après une étape importante. Nous en parlons
+        simplement à la fin de la séance.
+      </p>
     </div>
   </section>
 

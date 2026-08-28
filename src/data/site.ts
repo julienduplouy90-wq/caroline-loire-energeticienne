@@ -32,6 +32,9 @@ export const INDEXABLE = false;
 // contenu.json, modifiable depuis le CMS (/admin) sans toucher au code.
 const C = contenu.coordonnees;
 
+const phoneDigits = C.telephone.replace(/\D/g, '');
+const phoneE164 = '+33' + phoneDigits.replace(/^0/, '');
+
 export const SITE = {
   name: C.nom,
   tagline: C.sousTitre,
@@ -41,9 +44,13 @@ export const SITE = {
   zip: C.codePostal,
   fullAddress: `${C.adresse}, ${C.codePostal} ${C.ville}`,
   phone: C.telephone,
-  phoneHref: 'tel:+33' + C.telephone.replace(/\D/g, '').replace(/^0/, ''),
-  email: C.email,
-  emailHref: `mailto:${C.email}`,
+  phoneE164,
+  phoneHref: `tel:${phoneE164}`,
+  /**
+   * Caroline répond facilement aux SMS : le lien `sms:` est proposé à côté
+   * du téléphone pour les personnes qui n'osent pas appeler.
+   */
+  smsHref: `sms:${phoneE164}`,
   instagram: C.instagram,
   facebook: C.facebook,
   googleReviewsUrl: 'https://share.google/KVNhPcXqVOGVyyrhT',
@@ -53,11 +60,15 @@ export const SITE = {
    */
   bookingPath: '/contact',
   /**
-   * Endpoint Formspree (https://formspree.io) pour le formulaire de contact.
-   * Vide = le formulaire bascule automatiquement sur l'ouverture du logiciel
-   * de messagerie (mailto). Renseigner l'ID pour recevoir les messages par e-mail.
+   * Destinataire du formulaire de contact.
+   *
+   * Août 2026 : l'adresse e-mail de Caroline n'apparaît plus nulle part sur le
+   * site (demande de sa part). Les messages passent par le formulaire, qui les
+   * envoie au script PHP `public/envoi-message.php` — c'est lui, et lui seul,
+   * qui connaît l'adresse de réception. Les visiteurs n'ont donc plus d'adresse
+   * à copier, et les robots collecteurs n'ont rien à ramasser.
    */
-  formEndpoint: '',
+  formEndpoint: '/envoi-message.php',
 };
 
 /** Note globale Google réelle (fiche Caroline Loire). */
@@ -65,7 +76,10 @@ export const GOOGLE_RATING = { score: contenu.avisGoogle.score, count: contenu.a
 
 export const IMG = {
   logo: asset('images/logo.png'),
+  /** Même logo, recoloré en crème pour les fonds bleu canard (pied de page). */
+  logoClair: asset('images/logo-clair.png'),
   monogram: asset('images/monogram.png'),
+  monogramClair: asset('images/monogram-clair.png'),
   soin: asset('images/soin.jpg'),
   carte: asset('images/carte.jpg'),
   cabinet: asset('images/cabinet.jpg'),
@@ -73,6 +87,30 @@ export const IMG = {
   rituel: asset('images/rituel.jpg'),
   dreamcatcher: asset('images/dreamcatcher.webp'),
   salon: asset('images/salon.jpg'),
+  tambouloup: asset('images/tambouloup.png'),
+};
+
+/**
+ * Tambouloup — l'école du chaman d'Alexandre Godgenger (Gerde, 65).
+ * Partenariat : Alexandre transmet le voyage chamanique en stage, Caroline
+ * accompagne en séance individuelle les personnes qui souhaitent aller plus
+ * loin. Toutes les données du partenaire vivent ici : aucune URL ni aucun
+ * numéro en dur dans les pages.
+ */
+export const TAMBOULOUP = {
+  name: 'Tambouloup',
+  baseline: 'L’école du chaman',
+  site: 'https://tambouloup.fr/',
+  formation: 'https://tambouloup.fr/formation-chamanisme/',
+  guide: 'https://tambouloup.fr/alexandre/',
+  faq: 'https://tambouloup.fr/faq/',
+  rappel: 'https://tambouloup.fr/rappel/',
+  animator: 'Alexandre Godgenger',
+  phone: '06 64 97 77 49',
+  phoneHref: 'tel:+33664977749',
+  place: 'Au Mélilot, chemin des Humas, 65200 Gerde',
+  price: '150 €',
+  duration: 'deux jours — samedi et dimanche, de 12 h à 18 h',
 };
 
 export const NAV = [
@@ -84,6 +122,12 @@ export const NAV = [
   { to: '/tarifs', label: 'Tarifs' },
   { to: '/contact', label: 'Contact' },
 ];
+
+/** Page partenaire : absente de la barre du haut (déjà pleine sur ordinateur). */
+export const ATELIERS = { to: '/ateliers-chamaniques', label: 'Ateliers chamaniques' };
+
+/** Navigation complète : menu du téléphone et pied de page. */
+export const NAV_FULL = [...NAV.slice(0, 3), ATELIERS, ...NAV.slice(3)];
 
 export const RESOURCES = [
   { to: '/reiki', label: 'Reiki' },
@@ -97,6 +141,3 @@ export const RESOURCES = [
 ];
 
 export const PRICES = contenu.tarifs;
-
-export const DISCLAIMER =
-  'Les accompagnements proposés relèvent du bien-être et du développement personnel. Ils ne se substituent pas à un avis, un diagnostic ou un traitement médical ou psychologique.';

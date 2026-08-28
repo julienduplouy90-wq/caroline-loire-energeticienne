@@ -100,13 +100,18 @@ automatiques sont confiés à Systeme.io sur le sous-domaine
 
 ## Formulaire de contact
 
-Le site est statique : il n'y a pas de serveur pour recevoir les messages.
+Depuis août 2026, **aucune adresse e-mail n'apparaît sur le site** : Caroline ne voulait plus la
+voir affichée. Les visiteurs passent par le formulaire, le téléphone ou le SMS.
 
-- **Par défaut** : le formulaire ouvre le logiciel de messagerie du visiteur avec un message
-  pré-rempli adressé à `carolinenergies@yahoo.com`.
-- **Option recommandée** : créer un formulaire gratuit sur [Formspree](https://formspree.io),
-  puis coller l'URL de l'endpoint dans `SITE.formEndpoint` (`src/data/site.ts`). Les messages
-  arrivent alors directement par e-mail, sans quitter le site.
+- Le formulaire poste sur **`public/envoi-message.php`**, déployé tel quel dans `public_html`
+  (Hostinger exécute le PHP). C'est ce fichier — et lui seul — qui connaît l'adresse de réception ;
+  elle y est écrite en base64 pour ne pas traîner en clair dans un dépôt public. Pour la changer :
+  `echo -n "nouvelle@adresse.fr" | base64`, puis remplacer la constante `DESTINATAIRE`.
+- Avec JavaScript, l'envoi se fait en arrière-plan et le visiteur reste sur la page. Sans
+  JavaScript, le script renvoie sur `/contact/?message=envoye` (ou `?message=erreur`).
+- **À tester après la mise en ligne** : envoyer un vrai message depuis `/contact/` et vérifier
+  qu'il arrive bien. Si l'hébergement bloquait `mail()`, il faudrait basculer sur un service tiers
+  (Formspree, ou l'envoi SMTP d'une boîte e-mail Hostinger).
 
 ## Points à compléter avant la mise en ligne publique
 

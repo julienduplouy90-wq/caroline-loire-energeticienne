@@ -1,0 +1,65 @@
+---
+/*
+ * Encart « pour aller plus loin » vers les ateliers chamaniques de Tambouloup
+ * (Alexandre Godgenger). Même esprit que le teaser des formations Reiki :
+ * on ouvre une porte, on ne vend rien. Utilisé sur l'accueil et sur la page
+ * Chamanisme, avec un texte adapté à chaque contexte.
+ */
+import { IMG, TAMBOULOUP, u } from '../data/site';
+
+interface Props {
+  title?: string;
+  text?: string;
+}
+
+const {
+  title = 'Apprendre le voyage chamanique avec Tambouloup',
+  text = 'Alexandre Godgenger transmet le voyage chamanique au tambour lors d’un stage de deux jours, à Gerde, à quelques minutes de Bagnères-de-Bigorre. Une porte d’entrée pour celles et ceux qui souhaitent explorer par eux-mêmes — et un chemin qui peut se prolonger en séance au cabinet.',
+} = Astro.props;
+---
+
+<section class="border-y border-line bg-sand/60 px-4 py-12 md:px-6 md:py-16">
+  <div class="mx-auto grid max-w-6xl items-center gap-8 md:grid-cols-12 md:gap-10">
+    <div class="md:col-span-4">
+      <div
+        class="mx-auto flex max-w-[16rem] items-center justify-center rounded-3xl border border-line bg-white p-6 shadow-sm"
+      >
+        <img
+          src={IMG.tambouloup}
+          alt={`${TAMBOULOUP.name} — ${TAMBOULOUP.baseline}`}
+          class="h-auto w-full"
+          width="491"
+          height="585"
+          loading="lazy"
+        />
+      </div>
+    </div>
+
+    <div class="md:col-span-8">
+      <p
+        class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
+      >
+        <span class="accent-bar" aria-hidden="true"></span>
+        Pour aller plus loin · en partenariat avec {TAMBOULOUP.name}
+      </p>
+      <h2 class="font-display mt-3 text-2xl font-semibold text-forest md:text-3xl">{title}</h2>
+      <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink/80">{text}</p>
+      <div class="mt-6 flex flex-wrap gap-3">
+        <a
+          href={u('/ateliers-chamaniques')}
+          class="inline-flex min-h-11 items-center rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
+        >
+          Découvrir les ateliers chamaniques
+        </a>
+        <a
+          href={TAMBOULOUP.site}
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest transition hover:bg-white"
+        >
+          Voir le site de {TAMBOULOUP.name}
+        </a>
+      </div>
+    </div>
+  </div>
+</section>

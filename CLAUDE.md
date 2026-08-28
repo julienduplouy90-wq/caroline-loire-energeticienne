@@ -19,7 +19,7 @@ Julien et Caroline n'ont pas décidé autrement ; ce site est donc en `noindex` 
 | Hébergement    | Hostinger, domaine temporaire `purple-raven-386267.hostingersite.com`. GitHub Actions pousse `dist/` sur la branche `hostinger` ; hPanel → Git la déploie dans `public_html` (webhook). Aucun secret. |
 | URLs           | Racine du domaine, **barre oblique finale** (`/tarifs/`) ; `.htaccess` : HTTPS, 404, cache — aucune redirection de domaine |
 | Indexation     | `INDEXABLE = false` (`src/data/site.ts`) → `noindex` + `robots.txt` Disallow tant que le domaine est temporaire |
-| Formulaire     | Embed Systeme.io si `SYSTEME_CONTACT_FORM_EMBED` est renseigné ; sinon statique (`mailto:` / Formspree via `SITE.formEndpoint`) |
+| Formulaire     | Embed Systeme.io si `SYSTEME_CONTACT_FORM_EMBED` est renseigné ; sinon le formulaire du site poste sur `public/envoi-message.php` (PHP Hostinger), qui envoie le message à la boîte de Caroline. Aucune adresse e-mail n'est affichée sur le site. |
 | Conversion     | Systeme.io (calendrier, CRM, emails) — config `src/data/systeme.ts`, doc `docs/systeme-io/` |
 | Mesure         | Aucun outil chargé par défaut ; événements `clic_prendre_rdv`, `clic_reiki`, `clic_formation`, `formulaire_envoye` émis via `data-track` / `window.clTrack` (GA4 optionnel dans `src/data/analytics.ts`) |
 
@@ -62,10 +62,15 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
    séance proviennent du site existant de Caroline. En cas de doute, demander plutôt qu'inventer.
 2. **Aucun faux témoignage.** Seule la note globale Google réelle (4,9/5 · 31 avis) est affichée,
    avec un lien vers la fiche. Ne pas ajouter d'avis nominatif sans texte réel fourni par Caroline.
-3. **Mention bien-être obligatoire.** Toute page décrivant une pratique rappelle que les
-   accompagnements ne remplacent pas un avis ou un traitement médical ou psychologique
-   (constante `DISCLAIMER` dans `src/data/site.ts`).
-4. **Réservation via Systeme.io** (sous-domaine `rdv-carolineloire-energeticienne.systeme.io`).
+3. **Écrire au positif, et pas de mention « ne remplace pas un avis médical ».** Retours de
+   Caroline, août 2026 : la mention bien-être / suivi médical a été retirée de toutes les pages
+   (elle ne subsiste que dans les mentions légales, à titre juridique), et les tournures qui
+   disent ce qu'une pratique **n'est pas** (« pas une offre séparée », « pas une consultation
+   commerciale », « sans promesse de résultat ») ont été remplacées par ce qu'elle **est** et
+   comment elle s'intègre au soin. Ne pas les réintroduire.
+4. **Aucune adresse e-mail sur le site.** Les visiteurs passent par le formulaire, le téléphone
+   ou le SMS. Le destinataire des messages vit uniquement dans `public/envoi-message.php`.
+5. **Réservation via Systeme.io** (sous-domaine `rdv-carolineloire-energeticienne.systeme.io`).
    Toutes les URLs Systeme.io vivent dans `src/data/systeme.ts` (`SYSTEME_URLS`) et les CTA
    passent par `systemeHref()` : tant qu'une URL est vide, le CTA retombe sur `/contact`.
    Jamais d'URL Systeme.io en dur dans un composant. Doc complète : `docs/systeme-io/`.

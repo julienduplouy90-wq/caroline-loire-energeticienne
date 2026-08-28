@@ -1,5 +1,5 @@
 ---
-import { DISCLAIMER, IMG, NAV, RESOURCES, SITE, u } from '../data/site';
+import { IMG, NAV_FULL, RESOURCES, SITE, u } from '../data/site';
 
 const year = new Date().getFullYear();
 ---
@@ -9,16 +9,23 @@ const year = new Date().getFullYear();
     <div class="md:col-span-4">
       <div class="flex items-center gap-3">
         <img
-          src={IMG.monogram}
+          src={IMG.monogramClair}
           alt=""
-          class="h-12 w-12 rounded-full object-cover ring-1 ring-white/20"
-          width="48"
-          height="48"
+          class="h-14 w-14 shrink-0 object-contain"
+          width="56"
+          height="56"
           loading="lazy"
         />
         <div>
-          <p class="font-display tracking-logo text-xl">CAROLINE LOIRE</p>
-          <p class="mt-1 text-sm text-white/75">{SITE.tagline}</p>
+          <img
+            src={IMG.logoClair}
+            alt={SITE.name}
+            class="h-11 w-auto"
+            width="1128"
+            height="376"
+            loading="lazy"
+          />
+          <p class="mt-2 text-sm text-white/75">{SITE.tagline}</p>
         </div>
       </div>
       <p class="mt-5 max-w-sm text-sm leading-relaxed text-white/80">
@@ -57,7 +64,7 @@ const year = new Date().getFullYear();
       <p class="text-xs font-semibold tracking-[0.18em] text-peach uppercase">Navigation</p>
       <ul class="mt-4 space-y-2 text-sm">
         {
-          NAV.map((item) => (
+          NAV_FULL.map((item) => (
             <li>
               <a href={u(item.to)} class="text-white/85 transition hover:text-white">
                 {item.label}
@@ -100,9 +107,20 @@ const year = new Date().getFullYear();
         </li>
         <li class="flex gap-2">
           <svg class="mt-0.5 h-4 w-4 shrink-0 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+            <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.7L3 21l1.9-5A8.2 8.2 0 0 1 4 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 8 8.4Z" />
+          </svg>
+          <span>
+            <a href={SITE.smsHref} class="hover:text-white">Envoyer un SMS</a> — je réponds
+            facilement aux SMS.
+          </span>
+        </li>
+        <li class="flex gap-2">
+          <svg class="mt-0.5 h-4 w-4 shrink-0 text-peach" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
             <rect x="2" y="4" width="20" height="16" rx="2" /><path d="m2 7 10 6 10-6" />
           </svg>
-          <a href={SITE.emailHref} class="break-all hover:text-white">{SITE.email}</a>
+          <span>
+            <a href={u('/contact')} class="hover:text-white">Écrire par le formulaire</a>
+          </span>
         </li>
       </ul>
     </div>
@@ -119,8 +137,5 @@ const year = new Date().getFullYear();
         <a href={u('/ressources')} class="hover:text-white">Ressources</a>
       </div>
     </div>
-    <p class="mx-auto max-w-6xl px-4 pb-8 text-[11px] leading-relaxed text-white/50 md:px-6">
-      {DISCLAIMER}
-    </p>
   </div>
 </footer>
