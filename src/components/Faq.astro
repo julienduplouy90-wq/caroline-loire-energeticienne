@@ -1,6 +1,7 @@
 ---
 interface Props {
-  items: { q: string; a: string }[];
+  /** `lien` ajoute un bouton sous la réponse, pour les questions qui appellent une suite. */
+  items: { q: string; a: string; lien?: { href: string; label: string } }[];
 }
 
 const { items } = Astro.props;
@@ -25,6 +26,14 @@ const { items } = Astro.props;
           </svg>
         </summary>
         <p class="pb-4 text-sm leading-relaxed text-ink/80">{item.a}</p>
+        {item.lien && (
+          <a
+            href={item.lien.href}
+            class="mb-5 inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest transition hover:border-forest/45 hover:bg-sand"
+          >
+            {item.lien.label}
+          </a>
+        )}
       </details>
     ))
   }
