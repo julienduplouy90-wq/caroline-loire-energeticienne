@@ -114,6 +114,28 @@ const offers = [
   },
 ];
 
+/*
+ * Sur les deux séances, c'est la réservation qui porte le bouton plein et la
+ * page de présentation qui passe en lien de texte : le site pousse à prendre
+ * rendez-vous. La formation Reiki ne se réserve pas au créneau, elle garde
+ * donc son bouton « Découvrir » et n'a pas de second lien.
+ */
+const offres = offers.map((o) => {
+  const reservable = o.to !== '/formations-reiki';
+  return {
+    ...o,
+    principal: reservable
+      ? {
+          href: systemeHref('booking', SITE.bookingPath, `accueil-offre-${o.n}`),
+          label: 'Prendre rendez-vous',
+          track: TRACK.booking,
+          trackLabel: `accueil-offre-${o.n}`,
+        }
+      : { href: u(o.to), label: o.cta, track: undefined, trackLabel: undefined },
+    secondaire: reservable ? { href: u(o.to), label: o.cta } : null,
+  };
+});
+
 const compare = [
   {
     title: 'Soin énergétique',
@@ -411,7 +433,7 @@ const badges = [
       </div>
       <div class="mt-8 space-y-6 md:mt-12 md:space-y-10">
         {
-          offers.map((o, i) => (
+          offres.map((o, i) => (
             <article
               class:list={[
                 'grid items-center gap-8 overflow-hidden rounded-3xl border border-line bg-white shadow-sm lg:grid-cols-2',
@@ -442,36 +464,36 @@ const badges = [
                     </li>
                   ))}
                 </ul>
-                <a
-                  href={u(o.to)}
-                  class="mt-7 inline-flex min-h-11 items-center gap-2 rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
-                >
-                  {o.cta}
-                  <svg
-                    class="h-4 w-4"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 12h14M13 6l6 6-6 6" />
-                  </svg>
-                </a>
-                {/* Raccourci vers le calendrier, seulement pour les séances :
-                    une formation Reiki ne se réserve pas au créneau. */}
-                {o.to !== '/formations-reiki' && (
+                <div class="mt-7 flex flex-wrap items-center gap-x-5 gap-y-3">
                   <a
-                    href={systemeHref('booking', SITE.bookingPath, `accueil-offre-${o.n}`)}
-                    data-track={TRACK.booking}
-                    data-track-label={`accueil-offre-${o.n}`}
-                    class="mt-4 ml-1 inline-flex min-h-11 items-center text-sm font-medium text-forest underline-offset-4 hover:underline sm:mt-0 sm:ml-4"
+                    href={o.principal.href}
+                    data-track={o.principal.track}
+                    data-track-label={o.principal.trackLabel}
+                    class="inline-flex min-h-11 items-center gap-2 rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
                   >
-                    ou prendre rendez-vous
+                    {o.principal.label}
+                    <svg
+                      class="h-4 w-4"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d="M5 12h14M13 6l6 6-6 6" />
+                    </svg>
                   </a>
-                )}
+                  {o.secondaire && (
+                    <a
+                      href={o.secondaire.href}
+                      class="inline-flex min-h-11 items-center text-sm font-medium text-forest underline-offset-4 hover:underline"
+                    >
+                      {o.secondaire.label}
+                    </a>
+                  )}
+                </div>
               </div>
             </article>
           ))
