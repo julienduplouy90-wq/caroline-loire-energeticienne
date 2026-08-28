@@ -8,6 +8,7 @@
  */
 import { GHL, GHL_FORM_SRC } from '../data/ghl';
 import { TRACK } from '../data/systeme';
+import { u } from '../data/site';
 ---
 
 {
@@ -27,10 +28,10 @@ import { TRACK } from '../data/systeme';
             <li>Aucun engagement après votre demande</li>
             <li>Vos informations restent confidentielles</li>
           </ul>
-          {GHL.booking && (
+          {GHL.bookingPage && (
             <a
               class="premier-echange__direct"
-              href={GHL.booking}
+              href={u(GHL.bookingPage)}
               data-track={TRACK.booking}
               data-track-label="formulaire-premier-echange"
             >

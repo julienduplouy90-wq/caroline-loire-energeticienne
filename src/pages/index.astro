@@ -167,6 +167,15 @@ const steps = [
   },
 ];
 
+/* Version courte des quatre apports détaillés sur la page Soins énergétiques :
+   sur l'accueil, on veut l'idée d'un seul coup d'œil, pas le texte complet. */
+const bienfaits = [
+  'Entretenir l’équilibre plutôt que le rattraper',
+  'Repérer plus tôt ce qui pèse',
+  'Un point d’appui quand la vie s’accélère',
+  'Un temps qui n’appartient qu’à vous',
+];
+
 const reikiLevels = [
   { n: '01', t: 'Premier degré', d: 'Découvrir les fondations et pratiquer sur soi.' },
   { n: '02', t: 'Deuxième degré', d: 'Approfondir sa pratique et découvrir les symboles.' },
@@ -551,31 +560,77 @@ const badges = [
   </section>
 
   <!-- RÉGULARITÉ -->
-  <section class="px-4 py-10 md:px-6 md:py-20">
+  <section class="px-4 py-12 md:px-6 md:py-20">
     <div
-      class="mx-auto max-w-3xl rounded-3xl border border-peach/40 bg-white p-6 md:p-10"
+      class="relative mx-auto max-w-5xl overflow-hidden rounded-[2rem] border border-peach/50 bg-sand/60 p-7 shadow-[0_18px_50px_rgba(54,92,94,0.10)] md:p-12"
       data-reveal
     >
-      <span class="accent-bar mb-4" aria-hidden="true"></span>
-      <h2 class="font-display text-2xl font-semibold text-forest md:text-3xl">
-        Et si l’on n’attendait pas que tout déborde ?
-      </h2>
-      <p class="mt-3 text-sm leading-relaxed text-ink/80 md:mt-4 md:text-base">
-        On pense souvent au soin énergétique dans les moments difficiles. Il peut aussi être un
-        rendez-vous que l’on se donne de temps en temps, pour entretenir son équilibre plutôt que
-        de le rattraper : repérer plus tôt ce qui pèse, garder un point d’appui quand la vie
-        s’accélère, et s’offrir un temps qui n’appartient qu’à soi.
-      </p>
-      <p class="mt-3 text-sm leading-relaxed text-slate-soft md:text-base">
-        Ni forfait, ni abonnement, ni engagement : le rythme se décide ensemble, et il change avec
-        les saisons de votre vie.
-      </p>
-      <a
-        href={u('/soins-energetiques')}
-        class="mt-6 inline-flex text-sm font-medium text-forest underline-offset-4 hover:underline"
-      >
-        Ce qu’un soin suivi dans le temps peut apporter
-      </a>
+      <span
+        class="pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full bg-peach/25 blur-3xl"
+        aria-hidden="true"></span>
+
+      <div class="relative">
+        <p
+          class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
+        >
+          <span class="accent-bar" aria-hidden="true"></span>
+          Prendre soin de soi dans la durée
+        </p>
+        <h2 class="font-display mt-3 max-w-2xl text-2xl font-semibold text-forest md:text-4xl">
+          Et si l’on n’attendait pas que tout déborde ?
+        </h2>
+        <p class="mt-4 max-w-2xl text-[0.95rem] leading-relaxed text-ink/80 md:mt-5 md:text-lg">
+          On pense souvent au soin énergétique dans les moments difficiles. Il peut aussi être un
+          rendez-vous que l’on se donne de temps en temps, pour entretenir son équilibre plutôt que
+          de le rattraper.
+        </p>
+
+        <ul class="mt-7 grid gap-3 sm:grid-cols-2 md:mt-9">
+          {
+            bienfaits.map((b) => (
+              <li class="flex items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3.5 text-sm font-medium text-forest shadow-sm">
+                <span class="inline-flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-peach/25 text-peach-deep">
+                  <svg
+                    class="h-4 w-4"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    aria-hidden="true"
+                  >
+                    <path d="m5 12.5 4.5 4.5L19 7" />
+                  </svg>
+                </span>
+                {b}
+              </li>
+            ))
+          }
+        </ul>
+
+        <p class="mt-7 max-w-2xl text-sm leading-relaxed text-slate-soft md:text-base">
+          Ni forfait, ni abonnement, ni engagement : le rythme se décide ensemble, et il change
+          avec les saisons de votre vie.
+        </p>
+
+        <div class="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-6 md:mt-9">
+          <a
+            href={systemeHref('booking', SITE.bookingPath, 'accueil-regularite')}
+            data-track={TRACK.booking}
+            data-track-label="accueil-regularite"
+            class="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-7 py-3 text-sm font-semibold text-white shadow-sm transition hover:bg-forest-deep"
+          >
+            Prendre rendez-vous
+          </a>
+          <a
+            href={u('/soins-energetiques')}
+            class="inline-flex min-h-11 items-center justify-center text-sm font-medium text-forest underline-offset-4 hover:underline sm:justify-start"
+          >
+            Ce qu’un soin suivi dans le temps peut apporter
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 

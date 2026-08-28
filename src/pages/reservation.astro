@@ -1,0 +1,182 @@
+---
+/*
+ * Page de prise de rendez-vous.
+ *
+ * Cette page existait déjà en ligne mais avait été déposée dans public_html
+ * en dehors du dépôt (comme l'intégration GoHighLevel) : elle est reprise ici
+ * pour être versionnée, et refaite dans la charte du site.
+ *
+ * Ce qui la rendait difficile à lire : les deux calendriers étaient repliés
+ * dans des accordéons, donc on arrivait sur une page de réservation sans voir
+ * un seul créneau. Ici, le format « au cabinet » est ouvert d'emblée et la
+ * bascule se fait par deux onglets. Le calendrier « à distance » ne se charge
+ * qu'au premier clic, pour ne pas peser sur l'arrivée.
+ *
+ * Les informations pratiques (jours, horaires, paiement, tarifs) viennent de
+ * la page d'origine : ne pas les modifier sans vérifier auprès de Caroline.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { PRICES, SITE, u } from '../data/site';
+import { GHL } from '../data/ghl';
+
+const title = 'Prendre rendez-vous | Caroline Loire à Bagnères-de-Bigorre';
+const description =
+  'Réservez votre séance avec Caroline Loire : au cabinet à Bagnères-de-Bigorre, règlement sur place, ou à distance avec paiement sécurisé.';
+
+const formats = [
+  {
+    id: 'cabinet',
+    onglet: 'Au cabinet',
+    titre: 'Au cabinet, à Bagnères-de-Bigorre',
+    jours: 'Lundi, mercredi et samedi · 13 h – 16 h 30',
+    reperes: ['Règlement sur place', `Soin énergétique · ${PRICES.soin.full} €`],
+    texte: `Vous êtes accueilli(e) au ${SITE.fullAddress}. Le règlement se fait directement au cabinet, en fin de séance.`,
+    src: GHL.booking,
+    iframeTitre: 'Créneaux disponibles pour une séance au cabinet',
+  },
+  {
+    id: 'distance',
+    onglet: 'À distance',
+    titre: 'À distance, depuis chez vous',
+    jours: 'Mardi, jeudi et vendredi · 9 h – 11 h 30 et 14 h 30 – 16 h 30',
+    reperes: ['Paiement en ligne sécurisé', `${PRICES.soin.full} € ou ${PRICES.soin.solidaire} € solidaire`],
+    texte:
+      'Vous choisissez une séance énergétique ou une séance chamanisme et énergies, puis le tarif qui vous convient. La séance commence par un échange téléphonique, et se termine par un rappel.',
+    src: GHL.bookingRemote,
+    iframeTitre: 'Créneaux disponibles pour une séance à distance',
+  },
+];
+---
+
+<BaseLayout title={title} description={description}>
+  <PageHero
+    eyebrow="Prendre rendez-vous"
+    title="Choisissez le format qui vous convient"
+    text="Les créneaux affichés ci-dessous sont les disponibilités réelles de Caroline. Il ne reste qu’à choisir l’heure qui vous arrange."
+  />
+
+  <section class="px-4 py-10 md:px-6 md:py-14">
+    <div class="mx-auto max-w-4xl">
+      <!-- Onglets : cabinet ouvert par défaut, distance chargé au premier clic. -->
+      <div
+        class="flex gap-2 rounded-full border border-line bg-sand/60 p-1.5"
+        role="tablist"
+        aria-label="Format de la séance"
+      >
+        {
+          formats.map((f, i) => (
+            <button
+              type="button"
+              role="tab"
+              id={`onglet-${f.id}`}
+              aria-controls={`panneau-${f.id}`}
+              aria-selected={i === 0 ? 'true' : 'false'}
+              tabindex={i === 0 ? 0 : -1}
+              data-onglet={f.id}
+              class="flex-1 rounded-full px-4 py-3 text-sm font-semibold text-forest transition hover:bg-white aria-selected:bg-forest aria-selected:text-white aria-selected:shadow-sm"
+            >
+              {f.onglet}
+            </button>
+          ))
+        }
+      </div>
+
+      {
+        formats.map((f, i) => (
+          <div
+            id={`panneau-${f.id}`}
+            role="tabpanel"
+            aria-labelledby={`onglet-${f.id}`}
+            hidden={i !== 0}
+            class="mt-6"
+          >
+            <div class="rounded-3xl border border-line border-t-2 border-t-peach bg-white p-6 shadow-sm md:p-8">
+              <h2 class="font-display text-2xl text-forest md:text-3xl">{f.titre}</h2>
+
+              <p class="mt-4 flex items-center gap-2.5 text-sm font-semibold text-peach-deep">
+                <svg
+                  class="h-4 w-4 shrink-0"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.8"
+                  aria-hidden="true"
+                >
+                  <circle cx="12" cy="12" r="9" />
+                  <path d="M12 7v5l3.2 2" />
+                </svg>
+                {f.jours}
+              </p>
+
+              <ul class="mt-4 flex flex-wrap gap-2">
+                {f.reperes.map((r) => (
+                  <li class="rounded-full border border-peach/40 bg-peach/15 px-3 py-1.5 text-xs font-medium text-forest">
+                    {r}
+                  </li>
+                ))}
+              </ul>
+
+              <p class="mt-4 text-sm leading-relaxed text-ink/80 md:text-base">{f.texte}</p>
+
+              <div class="mt-6 overflow-hidden rounded-2xl border border-line bg-white">
+                <iframe
+                  class="block h-[44rem] w-full border-0 md:h-[46rem]"
+                  title={f.iframeTitre}
+                  src={i === 0 ? f.src : undefined}
+                  data-src={f.src}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+        ))
+      }
+
+      <p class="mt-8 text-center text-sm leading-relaxed text-slate-soft">
+        Une séance de chamanisme, un rendez-vous pour un enfant, le tarif solidaire au cabinet ou
+        simplement une question avant de réserver ?{' '}
+        <a href={u('/contact')} class="font-medium text-forest underline underline-offset-4">
+          Écrivez-moi
+        </a>{' '}
+        ou appelez-moi au{' '}
+        <a href={SITE.phoneHref} class="font-medium text-forest underline underline-offset-4">
+          {SITE.phone}
+        </a>{' '}
+        — je réponds facilement aux SMS.
+      </p>
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  const onglets = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-onglet]'));
+
+  const activer = (cible: HTMLButtonElement) => {
+    for (const onglet of onglets) {
+      const actif = onglet === cible;
+      onglet.setAttribute('aria-selected', String(actif));
+      onglet.tabIndex = actif ? 0 : -1;
+      const panneau = document.getElementById(`panneau-${onglet.dataset.onglet}`);
+      if (!panneau) continue;
+      panneau.hidden = !actif;
+      // Le second calendrier n'est demandé qu'à sa première ouverture.
+      const cadre = panneau.querySelector<HTMLIFrameElement>('iframe[data-src]');
+      if (actif && cadre && !cadre.getAttribute('src')) {
+        cadre.setAttribute('src', cadre.dataset.src ?? '');
+      }
+    }
+  };
+
+  onglets.forEach((onglet, i) => {
+    onglet.addEventListener('click', () => activer(onglet));
+    onglet.addEventListener('keydown', (e) => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      e.preventDefault();
+      const pas = e.key === 'ArrowRight' ? 1 : -1;
+      const suivant = onglets[(i + pas + onglets.length) % onglets.length];
+      activer(suivant);
+      suivant.focus();
+    });
+  });
+</script>

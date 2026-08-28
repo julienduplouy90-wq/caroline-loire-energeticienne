@@ -94,7 +94,7 @@ export type TrackEvent = (typeof TRACK)[keyof typeof TRACK];
 const CLES_RESERVATION: SystemeKey[] = ['booking', 'energeticSession', 'shamanicSession'];
 
 const reservationGhl = (keys: SystemeKey[]): boolean =>
-  Boolean(GHL.booking) && keys.some((k) => CLES_RESERVATION.includes(k));
+  Boolean(GHL.bookingPage) && keys.some((k) => CLES_RESERVATION.includes(k));
 
 /** Une destination existe-t-elle pour cette clé (GoHighLevel ou Systeme.io) ? */
 export function hasSysteme(keys: SystemeKey | SystemeKey[]): boolean {
@@ -120,7 +120,7 @@ export function systemeHref(
   placement?: string,
 ): string {
   const list = Array.isArray(keys) ? keys : [keys];
-  if (reservationGhl(list)) return GHL.booking;
+  if (reservationGhl(list)) return u(GHL.bookingPage);
   const key = list.find((k) => SYSTEME_URLS[k]);
   if (!key) return u(fallback);
   const url = SYSTEME_URLS[key];

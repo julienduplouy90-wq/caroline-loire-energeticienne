@@ -14,8 +14,17 @@
 export const GHL = {
   /** Widget de discussion (bulle en bas à droite), chargé sur toutes les pages. */
   chatWidgetId: '6a8d71e3ce390e2587ab900f',
-  /** Calendrier de réservation : destination de tous les CTA « Prendre rendez-vous ». */
+  /**
+   * Page du site où l'on choisit son format avant de voir un calendrier.
+   * C'est la destination de tous les CTA « Prendre rendez-vous » : le visiteur
+   * doit choisir entre cabinet et distance (jours, paiement et tarifs
+   * différents) avant d'atterrir sur des créneaux.
+   */
+  bookingPage: '/reservation',
+  /** Calendrier des séances au cabinet (paiement sur place). */
   booking: 'https://api.leadconnectorhq.com/widget/booking/dUfRUC3k5Peb6lqOEUjj',
+  /** Groupe de calendriers des séances à distance (paiement Stripe). */
+  bookingRemote: 'https://api.leadconnectorhq.com/widget/groups/seances-a-distance',
   /** Formulaire « Premier échange » embarqué sur l'accueil. */
   form: 'https://api.leadconnectorhq.com/widget/form/LB4hCG385mNuKIViplFc',
 };
