@@ -30,7 +30,11 @@ const formats = [
     onglet: 'Au cabinet',
     titre: 'Au cabinet, à Bagnères-de-Bigorre',
     jours: 'Lundi, mercredi et samedi · 13 h – 16 h 30',
-    reperes: ['Règlement sur place', `Soin énergétique · ${PRICES.soin.full} €`],
+    reperes: [
+      `Soin énergétique · ${PRICES.soin.duration} · ${PRICES.soin.full} €`,
+      `Chamanisme et énergies · ${PRICES.chamanisme.duration} · ${PRICES.chamanisme.full} €`,
+      'Règlement sur place',
+    ],
     texte: `Vous êtes accueilli(e) au ${SITE.fullAddress}. Le règlement se fait directement au cabinet, en fin de séance.`,
     src: GHL.booking,
     iframeTitre: 'Créneaux disponibles pour une séance au cabinet',
@@ -40,7 +44,11 @@ const formats = [
     onglet: 'À distance',
     titre: 'À distance, depuis chez vous',
     jours: 'Mardi, jeudi et vendredi · 9 h – 11 h 30 et 14 h 30 – 16 h 30',
-    reperes: ['Paiement en ligne sécurisé', `${PRICES.soin.full} € ou ${PRICES.soin.solidaire} € solidaire`],
+    reperes: [
+      `Soin énergétique · ${PRICES.soin.full} € ou ${PRICES.soin.solidaire} € solidaire`,
+      `Chamanisme et énergies, format court · ${PRICES.soin.full} € ou ${PRICES.soin.solidaire} € solidaire`,
+      'Paiement en ligne sécurisé',
+    ],
     texte:
       'Vous choisissez une séance énergétique ou une séance chamanisme et énergies, puis le tarif qui vous convient. La séance commence par un échange téléphonique, et se termine par un rappel.',
     src: GHL.bookingRemote,
@@ -134,8 +142,8 @@ const formats = [
       }
 
       <p class="mt-8 text-center text-sm leading-relaxed text-slate-soft">
-        Une séance de chamanisme, un rendez-vous pour un enfant, le tarif solidaire au cabinet ou
-        simplement une question avant de réserver ?{' '}
+        Un rendez-vous pour un enfant, le tarif solidaire au cabinet, ou simplement une question
+        avant de réserver ?{' '}
         <a href={u('/contact')} class="font-medium text-forest underline underline-offset-4">
           Écrivez-moi
         </a>{' '}
