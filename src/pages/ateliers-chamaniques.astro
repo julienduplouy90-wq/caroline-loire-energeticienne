@@ -1,11 +1,17 @@
 ---
 /*
  * Page partenaire : les ateliers chamaniques de Tambouloup (Alexandre
- * Godgenger, Gerde). Caroline n'organise pas ces stages : elle les
- * recommande, et accompagne ensuite en séance individuelle celles et ceux
- * qui souhaitent aller plus loin. Toutes les informations pratiques
- * proviennent de tambouloup.fr — ne rien inventer, et vérifier auprès
- * d'Alexandre avant toute modification (tarif, durée, lieu).
+ * Godgenger, Gerde).
+ *
+ * Cadrage voulu par Caroline (28/08/2026) : ce n'est pas une adresse donnée
+ * au hasard mais un binôme — elle participe à certains ateliers et en anime
+ * d'autres avec Alexandre. Le partenariat rassure la cliente, donc ne pas
+ * réécrire la page comme une simple recommandation. Le tandem se construit
+ * « de façon organique » : rester au conditionnel sur qui anime quoi.
+ *
+ * Toutes les informations pratiques proviennent de tambouloup.fr — ne rien
+ * inventer, et vérifier auprès d'Alexandre avant toute modification (tarif,
+ * durée, lieu).
  */
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
@@ -15,7 +21,7 @@ import page from '../data/pages/ateliers-chamaniques.json';
 
 const title = 'Ateliers chamaniques près de Bagnères-de-Bigorre | Caroline Loire';
 const description =
-  'Stage d’initiation au voyage chamanique animé par Alexandre Godgenger (Tambouloup) à Gerde, Hautes-Pyrénées. Recommandé par Caroline Loire, énergéticienne.';
+  'Stage d’initiation au voyage chamanique à Gerde, Hautes-Pyrénées. Alexandre Godgenger (Tambouloup) et Caroline Loire, énergéticienne, travaillent en binôme sur ces ateliers.';
 
 const seuils = [
   {
@@ -51,16 +57,20 @@ const pratique = [
     <div class="mx-auto grid max-w-6xl gap-10 md:grid-cols-12">
       <div class="space-y-5 text-base leading-relaxed text-ink/85 md:col-span-7">
         <h2 class="font-display text-2xl text-forest md:text-3xl">
-          Pourquoi je vous parle de ces ateliers
+          Un travail à deux, pas une adresse donnée au hasard
         </h2>
+        <p>
+          Je travaille en binôme avec {TAMBOULOUP.animator}. Il m’arrive de participer aux ateliers,
+          et d’en animer certains avec lui. Ce n’est donc pas quelqu’un d’autre vers qui je vous
+          envoie : c’est quelqu’un avec qui je travaille, et en qui j’ai confiance.
+        </p>
         <p>
           Dans mon cabinet, j’accompagne les personnes en séance : c’est moi qui voyage, et je
           restitue ensuite ce qui est remonté. Beaucoup de gens, après une première séance, ont
-          envie d’aller voir par eux-mêmes. C’est exactement ce que transmet Alexandre Godgenger,
-          avec {TAMBOULOUP.name}.
+          envie d’aller voir par eux-mêmes. C’est exactement ce que transmettent ces ateliers.
         </p>
         <p>
-          Son stage d’initiation apprend à faire un voyage chamanique et à rencontrer un animal
+          Le stage d’initiation apprend à faire un voyage chamanique et à rencontrer un animal
           totem — pour soi, puis pour quelqu’un d’autre. Aucune expérience préalable n’est
           nécessaire, et l’objectif est clair : repartir autonome, avec une pratique que l’on peut
           poursuivre chez soi.
@@ -97,9 +107,8 @@ const pratique = [
           >.
         </p>
         <p>
-          Nos deux pratiques se répondent : Alexandre transmet l’outil, je vous accompagne quand le
-          chemin demande à aller plus loin. Si vous ne savez pas par où commencer, appelez l’un de
-          nous deux : nous vous orienterons simplement.
+          Si vous ne savez pas par où commencer, appelez l’un de nous deux : nous travaillons
+          ensemble, nous vous orienterons simplement.
         </p>
       </div>
 
@@ -122,7 +131,8 @@ const pratique = [
             </div>
           </div>
           <p class="mt-4 text-center text-sm text-slate-soft">
-            {TAMBOULOUP.baseline} — ateliers animés par {TAMBOULOUP.animator}
+            {TAMBOULOUP.baseline} — ateliers animés par {TAMBOULOUP.animator}, parfois à deux avec
+            Caroline
           </p>
 
           <dl class="mt-6 space-y-3 text-sm">
@@ -163,13 +173,18 @@ const pratique = [
       <div>
         <span class="accent-bar mb-4" aria-hidden="true"></span>
         <h2 class="font-display text-2xl text-forest md:text-3xl">
-          {TAMBOULOUP.animator}, qui anime les ateliers
+          {TAMBOULOUP.animator}, avec qui je travaille
         </h2>
         <p class="mt-4 text-base leading-relaxed text-ink/80">
           Ostéopathe D.O. et masseur-kinésithérapeute installé à Bagnères-de-Bigorre, Alexandre est
           venu aux pratiques chamaniques par des années d’écoute du corps. Avec {TAMBOULOUP.name},
           il transmet le voyage chamanique en petit groupe, au Mélilot, à Gerde — sans mise en
           scène ni folklore.
+        </p>
+        <p class="mt-4 text-base leading-relaxed text-ink/80">
+          Nous avançons ensemble, de façon organique : selon les sessions, je participe à l’atelier
+          ou nous l’animons à deux. Nos pratiques se complètent — il transmet l’outil, j’accompagne
+          au cabinet celles et ceux qui souhaitent aller plus loin.
         </p>
         <div class="mt-6 flex flex-wrap gap-3">
           <a
@@ -195,7 +210,7 @@ const pratique = [
 
   <CtaBand
     title="Vous hésitez entre l’atelier et une séance ?"
-    text={`Écrivez-moi ou envoyez-moi un SMS au ${SITE.phone} : je vous dirai franchement ce qui me semble le plus juste pour vous, quitte à vous envoyer vers Alexandre.`}
+    text={`Écrivez-moi ou envoyez-moi un SMS au ${SITE.phone} : nous regarderons ensemble ce qui vous correspond le mieux, l’atelier ou une séance au cabinet.`}
     primaryLabel="Poser ma question à Caroline"
     primaryTo="/contact"
     primaryKey={null}

@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-  title = 'Apprendre le voyage chamanique avec Tambouloup',
-  text = 'Alexandre Godgenger transmet le voyage chamanique au tambour lors d’un stage de deux jours, à Gerde, à quelques minutes de Bagnères-de-Bigorre. Une porte d’entrée pour celles et ceux qui souhaitent explorer par eux-mêmes — et un chemin qui peut se prolonger en séance au cabinet.',
+  title = 'Apprendre le voyage chamanique, avec Tambouloup',
+  text = 'Je travaille en binôme avec Alexandre Godgenger : il transmet le voyage chamanique au tambour lors d’un stage de deux jours, à Gerde, à quelques minutes de Bagnères-de-Bigorre — et il m’arrive d’y participer, ou de l’animer avec lui. Une porte d’entrée pour explorer par soi-même, qui peut ensuite se prolonger en séance au cabinet.',
 } = Astro.props;
 ---
 
@@ -43,7 +43,7 @@ const {
         class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
       >
         <span class="accent-bar" aria-hidden="true"></span>
-        Pour aller plus loin · en partenariat avec {TAMBOULOUP.name}
+        Pour aller plus loin · en binôme avec {TAMBOULOUP.name}
       </p>
       <h2 class="font-display mt-3 text-2xl font-semibold text-forest md:text-3xl">{title}</h2>
       <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink/80">{text}</p>
