@@ -158,3 +158,11 @@ export const RESOURCES = [
 ];
 
 export const PRICES = contenu.tarifs;
+
+/**
+ * Rythme d'accompagnement conseillé par Caroline (ex. « deux séances espacées
+ * de trois semaines pour commencer »). Vide tant qu'elle ne l'a pas précisé :
+ * l'encart correspondant ne s'affiche alors pas, plutôt que d'annoncer un
+ * protocole qu'elle n'a pas validé.
+ */
+export const RYTHME_CONSEILLE = contenu.accompagnement.rythmeConseille;

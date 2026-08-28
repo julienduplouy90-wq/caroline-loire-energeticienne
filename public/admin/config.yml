@@ -48,6 +48,18 @@ collections:
               - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35. Sert aussi au bouton « Envoyer un SMS ».' }
               - { name: instagram, label: Lien Instagram, widget: string }
               - { name: facebook, label: Lien Facebook, widget: string }
+          - name: accompagnement
+            label: Accompagnement
+            widget: object
+            fields:
+              - name: rythmeConseille
+                label: Rythme conseillé
+                widget: text
+                required: false
+                hint: >-
+                  Ce que vous conseillez pour un accompagnement, par exemple « deux séances
+                  espacées de trois semaines pour commencer ». Affiché en encart sur la page
+                  Soins énergétiques. Laissez vide si vous ne voulez rien annoncer.
           - name: tarifs
             label: Tarifs
             widget: object

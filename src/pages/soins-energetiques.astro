@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, PRICES, SITE, u, asset } from '../data/site';
+import { IMG, PRICES, RYTHME_CONSEILLE, SITE, u, asset } from '../data/site';
 import { TRACK, systemeHref } from '../data/systeme';
 import page from '../data/pages/soins-energetiques.json';
 
@@ -152,14 +152,42 @@ const outils = [
       <div data-reveal>
         <span class="accent-bar mb-4" aria-hidden="true"></span>
         <h2 class="font-display max-w-2xl text-2xl font-semibold text-forest md:text-3xl">
-          Et si l’on n’attendait pas que tout déborde ?
+          Une séance fait du bien. Plusieurs ouvrent un chemin.
         </h2>
         <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink/80">
           On pense souvent au soin énergétique quand quelque chose ne va plus : une fatigue qui
           dure, une émotion qui prend toute la place, une période qui pèse. C’est légitime — et
-          c’est souvent comme cela que l’on se rencontre. Mais un soin peut aussi être un
-          rendez-vous que l’on se donne, simplement pour rester en lien avec soi.
+          c’est souvent comme cela que l’on se rencontre.
         </p>
+        <p class="mt-4 max-w-2xl text-base leading-relaxed text-ink/80">
+          Mais ce qui se met en mouvement pendant une séance continue de travailler les jours
+          suivants. Quand quelque chose demande vraiment à se dénouer, cela se joue rarement en une
+          fois : c’est en revenant, à quelques semaines d’intervalle, que le chemin se dessine et
+          que les effets s’installent. C’est pourquoi je vous invite à penser l’accompagnement en
+          plusieurs rendez-vous plutôt qu’en une seule visite.
+        </p>
+
+        {
+          RYTHME_CONSEILLE && (
+            <p class="mt-6 flex max-w-2xl items-start gap-3 rounded-2xl border border-peach/45 bg-peach/15 px-5 py-4 text-base leading-relaxed text-ink/85">
+              <svg
+                class="mt-1 h-5 w-5 shrink-0 text-peach-deep"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="1.8"
+                aria-hidden="true"
+              >
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 7v5l3.2 2" />
+              </svg>
+              <span>
+                <strong class="font-semibold text-forest">Ce que je conseille :</strong>{' '}
+                {RYTHME_CONSEILLE}
+              </span>
+            </p>
+          )
+        }
       </div>
 
       <div class="mt-8 grid gap-4 sm:grid-cols-2 md:mt-10">
