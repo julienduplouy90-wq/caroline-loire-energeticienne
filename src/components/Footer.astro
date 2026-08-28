@@ -1,5 +1,6 @@
 ---
 import { IMG, NAV_FULL, RESOURCES, SITE, u } from '../data/site';
+import { TRACK, systemeHref } from '../data/systeme';
 
 const year = new Date().getFullYear();
 ---
@@ -129,6 +130,15 @@ const year = new Date().getFullYear();
           <span>{SITE.hours.cabinet}</span>
         </li>
       </ul>
+
+      <a
+        href={systemeHref('booking', SITE.bookingPath, 'pied-de-page')}
+        data-track={TRACK.booking}
+        data-track-label="pied-de-page"
+        class="mt-5 inline-flex min-h-11 items-center justify-center rounded-full bg-peach px-5 py-2.5 text-sm font-semibold text-ink transition hover:bg-white"
+      >
+        Prendre rendez-vous
+      </a>
     </div>
   </div>
 

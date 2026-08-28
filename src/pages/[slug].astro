@@ -3,7 +3,8 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { RESOURCES_CONTENT } from '../data/resources';
-import { u } from '../data/site';
+import { SITE, u } from '../data/site';
+import { TRACK, systemeHref } from '../data/systeme';
 
 export function getStaticPaths() {
   return RESOURCES_CONTENT.map((resource) => ({
@@ -40,16 +41,18 @@ const { resource } = Astro.props;
 
       <div class="flex flex-wrap gap-3">
         <a
-          href={u(resource.primaryCta.to)}
+          href={systemeHref('booking', SITE.bookingPath, `ressource-${resource.slug}`)}
+          data-track={TRACK.booking}
+          data-track-label={`ressource-${resource.slug}`}
           class="inline-flex min-h-11 items-center rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
         >
-          {resource.primaryCta.label}
+          Prendre rendez-vous
         </a>
         <a
-          href={u('/contact')}
+          href={u(resource.primaryCta.to)}
           class="inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest hover:bg-sand"
         >
-          Prendre contact
+          {resource.primaryCta.label}
         </a>
       </div>
     </div>
@@ -57,10 +60,8 @@ const { resource } = Astro.props;
 
   <CtaBand
     title="Envie d’un accompagnement personnalisé ?"
-    text="Le Reiki et les autres outils présentés ici s’intègrent le plus souvent dans un soin énergétique ou une séance de chamanisme."
-    primaryLabel={resource.primaryCta.label}
-    primaryTo={resource.primaryCta.to}
-    primaryKey={null}
-    primaryTrack={null}
+    text="Ces outils s’intègrent à un soin énergétique ou à une séance de chamanisme. Réservez votre créneau : nous verrons ensemble ce qui vous correspond."
+    secondaryLabel={resource.primaryCta.label}
+    secondaryTo={resource.primaryCta.to}
   />
 </BaseLayout>

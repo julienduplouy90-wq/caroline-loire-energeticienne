@@ -6,7 +6,7 @@ import GoogleRating from '../components/GoogleRating.astro';
 import TambouloupTeaser from '../components/TambouloupTeaser.astro';
 import PremierEchange from '../components/PremierEchange.astro';
 import { GOOGLE_RATING, IMG, PRICES, SITE, u } from '../data/site';
-import { TRACK } from '../data/systeme';
+import { TRACK, systemeHref } from '../data/systeme';
 import page from '../data/pages/accueil.json';
 
 const title = 'Caroline Loire | Énergéticienne à Bagnères-de-Bigorre';
@@ -252,20 +252,31 @@ const badges = [
         </p>
         <div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap md:mt-8">
           <a
-            href="#accompagnements"
+            href={systemeHref('booking', SITE.bookingPath, 'accueil-hero')}
+            data-track={TRACK.booking}
+            data-track-label="accueil-hero"
             class="inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-6 py-3 text-sm font-medium text-white transition hover:bg-forest-deep"
+          >
+            Prendre rendez-vous
+          </a>
+          <a
+            href="#accompagnements"
+            class="inline-flex min-h-12 items-center justify-center rounded-full border border-forest/25 bg-white px-6 py-3 text-sm font-medium text-forest transition hover:bg-sand"
           >
             Trouver l’accompagnement qui me correspond
           </a>
+        </div>
+        <p class="mt-4 text-sm text-slate-soft">
+          Vous venez plutôt pour apprendre ?{' '}
           <a
             href={u('/formations-reiki')}
             data-track={TRACK.formation}
             data-track-label="accueil-hero"
-            class="inline-flex min-h-12 items-center justify-center rounded-full border border-forest/25 bg-white px-6 py-3 text-sm font-medium text-forest transition hover:bg-sand"
+            class="font-medium text-forest underline underline-offset-4 hover:text-forest-deep"
           >
             Découvrir les formations Reiki
           </a>
-        </div>
+        </p>
       </div>
 
       <div class="relative md:col-span-6">
@@ -440,6 +451,18 @@ const badges = [
                     <path d="M5 12h14M13 6l6 6-6 6" />
                   </svg>
                 </a>
+                {/* Raccourci vers le calendrier, seulement pour les séances :
+                    une formation Reiki ne se réserve pas au créneau. */}
+                {o.to !== '/formations-reiki' && (
+                  <a
+                    href={systemeHref('booking', SITE.bookingPath, `accueil-offre-${o.n}`)}
+                    data-track={TRACK.booking}
+                    data-track-label={`accueil-offre-${o.n}`}
+                    class="mt-4 ml-1 inline-flex min-h-11 items-center text-sm font-medium text-forest underline-offset-4 hover:underline sm:mt-0 sm:ml-4"
+                  >
+                    ou prendre rendez-vous
+                  </a>
+                )}
               </div>
             </article>
           ))
@@ -478,15 +501,25 @@ const badges = [
         }
       </div>
       <p class="mt-8 max-w-2xl text-base text-ink/80">
-        Vous hésitez encore ? Contactez-moi et expliquez-moi simplement ce que vous traversez. Je
-        vous aiderai à identifier l’option la plus cohérente.
+        Vous hésitez encore ? Prenez rendez-vous : nous ferons le point au début de la séance et
+        j’adapterai l’accompagnement à ce que vous traversez.
       </p>
-      <a
-        href={u('/contact')}
-        class="mt-5 inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest hover:bg-sand"
-      >
-        Poser ma question à Caroline
-      </a>
+      <div class="mt-5 flex flex-wrap items-center gap-4">
+        <a
+          href={systemeHref('booking', SITE.bookingPath, 'accueil-comparatif')}
+          data-track={TRACK.booking}
+          data-track-label="accueil-comparatif"
+          class="inline-flex min-h-11 items-center rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-white transition hover:bg-forest-deep"
+        >
+          Prendre rendez-vous
+        </a>
+        <a
+          href={u('/contact')}
+          class="inline-flex min-h-11 items-center text-sm font-medium text-forest underline-offset-4 hover:underline"
+        >
+          ou me poser une question d’abord
+        </a>
+      </div>
     </div>
   </section>
 

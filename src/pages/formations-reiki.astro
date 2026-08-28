@@ -2,7 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
-import { IMG, PRICES, asset } from '../data/site';
+import { IMG, PRICES, SITE, asset } from '../data/site';
 import { TRACK, hasSysteme, systemeHref, type SystemeKey } from '../data/systeme';
 import page from '../data/pages/formations-reiki.json';
 
@@ -133,7 +133,7 @@ const levels = [
     primaryTo="/contact"
     primaryKey="reikiInfo"
     primaryTrack={TRACK.formation}
-    secondaryLabel="Voir les soins énergétiques"
-    secondaryTo="/soins-energetiques"
+    secondaryLabel="Prendre rendez-vous pour une séance"
+    secondaryTo={systemeHref('booking', SITE.bookingPath, 'formations-bandeau')}
   />
 </BaseLayout>
