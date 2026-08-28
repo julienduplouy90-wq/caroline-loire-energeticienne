@@ -2,6 +2,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
+import TambouloupTeaser from '../components/TambouloupTeaser.astro';
 import { IMG, PRICES, SITE, u, asset } from '../data/site';
 import { TRACK, systemeHref } from '../data/systeme';
 import page from '../data/pages/chamanisme.json';
@@ -55,17 +56,18 @@ const soins = [
           ramène des informations et effectue des soins spécifiques en se laissant guider.
         </p>
         <p>
-          Cette séance est profonde. Il est important de se sentir prêt(e) avant de l’aborder. Elle
-          ne remplace pas un suivi médical ou psychologique.
+          Cette séance est profonde. Il est important de se sentir prêt(e) avant de l’aborder :
+          nous en parlons ensemble avant de fixer un rendez-vous.
         </p>
 
         <h3 class="font-display pt-2 text-xl text-forest">Déroulement d’une séance</h3>
         <p>
-          Après un bref échange, j’effectue un temps d’écoute énergétique des centres (chakras). Vous
-          vous installez habillé(e) sur la table de soin. J’utilise notamment mon tambour et mon
-          hochet, puis je poursuis avec une transmission d’énergies (Reiki et Shamballa selon les
-          ressentis). En fin de séance, je prépare souvent un mélange de Fleurs de Bach, je restitue
-          les informations captées et je clôture par un tirage d’oracle.
+          Après un bref échange, je fais un scanner énergétique : je passe le long du corps et je
+          ressens l’état de vos chakras. Vous vous installez habillé(e) sur la table de soin.
+          J’utilise notamment mon tambour et mon hochet, puis je poursuis avec une transmission
+          d’énergies (Reiki et Shamballa selon les ressentis). En fin de séance, je prépare
+          souvent un mélange de Fleurs de Bach, je restitue les informations captées et je
+          clôture par le tirage d’une carte d’oracle.
         </p>
 
         <h3 class="font-display pt-2 text-xl text-forest">Les grands soins possibles</h3>
@@ -120,6 +122,11 @@ const soins = [
       </aside>
     </div>
   </section>
+
+  <TambouloupTeaser
+    title="Envie d’apprendre à voyager vous-même ?"
+    text="En séance, c’est moi qui voyage et qui vous restitue ce qui remonte. Si vous souhaitez faire l’expérience par vous-même, Alexandre Godgenger transmet le voyage chamanique au tambour lors d’un stage de deux jours à Gerde, tout près d’ici. Beaucoup y découvrent leur animal totem — et reviennent ensuite en séance pour un travail plus profond."
+  />
 
   <CtaBand
     primaryKey={['shamanicSession', 'booking']}

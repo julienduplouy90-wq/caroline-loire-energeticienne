@@ -1,5 +1,5 @@
 ---
-import { IMG, NAV, SITE, u } from '../data/site';
+import { IMG, NAV, NAV_FULL, SITE, u } from '../data/site';
 import { TRACK, systemeHref } from '../data/systeme';
 
 const current = Astro.url.pathname.replace(/\/+$/, '') || u('/').replace(/\/+$/, '');
@@ -18,11 +18,17 @@ const isActive = (to: string) => {
       <img
         src={IMG.monogram}
         alt=""
-        class="h-10 w-10 rounded-full object-cover"
+        class="h-10 w-10 shrink-0 object-contain md:h-11 md:w-11"
         width="40"
         height="40"
       />
-      <span class="font-display tracking-logo text-lg text-forest md:text-xl">CAROLINE LOIRE</span>
+      <img
+        src={IMG.logo}
+        alt={SITE.name}
+        class="h-9 w-auto md:h-11"
+        width="1128"
+        height="376"
+      />
     </a>
 
     <nav class="hidden items-center gap-1 whitespace-nowrap lg:flex" aria-label="Navigation principale">
@@ -74,7 +80,7 @@ const isActive = (to: string) => {
   <div id="mobile-nav" class="hidden border-t border-line bg-white lg:hidden">
     <nav class="flex w-full flex-col gap-1 px-4 py-4" aria-label="Menu mobile">
       {
-        NAV.map((item) => (
+        NAV_FULL.map((item) => (
           <a
             href={u(item.to)}
             data-close-menu

@@ -6,7 +6,7 @@ import { SYSTEME_CONTACT_FORM_EMBED, TRACK, hasSysteme, systemeHref } from '../d
 import page from '../data/pages/contact.json';
 
 const title = 'Contact | Caroline Loire énergéticienne à Bagnères-de-Bigorre';
-const description = `Contactez Caroline Loire à Bagnères-de-Bigorre : ${SITE.phone}, ${SITE.email}, ${SITE.address}.`;
+const description = `Contactez Caroline Loire à Bagnères-de-Bigorre : ${SITE.phone} (appel ou SMS), formulaire de contact, ${SITE.address}.`;
 
 const subjects = [
   'Demande d’informations',
@@ -75,12 +75,15 @@ const mapSrc =
                 stroke-width="1.8"
                 aria-hidden="true"
               >
-                <rect x="2" y="4" width="20" height="16" rx="2"></rect><path d="m2 7 10 6 10-6"
+                <path d="M21 11.5a8.4 8.4 0 0 1-9 8.4 9 9 0 0 1-3.4-.7L3 21l1.9-5A8.2 8.2 0 0 1 4 11.5a8.4 8.4 0 0 1 9-8.4 8.4 8.4 0 0 1 8 8.4Z"
                 ></path>
               </svg>
-              <a href={SITE.emailHref} class="font-medium break-all text-forest hover:underline"
-                >{SITE.email}</a
-              >
+              <span>
+                <a href={SITE.smsHref} class="font-medium text-forest hover:underline"
+                  >Envoyer un SMS</a
+                >
+                <span class="block text-slate-soft">Je réponds facilement aux SMS.</span>
+              </span>
             </li>
           </ul>
           {
@@ -108,8 +111,8 @@ const mapSrc =
             ) : (
               <>
                 <p class="mt-6 rounded-2xl bg-sand/70 px-4 py-3 text-xs leading-relaxed text-slate-soft">
-                  Les rendez-vous se prennent par téléphone ou par e-mail. Je vous rappelle dès que
-                  possible pour convenir d’un créneau.
+                  Les rendez-vous se prennent par téléphone, par SMS ou avec le formulaire
+                  ci-contre. Je vous réponds dès que possible pour convenir d’un créneau.
                 </p>
                 <a
                   href={SITE.phoneHref}
@@ -278,7 +281,7 @@ const mapSrc =
     </div>
   </section>
 
-  <script define:vars={{ endpoint: SITE.formEndpoint, mailto: SITE.email, sentEvent: TRACK.formSent }}>
+  <script define:vars={{ endpoint: SITE.formEndpoint, telephone: SITE.phone, sentEvent: TRACK.formSent }}>
     const form = document.getElementById('contact-form');
     const status = document.getElementById('form-status');
     const sent = (mode, objet) =>
@@ -292,6 +295,17 @@ const mapSrc =
       status.classList.toggle('text-peach-deep', !ok);
     };
 
+    // Retour du formulaire posté sans JavaScript (voir envoi-message.php).
+    const retour = new URLSearchParams(window.location.search).get('message');
+    if (retour === 'envoye') {
+      show('Message envoyé. Merci, je vous répondrai dès que possible.', true);
+    } else if (retour === 'erreur') {
+      show(
+        `L’envoi n’a pas abouti. Vous pouvez m’appeler ou m’envoyer un SMS au ${telephone} : je réponds facilement aux SMS.`,
+        false,
+      );
+    }
+
     form?.addEventListener('submit', async (event) => {
       if (!form.reportValidity()) return;
       const data = new FormData(form);
@@ -300,44 +314,32 @@ const mapSrc =
         return;
       }
 
-      // Sans endpoint configuré, on ouvre le logiciel de messagerie du visiteur
-      // avec un message pré-rempli : le site reste 100 % statique.
-      if (!endpoint) {
-        event.preventDefault();
-        const corps = [
-          `Prénom : ${data.get('prenom')}`,
-          `Nom : ${data.get('nom')}`,
-          `E-mail : ${data.get('email')}`,
-          `Téléphone : ${data.get('telephone') || '—'}`,
-          `Recevoir des nouvelles : ${data.get('nouvelles') ? 'oui' : 'non'}`,
-          '',
-          data.get('message'),
-        ].join('\n');
-        const href = `mailto:${mailto}?subject=${encodeURIComponent(
-          `[Site] ${data.get('objet')}`,
-        )}&body=${encodeURIComponent(corps)}`;
-        window.location.href = href;
-        sent('mailto', data.get('objet'));
-        show('Votre logiciel de messagerie s’ouvre avec le message pré-rempli.', true);
-        return;
-      }
-
+      // Le message part vers `envoi-message.php`, qui le transmet à la boîte
+      // de Caroline. Aucune adresse e-mail n'apparaît côté visiteur.
       event.preventDefault();
+      const bouton = form.querySelector('button[type="submit"]');
+      if (bouton) bouton.disabled = true;
       try {
         const res = await fetch(endpoint, {
           method: 'POST',
           body: data,
           headers: { Accept: 'application/json' },
         });
-        if (!res.ok) throw new Error('HTTP ' + res.status);
+        const reponse = await res.json().catch(() => ({}));
+        if (!res.ok || reponse.ok !== true) {
+          throw new Error(reponse.erreur || 'HTTP ' + res.status);
+        }
         form.reset();
-        sent('formspree', data.get('objet'));
+        sent('formulaire', data.get('objet'));
         show('Message envoyé. Merci, je vous répondrai dès que possible.', true);
-      } catch {
+      } catch (erreur) {
+        const detail = erreur && erreur.message ? erreur.message + ' ' : '';
         show(
-          `L’envoi a échoué. Vous pouvez m’écrire directement à ${mailto} ou m’appeler.`,
+          `${detail}Vous pouvez aussi m’appeler ou m’envoyer un SMS au ${telephone} : je réponds facilement aux SMS.`,
           false,
         );
+      } finally {
+        if (bouton) bouton.disabled = false;
       }
     });
   </script>

@@ -3,7 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHero from '../components/PageHero.astro';
 import CtaBand from '../components/CtaBand.astro';
 import { RESOURCES_CONTENT } from '../data/resources';
-import { DISCLAIMER, u } from '../data/site';
+import { u } from '../data/site';
 
 export function getStaticPaths() {
   return RESOURCES_CONTENT.map((resource) => ({
@@ -37,12 +37,6 @@ const { resource } = Astro.props;
           </div>
         ))
       }
-
-      <p
-        class="rounded-2xl border border-peach/40 bg-peach/15 p-5 text-sm leading-relaxed text-slate-soft"
-      >
-        {DISCLAIMER}
-      </p>
 
       <div class="flex flex-wrap gap-3">
         <a

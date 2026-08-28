@@ -43,8 +43,7 @@ collections:
               - { name: adresse, label: Adresse, widget: string }
               - { name: codePostal, label: Code postal, widget: string }
               - { name: ville, label: Ville, widget: string }
-              - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35' }
-              - { name: email, label: Email, widget: string }
+              - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35. Sert aussi au bouton « Envoyer un SMS ».' }
               - { name: instagram, label: Lien Instagram, widget: string }
               - { name: facebook, label: Lien Facebook, widget: string }
           - name: tarifs
@@ -171,10 +170,26 @@ collections:
           - { name: titre, label: Grand titre, widget: string }
           - { name: texte, label: Texte d’introduction, widget: text }
 
+  # -------------------------------------------------------- ATELIERS TAMBOULOUP
+  - name: page_ateliers
+    label: '7. Page Ateliers chamaniques'
+    description: >-
+      Page partenaire sur les ateliers d’Alexandre Godgenger (Tambouloup). Seuls le titre et
+      l’introduction se modifient ici : les informations pratiques (dates, tarif, lieu) viennent
+      de tambouloup.fr et se changent dans le code, après vérification auprès d’Alexandre.
+    files:
+      - name: ateliers
+        label: Page Ateliers chamaniques
+        file: src/data/pages/ateliers-chamaniques.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+
   # ------------------------------------------------------------------ CONTACT
   - name: page_contact
-    label: '7. Page Contact'
-    description: Le titre de la page. Le téléphone et l’email se modifient dans « ⭐ Sur tout le site ».
+    label: '8. Page Contact'
+    description: Le titre de la page. Le téléphone se modifie dans « ⭐ Sur tout le site ».
     files:
       - name: contact
         label: Page Contact
