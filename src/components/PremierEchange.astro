@@ -113,12 +113,23 @@ import { u } from '../data/site';
     font-weight: 700;
   }
   #premier-echange .premier-echange__direct {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     margin-top: 28px;
+    padding: 0 20px;
+    border: 1px solid rgba(77, 160, 168, 0.35);
+    border-radius: 999px;
     color: #4da0a8;
-    font: 600 15px/1.4 Inter, sans-serif;
-    text-decoration: underline;
-    text-underline-offset: 4px;
+    font: 600 14px/1.4 Inter, sans-serif;
+    text-decoration: none;
+    transition:
+      border-color 150ms,
+      background-color 150ms;
+  }
+  #premier-echange .premier-echange__direct:hover {
+    border-color: rgba(77, 160, 168, 0.6);
+    background: #fdf3ef;
   }
   #premier-echange .premier-echange__card {
     background: #fff;
