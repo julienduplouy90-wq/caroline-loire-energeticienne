@@ -1,3 +1,32 @@
 {
-  "avis": []
+  "avis": [
+    {
+      "auteur": "Aurélie M",
+      "note": 5,
+      "texte": "J'ai bénéficié d'une séance de soins à distance avec Caroline. Caroline s'est montrée très à l'écoute, très douce et d'une justesse incroyable quant à la prise en considération de ma situation, pour laquelle je sollicitais le soin.",
+      "date": "mars 2026",
+      "extrait": true
+    },
+    {
+      "auteur": "Florence Martinand",
+      "note": 5,
+      "texte": "Caroline me fait des soins chamanismes et énergétiques depuis environ 3 ans des que le besoin sans fait sentir ! Un coup de fatigue , un événement qui fragilise le mental et le corps ! Ses soins me sont tjs bénéfiques pour repartir du bon",
+      "date": "octobre 2025",
+      "extrait": true
+    },
+    {
+      "auteur": "Ségolène Tinguely",
+      "note": 5,
+      "texte": "Caroline est une personne très à l'écoute et très douce. Nous avons su nous comprendre très rapidement. Le soin énergétique et chamanique ont tout les deux été doux et pourtant sources",
+      "date": "août 2025",
+      "extrait": true
+    },
+    {
+      "auteur": "Julien Duplouy",
+      "note": 5,
+      "texte": "Caroline est vraiment très à l'écoute et ses soins sont d'une justesse incroyable. L'ambiance du lieux y est également très agréable. Un tout qui amène donc aux résultats recherchés lors de ma venue !",
+      "date": "janvier 2026",
+      "extrait": true
+    }
+  ]
 }

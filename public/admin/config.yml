@@ -44,7 +44,6 @@ collections:
               - { name: codePostal, label: Code postal, widget: string }
               - { name: ville, label: Ville, widget: string }
               - { name: horairesCabinet, label: Horaires au cabinet, widget: string, hint: 'Ex. : Lundi, mercredi et samedi, de 13 h à 16 h 30' }
-              - { name: horairesDistance, label: Horaires à distance, widget: string, hint: 'Ex. : À distance : souvent en soirée, sur rendez-vous' }
               - { name: horairesNote, label: Phrase de souplesse sur les horaires, widget: text, hint: 'Affichée sur la page Contact, sous les horaires.' }
               - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35. Sert aussi au bouton « Envoyer un SMS ».' }
               - { name: instagram, label: Lien Instagram, widget: string }

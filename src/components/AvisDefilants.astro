@@ -12,12 +12,15 @@
  * ni temps mort.
  */
 import donnees from '../data/avis.json';
+import { SITE } from '../data/site';
 
 interface Avis {
   auteur: string;
   note?: number;
   texte: string;
   date?: string;
+  /** Vrai si Google tronque l'avis : on affiche « … » et on renvoie à la fiche. */
+  extrait?: boolean;
 }
 
 const avis = (donnees.avis as Avis[]).filter((a) => a && a.texte && a.auteur);
@@ -35,27 +38,35 @@ const piste = [...avis, ...avis];
       <div class="avis-viewport">
         <ul class="avis-piste" role="list">
           {piste.map((a, i) => (
-            <li
-              class="avis-carte"
-              aria-hidden={i >= avis.length ? 'true' : undefined}
-            >
-              <div class="avis-etoiles" aria-label={`${a.note ?? 5} sur 5 étoiles`}>
-                {Array.from({ length: 5 }).map((_, s) => (
-                  <svg
-                    class={s < Math.round(a.note ?? 5) ? 'est-pleine' : 'est-vide'}
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.8l6.5-.9L12 3Z" />
-                  </svg>
-                ))}
-              </div>
-              <p class="avis-texte">{a.texte}</p>
-              <p class="avis-auteur">
-                {a.auteur}
-                {a.date && <span class="avis-date"> · {a.date}</span>}
-              </p>
+            <li class="avis-carte" aria-hidden={i >= avis.length ? 'true' : undefined}>
+              <a
+                class="avis-lien"
+                href={SITE.googleReviewsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                tabindex={i >= avis.length ? -1 : undefined}
+              >
+                <span class="avis-etoiles" aria-label={`${a.note ?? 5} sur 5 étoiles`}>
+                  {Array.from({ length: 5 }).map((_, s) => (
+                    <svg
+                      class={s < Math.round(a.note ?? 5) ? 'est-pleine' : 'est-vide'}
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      aria-hidden="true"
+                    >
+                      <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.8l6.5-.9L12 3Z" />
+                    </svg>
+                  ))}
+                </span>
+                <span class="avis-texte">
+                  {a.texte}
+                  {a.extrait && <span class="avis-suite"> … lire la suite sur Google</span>}
+                </span>
+                <span class="avis-auteur">
+                  {a.auteur}
+                  {a.date && <span class="avis-date"> · {a.date}</span>}
+                </span>
+              </a>
             </li>
           ))}
         </ul>
@@ -123,6 +134,20 @@ const piste = [...avis, ...avis];
     background: rgba(255, 255, 255, 0.06);
   }
 
+  .avis-lien {
+    display: block;
+    color: inherit;
+    text-decoration: none;
+  }
+  .avis-lien:hover .avis-suite,
+  .avis-lien:focus-visible .avis-suite {
+    text-decoration: underline;
+  }
+
+  .avis-suite {
+    color: rgba(255, 255, 255, 0.55);
+  }
+
   .avis-etoiles {
     display: flex;
     gap: 2px;
@@ -139,6 +164,7 @@ const piste = [...avis, ...avis];
   }
 
   .avis-texte {
+    display: block;
     margin: 0.9rem 0 0;
     color: rgba(255, 255, 255, 0.88);
     font-size: 0.9rem;
@@ -146,6 +172,7 @@ const piste = [...avis, ...avis];
   }
 
   .avis-auteur {
+    display: block;
     margin: 1rem 0 0;
     color: #eeb1a0;
     font-size: 0.8rem;

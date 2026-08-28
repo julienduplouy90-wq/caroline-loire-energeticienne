@@ -1,0 +1,44 @@
+---
+/*
+ * Pastille « 4,9/5 · 31 avis » qui reste visible pendant tout le défilement.
+ *
+ * En bas à GAUCHE : le coin bas-droit est occupé par la bulle de discussion
+ * GoHighLevel, et le bas de l'écran par la barre d'appel sur téléphone — d'où
+ * l'affichage à partir de `md` uniquement (`hidden md:flex`).
+ */
+import { GOOGLE_RATING, SITE } from '../data/site';
+
+const score = GOOGLE_RATING.score;
+const pleines = Math.round(score);
+---
+
+<a
+  href={SITE.googleReviewsUrl}
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label={`${score} sur 5 d’après ${GOOGLE_RATING.count} avis Google — lire les avis`}
+  class="fixed bottom-5 left-5 z-30 hidden items-center gap-3 rounded-full border border-line bg-white/95 py-2.5 pr-5 pl-4 shadow-lg backdrop-blur transition hover:-translate-y-0.5 hover:shadow-xl md:flex"
+>
+  <span class="font-display text-2xl leading-none text-forest">
+    {score.toFixed(1).replace('.', ',')}
+  </span>
+  <span class="h-8 w-px bg-line" aria-hidden="true"></span>
+  <span class="flex flex-col gap-0.5">
+    <span class="flex items-center gap-0.5" aria-hidden="true">
+      {
+        Array.from({ length: 5 }).map((_, i) => (
+          <svg
+            class:list={['h-3.5 w-3.5', i < pleines ? 'text-[#FFB400]' : 'text-line']}
+            viewBox="0 0 24 24"
+            fill="currentColor"
+          >
+            <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.8l6.5-.9L12 3Z" />
+          </svg>
+        ))
+      }
+    </span>
+    <span class="text-[11px] leading-none font-medium text-slate-soft">
+      {GOOGLE_RATING.count} avis Google
+    </span>
+  </span>
+</a>
