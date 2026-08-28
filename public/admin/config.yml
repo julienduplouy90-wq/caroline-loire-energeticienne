@@ -43,6 +43,9 @@ collections:
               - { name: adresse, label: Adresse, widget: string }
               - { name: codePostal, label: Code postal, widget: string }
               - { name: ville, label: Ville, widget: string }
+              - { name: horairesCabinet, label: Horaires au cabinet, widget: string, hint: 'Ex. : Lundi, mercredi et samedi, de 13 h à 16 h 30' }
+              - { name: horairesDistance, label: Horaires à distance, widget: string, hint: 'Ex. : À distance : souvent en soirée, sur rendez-vous' }
+              - { name: horairesNote, label: Phrase de souplesse sur les horaires, widget: text, hint: 'Affichée sur la page Contact, sous les horaires.' }
               - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35. Sert aussi au bouton « Envoyer un SMS ».' }
               - { name: instagram, label: Lien Instagram, widget: string }
               - { name: facebook, label: Lien Facebook, widget: string }
@@ -86,6 +89,29 @@ collections:
             fields:
               - { name: score, label: Note sur 5, widget: number, value_type: float, step: 0.1 }
               - { name: nombre, label: Nombre d’avis, widget: number, value_type: int }
+
+  # -------------------------------------------------------------- AVIS GOOGLE
+  - name: avis
+    label: '⭐ Avis Google qui défilent'
+    description: >-
+      Le bandeau d’avis qui défile sous la note globale, sur la page d’accueil. Recopier ici de
+      VRAIS avis de la fiche Google, tels qu’ils sont écrits. En dessous de trois avis, le bandeau
+      ne s’affiche pas : c’est voulu. Un faux avis est interdit par la loi.
+    files:
+      - name: liste
+        label: Avis Google
+        file: src/data/avis.json
+        fields:
+          - name: avis
+            label: Avis
+            widget: list
+            label_singular: avis
+            summary: '{{fields.auteur}} — {{fields.texte}}'
+            fields:
+              - { name: auteur, label: Prénom ou nom affiché sur Google, widget: string }
+              - { name: note, label: Note (sur 5), widget: number, value_type: int, min: 1, max: 5, default: 5 }
+              - { name: texte, label: Texte de l’avis, widget: text }
+              - { name: date, label: Date (facultatif), widget: string, required: false, hint: 'Ex. : juin 2026' }
 
   # ------------------------------------------------------------------- ACCUEIL
   - name: page_accueil

@@ -51,6 +51,17 @@ export const SITE = {
    * du téléphone pour les personnes qui n'osent pas appeler.
    */
   smsHref: `sms:${phoneE164}`,
+  /**
+   * Horaires communiqués par Caroline le 28/08/2026 : présentiel lundi,
+   * mercredi et samedi 13 h–16 h 30, séances à distance souvent en soirée,
+   * et cabinet disponible tous les soirs si besoin — d'où la note qui invite
+   * à appeler plutôt qu'à renoncer.
+   */
+  hours: {
+    cabinet: C.horairesCabinet,
+    distance: C.horairesDistance,
+    note: C.horairesNote,
+  },
   instagram: C.instagram,
   facebook: C.facebook,
   googleReviewsUrl: 'https://share.google/KVNhPcXqVOGVyyrhT',
@@ -87,7 +98,14 @@ export const IMG = {
   rituel: asset('images/rituel.jpg'),
   dreamcatcher: asset('images/dreamcatcher.webp'),
   salon: asset('images/salon.jpg'),
+  /** Logo Tambouloup d'origine (encre noire), pour les fonds neutres. */
   tambouloup: asset('images/tambouloup.png'),
+  /**
+   * Même logo décliné en bleu canard : c'est celui qu'on affiche sur le site
+   * de Caroline, pour que le partenariat s'intègre à sa charte au lieu de
+   * plaquer un bloc noir au milieu de ses pages.
+   */
+  tambouloupCanard: asset('images/tambouloup-canard.png'),
 };
 
 /**

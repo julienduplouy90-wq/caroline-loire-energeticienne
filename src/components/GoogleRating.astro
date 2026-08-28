@@ -1,5 +1,6 @@
 ---
 import { GOOGLE_RATING, SITE } from '../data/site';
+import AvisDefilants from './AvisDefilants.astro';
 
 const score = GOOGLE_RATING.score;
 const filled = Math.round(score);
@@ -52,4 +53,6 @@ const filled = Math.round(score);
       Lire les avis sur Google
     </a>
   </div>
+
+  <AvisDefilants />
 </section>

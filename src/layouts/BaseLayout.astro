@@ -5,6 +5,7 @@ import Footer from '../components/Footer.astro';
 import MobileBar from '../components/MobileBar.astro';
 import { IMG, INDEXABLE, SITE, asset } from '../data/site';
 import { ANALYTICS } from '../data/analytics';
+import { GHL } from '../data/ghl';
 
 interface Props {
   title: string;
@@ -147,5 +148,18 @@ const ogImage = new URL(image, Astro.site).href;
         revealAll();
       }
     </script>
+
+    {
+      /* Widget de discussion GoHighLevel (bulle en bas à droite).
+         Identifiant dans src/data/ghl.ts — le vider retire la bulle. */
+      GHL.chatWidgetId && (
+        <script
+          is:inline
+          src="https://widgets.leadconnectorhq.com/loader.js"
+          data-resources-url="https://widgets.leadconnectorhq.com/chat-widget/loader.js"
+          data-widget-id={GHL.chatWidgetId}
+        />
+      )
+    }
   </body>
 </html>

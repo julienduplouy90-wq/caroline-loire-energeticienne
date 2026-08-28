@@ -22,17 +22,20 @@ const {
   <div class="mx-auto grid max-w-6xl items-center gap-8 md:grid-cols-12 md:gap-10">
     <div class="md:col-span-4">
       <div
-        class="mx-auto flex max-w-[16rem] items-center justify-center rounded-3xl border border-line bg-white p-6 shadow-sm"
+        class="mx-auto flex aspect-square max-w-[15rem] items-center justify-center rounded-full bg-cream ring-1 ring-peach/45"
       >
         <img
-          src={IMG.tambouloup}
+          src={IMG.tambouloupCanard}
           alt={`${TAMBOULOUP.name} — ${TAMBOULOUP.baseline}`}
-          class="h-auto w-full"
+          class="h-auto w-3/5"
           width="491"
           height="585"
           loading="lazy"
         />
       </div>
+      <p class="mt-4 text-center text-xs tracking-[0.14em] text-slate-soft uppercase">
+        {TAMBOULOUP.baseline}
+      </p>
     </div>
 
     <div class="md:col-span-8">

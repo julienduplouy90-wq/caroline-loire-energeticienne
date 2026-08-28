@@ -1,0 +1,26 @@
+/* ------------------------------------------------------------------
+   GoHighLevel / LeadConnector — configuration centralisée
+   ------------------------------------------------------------------
+   Ces trois identifiants viennent du sous-compte GoHighLevel de Caroline.
+   Ils étaient en ligne sur purple-raven-386267.hostingersite.com mais
+   n'existaient nulle part dans ce dépôt : la version déployée avait été
+   envoyée dans public_html en dehors du flux Git. Ils sont récupérés ici
+   depuis le HTML qui était servi, pour que le déploiement automatique
+   (main → branche hostinger → hPanel) ne les efface plus jamais.
+
+   Mettre une valeur à '' désactive proprement l'élément correspondant.
+   ------------------------------------------------------------------ */
+
+export const GHL = {
+  /** Widget de discussion (bulle en bas à droite), chargé sur toutes les pages. */
+  chatWidgetId: '6a8d71e3ce390e2587ab900f',
+  /** Calendrier de réservation : destination de tous les CTA « Prendre rendez-vous ». */
+  booking: 'https://api.leadconnectorhq.com/widget/booking/dUfRUC3k5Peb6lqOEUjj',
+  /** Formulaire « Premier échange » embarqué sur l'accueil. */
+  form: 'https://api.leadconnectorhq.com/widget/form/LB4hCG385mNuKIViplFc',
+};
+
+/** Le formulaire avec ses paramètres de suivi (d'où vient le contact). */
+export const GHL_FORM_SRC = GHL.form
+  ? `${GHL.form}?source=site-caroline&campaign=premier-echange`
+  : '';

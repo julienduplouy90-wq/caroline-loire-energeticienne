@@ -1,4 +1,5 @@
 import { u } from './site';
+import { GHL } from './ghl';
 
 /* ------------------------------------------------------------------
    Systeme.io — configuration centralisée
@@ -84,10 +85,21 @@ export const TRACK = {
 
 export type TrackEvent = (typeof TRACK)[keyof typeof TRACK];
 
-/** Une URL Systeme.io est-elle renseignée pour cette clé ? */
+/**
+ * Clés de réservation de séance. Elles sont servies par le calendrier
+ * GoHighLevel (`GHL.booking`) tant qu'il est renseigné : c'est l'outil
+ * réellement utilisé par Caroline. Les clés de formation Reiki continuent
+ * de passer par Systeme.io.
+ */
+const CLES_RESERVATION: SystemeKey[] = ['booking', 'energeticSession', 'shamanicSession'];
+
+const reservationGhl = (keys: SystemeKey[]): boolean =>
+  Boolean(GHL.booking) && keys.some((k) => CLES_RESERVATION.includes(k));
+
+/** Une destination existe-t-elle pour cette clé (GoHighLevel ou Systeme.io) ? */
 export function hasSysteme(keys: SystemeKey | SystemeKey[]): boolean {
   const list = Array.isArray(keys) ? keys : [keys];
-  return list.some((k) => Boolean(SYSTEME_URLS[k]));
+  return reservationGhl(list) || list.some((k) => Boolean(SYSTEME_URLS[k]));
 }
 
 /**
@@ -108,6 +120,7 @@ export function systemeHref(
   placement?: string,
 ): string {
   const list = Array.isArray(keys) ? keys : [keys];
+  if (reservationGhl(list)) return GHL.booking;
   const key = list.find((k) => SYSTEME_URLS[k]);
   if (!key) return u(fallback);
   const url = SYSTEME_URLS[key];

@@ -4,6 +4,7 @@ import CtaBand from '../components/CtaBand.astro';
 import Faq from '../components/Faq.astro';
 import GoogleRating from '../components/GoogleRating.astro';
 import TambouloupTeaser from '../components/TambouloupTeaser.astro';
+import PremierEchange from '../components/PremierEchange.astro';
 import { GOOGLE_RATING, IMG, PRICES, SITE, u } from '../data/site';
 import { TRACK } from '../data/systeme';
 import page from '../data/pages/accueil.json';
@@ -28,6 +29,14 @@ const jsonLd = {
     addressRegion: SITE.region,
     addressCountry: 'FR',
   },
+  openingHoursSpecification: [
+    {
+      '@type': 'OpeningHoursSpecification',
+      dayOfWeek: ['Monday', 'Wednesday', 'Saturday'],
+      opens: '13:00',
+      closes: '16:30',
+    },
+  ],
   aggregateRating: {
     '@type': 'AggregateRating',
     ratingValue: GOOGLE_RATING.score,
@@ -168,6 +177,10 @@ const faq = [
   {
     q: 'Comment choisir entre un soin énergétique et une séance de chamanisme ?',
     a: 'Le soin énergétique convient souvent pour ralentir, se recentrer ou découvrir l’énergétique. La séance de chamanisme et énergies est plus longue et s’adresse à celles et ceux qui souhaitent explorer plus en profondeur ce qu’ils traversent. Si vous hésitez, écrivez-moi simplement ce que vous vivez : je vous aiderai à choisir.',
+  },
+  {
+    q: 'Quels sont les horaires ?',
+    a: `${SITE.hours.cabinet} au cabinet. ${SITE.hours.distance}. ${SITE.hours.note}`,
   },
   {
     q: 'Comment se déroule une première séance ?',
@@ -359,6 +372,8 @@ const badges = [
       </div>
     </div>
   </section>
+
+  <PremierEchange />
 
   <!-- ACCOMPAGNEMENTS -->
   <section id="accompagnements" class="scroll-mt-24 bg-sand/50 px-4 py-10 md:px-6 md:py-20">

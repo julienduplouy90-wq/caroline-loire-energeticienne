@@ -1,0 +1,183 @@
+---
+/*
+ * Bandeau d'avis Google qui défile en continu, de droite à gauche.
+ *
+ * Règle absolue (voir CLAUDE.md) : uniquement de VRAIS avis, recopiés depuis
+ * la fiche Google de Caroline. Tant que `src/data/avis.json` contient moins
+ * de trois avis, le bandeau ne s'affiche pas du tout — mieux vaut la seule
+ * note globale qu'un faux témoignage.
+ *
+ * La piste contient deux fois la liste : quand la première copie a fini de
+ * défiler, la seconde est exactement à sa place, d'où la boucle sans couture
+ * ni temps mort.
+ */
+import donnees from '../data/avis.json';
+
+interface Avis {
+  auteur: string;
+  note?: number;
+  texte: string;
+  date?: string;
+}
+
+const avis = (donnees.avis as Avis[]).filter((a) => a && a.texte && a.auteur);
+const actif = avis.length >= 3;
+
+// ~9 secondes par avis : assez lent pour être lisible sans donner l'impression
+// que ça traîne.
+const duree = Math.max(30, avis.length * 9);
+const piste = [...avis, ...avis];
+---
+
+{
+  actif && (
+    <div class="avis-marquee" style={`--defilement:${duree}s`}>
+      <div class="avis-viewport">
+        <ul class="avis-piste" role="list">
+          {piste.map((a, i) => (
+            <li
+              class="avis-carte"
+              aria-hidden={i >= avis.length ? 'true' : undefined}
+            >
+              <div class="avis-etoiles" aria-label={`${a.note ?? 5} sur 5 étoiles`}>
+                {Array.from({ length: 5 }).map((_, s) => (
+                  <svg
+                    class={s < Math.round(a.note ?? 5) ? 'est-pleine' : 'est-vide'}
+                    viewBox="0 0 24 24"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path d="m12 3 2.9 5.9 6.5.9-4.7 4.6 1.1 6.5-5.8-3-5.8 3 1.1-6.5L2.6 9.8l6.5-.9L12 3Z" />
+                  </svg>
+                ))}
+              </div>
+              <p class="avis-texte">{a.texte}</p>
+              <p class="avis-auteur">
+                {a.auteur}
+                {a.date && <span class="avis-date"> · {a.date}</span>}
+              </p>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  )
+}
+
+<style>
+  .avis-marquee {
+    margin-top: 3rem;
+    /* On annule le rembourrage latéral de la section pour que le bandeau file
+       d'un bord à l'autre — sans utiliser 100vw, qui ajouterait la largeur de
+       la barre de défilement et provoquerait un débordement horizontal. */
+    margin-left: -1rem;
+    margin-right: -1rem;
+    /* Les cartes s'effacent sur les bords au lieu d'être coupées net. */
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6%,
+      #000 94%,
+      transparent
+    );
+    mask-image: linear-gradient(to right, transparent, #000 6%, #000 94%, transparent);
+  }
+
+  .avis-viewport {
+    overflow: hidden;
+  }
+
+  .avis-piste {
+    display: flex;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    width: max-content;
+    list-style: none;
+    animation: avis-defile var(--defilement, 60s) linear infinite;
+  }
+
+  /* Survol : on ralentit jusqu'à l'arrêt pour laisser lire un avis. */
+  .avis-marquee:hover .avis-piste,
+  .avis-marquee:focus-within .avis-piste {
+    animation-play-state: paused;
+  }
+
+  @keyframes avis-defile {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      /* -50 % = la longueur d'une copie de la liste, gouttière comprise. */
+      transform: translateX(calc(-50% - 0.5rem));
+    }
+  }
+
+  .avis-carte {
+    flex: 0 0 auto;
+    width: 19rem;
+    padding: 1.5rem;
+    text-align: left;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 1.25rem;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .avis-etoiles {
+    display: flex;
+    gap: 2px;
+  }
+  .avis-etoiles svg {
+    width: 16px;
+    height: 16px;
+  }
+  .avis-etoiles .est-pleine {
+    color: #ffd700;
+  }
+  .avis-etoiles .est-vide {
+    color: rgba(255, 255, 255, 0.25);
+  }
+
+  .avis-texte {
+    margin: 0.9rem 0 0;
+    color: rgba(255, 255, 255, 0.88);
+    font-size: 0.9rem;
+    line-height: 1.65;
+  }
+
+  .avis-auteur {
+    margin: 1rem 0 0;
+    color: #eeb1a0;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+  .avis-date {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 400;
+  }
+
+  @media (min-width: 768px) {
+    .avis-marquee {
+      margin-left: -1.5rem;
+      margin-right: -1.5rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .avis-carte {
+      width: 16rem;
+      padding: 1.25rem;
+    }
+  }
+
+  /* Mouvement réduit : la règle globale coupe déjà l'animation, on rend donc
+     le bandeau simplement déroulable à la main. */
+  @media (prefers-reduced-motion: reduce) {
+    .avis-viewport {
+      overflow-x: auto;
+    }
+    .avis-piste {
+      animation: none;
+    }
+  }
+</style>

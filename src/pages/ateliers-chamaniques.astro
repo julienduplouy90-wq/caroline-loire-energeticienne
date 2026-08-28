@@ -108,14 +108,18 @@ const pratique = [
           class="sticky top-28 rounded-3xl border border-line border-t-2 border-t-peach bg-white p-6 shadow-sm"
         >
           <div class="flex justify-center">
-            <img
-              src={IMG.tambouloup}
-              alt={`${TAMBOULOUP.name} — ${TAMBOULOUP.baseline}`}
-              class="h-auto w-40"
-              width="491"
-              height="585"
-              loading="lazy"
-            />
+            <div
+              class="flex aspect-square w-44 items-center justify-center rounded-full bg-cream ring-1 ring-peach/45"
+            >
+              <img
+                src={IMG.tambouloupCanard}
+                alt={`${TAMBOULOUP.name} — ${TAMBOULOUP.baseline}`}
+                class="h-auto w-3/5"
+                width="491"
+                height="585"
+                loading="lazy"
+              />
+            </div>
           </div>
           <p class="mt-4 text-center text-sm text-slate-soft">
             {TAMBOULOUP.baseline} — ateliers animés par {TAMBOULOUP.animator}
