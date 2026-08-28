@@ -155,15 +155,6 @@ const compare = [
       'Envie d’explorer plus profondément son vécu',
     ],
   },
-  {
-    title: 'Formation Reiki',
-    points: [
-      'Envie d’apprendre',
-      'Pratique personnelle',
-      'Développement de la sensibilité énergétique',
-      'Souhait éventuel d’accompagner d’autres personnes',
-    ],
-  },
 ];
 
 const steps = [
@@ -198,12 +189,6 @@ const bienfaits = [
   'Un temps qui n’appartient qu’à vous',
 ];
 
-const reikiLevels = [
-  { n: '01', t: 'Premier degré', d: 'Découvrir les fondations et pratiquer sur soi.' },
-  { n: '02', t: 'Deuxième degré', d: 'Approfondir sa pratique et découvrir les symboles.' },
-  { n: '03', t: 'Troisième degré', d: 'Aller vers la maîtrise et le perfectionnement.' },
-];
-
 const faq = [
   {
     q: 'Comment choisir entre un soin énergétique et une séance de chamanisme ?',
@@ -236,10 +221,6 @@ const faq = [
   {
     q: 'Comment fonctionne le tarif solidaire ?',
     a: 'Pour certaines séances, vous pouvez choisir entre le tarif complet et le tarif solidaire. Aucune justification ne vous sera demandée : je vous fais confiance pour choisir ce qui vous semble juste et équilibré.',
-  },
-  {
-    q: 'Puis-je commencer une formation Reiki sans expérience ?',
-    a: 'Oui. Le premier degré est conçu pour découvrir les fondations, même sans pratique préalable.',
   },
 ];
 
@@ -295,14 +276,6 @@ const badges = [
             class="inline-flex min-h-12 items-center justify-center rounded-full border border-forest/25 bg-white px-6 py-3 text-sm font-medium text-forest transition hover:border-forest/45 hover:bg-sand"
           >
             Trouver l’accompagnement qui me correspond
-          </a>
-          <a
-            href={u('/formations-reiki')}
-            data-track={TRACK.formation}
-            data-track-label="accueil-hero"
-            class="inline-flex min-h-12 items-center justify-center rounded-full border border-forest/25 bg-white px-6 py-3 text-sm font-medium text-forest transition hover:border-forest/45 hover:bg-sand"
-          >
-            Découvrir les formations Reiki
           </a>
         </div>
       </div>
@@ -505,7 +478,7 @@ const badges = [
       <h2 class="font-display text-2xl font-semibold text-forest md:text-4xl" data-reveal>
         Quelle approche choisir ?
       </h2>
-      <div class="mt-6 grid gap-4 md:mt-10 md:grid-cols-3 md:gap-5">
+      <div class="mt-6 grid gap-4 md:mt-10 md:grid-cols-2 md:gap-5">
         {
           compare.map((c) => (
             <div
@@ -718,54 +691,6 @@ const badges = [
         >
           Découvrir mon parcours
         </a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TEASER REIKI -->
-  <section class="border-y border-line bg-sand/60 px-4 py-10 md:px-6 md:py-20">
-    <div class="mx-auto max-w-6xl">
-      <div class="flex flex-col justify-between gap-6 md:flex-row md:items-end">
-        <div>
-          <p
-            class="flex items-center gap-2.5 text-xs font-semibold tracking-[0.2em] text-peach-deep uppercase"
-          >
-            <span class="accent-bar" aria-hidden="true"></span>
-            Formations
-          </p>
-          <h2 class="font-display mt-3 text-2xl font-semibold text-forest md:text-4xl">
-            Apprendre le Reiki, pas à pas
-          </h2>
-        </div>
-        <a
-          href={u('/formations-reiki')}
-          data-track={TRACK.formation}
-          data-track-label="accueil-formations"
-          class="inline-flex min-h-11 items-center rounded-full border border-forest/25 px-5 py-2.5 text-sm font-medium text-forest hover:bg-white"
-        >
-          Voir le programme des formations
-        </a>
-      </div>
-      <div class="mt-6 grid gap-4 md:mt-10 md:grid-cols-3">
-        {
-          reikiLevels.map((l, i) => (
-            <div
-              class="rounded-2xl border border-line border-t-2 border-t-peach bg-white p-5 md:p-7"
-              data-reveal
-            >
-              <span
-                class:list={[
-                  'font-display text-4xl',
-                  i % 2 === 0 ? 'text-peach-deep' : 'text-forest/70',
-                ]}
-              >
-                {l.n}
-              </span>
-              <h3 class="font-display mt-3 text-2xl text-forest">{l.t}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-slate-soft">{l.d}</p>
-            </div>
-          ))
-        }
       </div>
     </div>
   </section>
