@@ -52,10 +52,10 @@ export const SITE = {
    */
   smsHref: `sms:${phoneE164}`,
   /**
-   * Horaires communiqués par Caroline le 28/08/2026 : lundi, mercredi et
-   * samedi 13 h–16 h 30, et cabinet disponible tous les soirs si besoin —
-   * d'où la note qui invite à appeler plutôt qu'à renoncer. Ne pas remettre
-   * de précision « à distance » ici : demande de Caroline.
+   * Horaires communiqués par Caroline le 03/09/2026 : lundi et mercredi
+   * 9 h 30–16 h 30, samedi 10 h 30–18 h 30, et cabinet disponible en soirée
+   * si besoin — d'où la note qui invite à appeler plutôt qu'à renoncer.
+   * Ne pas remettre de précision « à distance » ici : demande de Caroline.
    */
   hours: {
     cabinet: C.horairesCabinet,
@@ -143,8 +143,12 @@ export const NAV = [
 /** Page partenaire : absente de la barre du haut (déjà pleine sur ordinateur). */
 export const ATELIERS = { to: '/ateliers-chamaniques', label: 'Ateliers chamaniques' };
 
+/** Cartes cadeaux : même traitement que la page partenaire — menu complet
+ * seulement, la barre du haut restant réservée aux sept entrées principales. */
+export const CARTES_CADEAUX = { to: '/cartes-cadeaux', label: 'Cartes cadeaux' };
+
 /** Navigation complète : menu du téléphone et pied de page. */
-export const NAV_FULL = [...NAV.slice(0, 3), ATELIERS, ...NAV.slice(3)];
+export const NAV_FULL = [...NAV.slice(0, 3), ATELIERS, ...NAV.slice(3, 6), CARTES_CADEAUX, ...NAV.slice(6)];
 
 export const RESOURCES = [
   { to: '/reiki', label: 'Reiki' },

@@ -1,0 +1,312 @@
+---
+/*
+ * Cartes cadeaux — page publique.
+ *
+ * Aucun paiement ne se fait sur le site : la commande part par le
+ * formulaire (envoi-message.php), Caroline encaisse comme elle le
+ * souhaite (au cabinet, ou lien de paiement envoyé pour la distance),
+ * puis prépare la carte avec l'outil privé /outils/carte-cadeau.
+ * Si un lien de paiement permanent existe un jour, le renseigner dans
+ * CARTE_CADEAU_PAIEMENT_URL : un bouton « Régler en ligne » apparaîtra.
+ */
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHero from '../components/PageHero.astro';
+import { IMG, SITE, u } from '../data/site';
+import { TRACK } from '../data/systeme';
+import {
+  CARTE_CADEAU_CHOIX,
+  CARTE_CADEAU_FORMULES,
+  CARTE_CADEAU_PAIEMENT_URL,
+} from '../data/cartes-cadeaux';
+
+const title = 'Cartes cadeaux | Caroline Loire à Bagnères-de-Bigorre';
+const description =
+  'Offrez un soin énergétique ou une séance de chamanisme à Bagnères-de-Bigorre : cartes cadeaux disponibles au cabinet et à distance, envoyées prêtes à offrir.';
+
+const etapes = [
+  {
+    n: '01',
+    t: 'Vous commandez',
+    d: 'Avec le formulaire ci-dessous, par téléphone ou directement au cabinet. Dites-moi simplement quelle formule vous souhaitez offrir, et à qui.',
+  },
+  {
+    n: '02',
+    t: 'Vous réglez, même à distance',
+    d: 'Au cabinet, ou depuis chez vous : je vous envoie un lien de paiement sécurisé. Le règlement en plusieurs fois reste possible.',
+  },
+  {
+    n: '03',
+    t: 'Vous recevez la carte, prête à offrir',
+    d: 'Je prépare une carte au nom de la personne, avec votre mot si vous le souhaitez, et je vous l’envoie par e-mail, prête à imprimer ou à transférer.',
+  },
+];
+---
+
+<BaseLayout title={title} description={description} image={IMG.carte}>
+  <PageHero
+    eyebrow="Cartes cadeaux"
+    title="Offrir un temps pour soi"
+    text="Un soin énergétique, une séance de chamanisme ou un montant libre : la carte cadeau permet d’offrir une vraie parenthèse à quelqu’un qui en a besoin — même si vous êtes loin."
+  />
+
+  <section class="px-4 py-12 md:px-6 md:py-16">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-display text-2xl text-forest md:text-3xl">Que souhaitez-vous offrir ?</h2>
+      <ul class="mt-6 grid gap-4 md:grid-cols-3">
+        {
+          CARTE_CADEAU_FORMULES.map((f) => (
+            <li class="rounded-3xl border border-line border-t-2 border-t-peach bg-white p-6 shadow-sm">
+              <p class="text-sm text-slate-soft">{f.label}</p>
+              <p class="font-display mt-1 text-3xl text-forest">{f.montant}</p>
+              <p class="mt-3 text-sm leading-relaxed text-ink/80">{f.detail}</p>
+            </li>
+          ))
+        }
+      </ul>
+      <p class="mt-4 text-sm text-slate-soft">
+        La carte est utilisable au cabinet comme à distance, au moment qui conviendra à la personne.
+        Une question, une autre idée ? <a
+          href={u('/contact')}
+          class="font-medium text-forest underline underline-offset-4">Écrivez-moi</a
+        > ou appelez-moi au <a href={SITE.phoneHref} class="font-medium text-forest underline underline-offset-4"
+          >{SITE.phone}</a
+        >.
+      </p>
+    </div>
+  </section>
+
+  <section class="border-y border-line/70 bg-sand/60 px-4 py-12 md:px-6 md:py-16">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="font-display text-2xl text-forest md:text-3xl">Comment ça se passe</h2>
+      <ol class="mt-6 grid gap-4 md:grid-cols-3">
+        {
+          etapes.map((e) => (
+            <li class="rounded-3xl border border-line bg-white p-6">
+              <p class="font-display text-sm text-peach-deep">{e.n}</p>
+              <h3 class="font-display mt-1 text-xl text-forest">{e.t}</h3>
+              <p class="mt-3 text-sm leading-relaxed text-ink/80">{e.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+      {
+        CARTE_CADEAU_PAIEMENT_URL && (
+          <a
+            href={CARTE_CADEAU_PAIEMENT_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            class="mt-6 inline-flex min-h-12 items-center rounded-full bg-forest px-6 py-3 text-sm font-medium text-white transition hover:bg-forest-deep"
+          >
+            Régler ma carte cadeau en ligne
+          </a>
+        )
+      }
+    </div>
+  </section>
+
+  <section class="px-4 py-12 md:px-6 md:py-16">
+    <div class="mx-auto grid max-w-6xl gap-10 lg:grid-cols-12">
+      <div class="lg:col-span-5">
+        <h2 class="font-display text-2xl text-forest md:text-3xl">Commander une carte cadeau</h2>
+        <span class="accent-bar mt-3" aria-hidden="true"></span>
+        <p class="mt-4 text-sm leading-relaxed text-ink/80 md:text-base">
+          Laissez-moi vos coordonnées et la formule choisie : je reviens vers vous rapidement pour
+          le règlement, puis je prépare la carte. Vous pouvez aussi tout faire par téléphone ou par
+          SMS au <a href={SITE.phoneHref} class="font-medium text-forest underline underline-offset-4"
+            >{SITE.phone}</a
+          >.
+        </p>
+
+        <div class="mt-6 rounded-3xl border border-peach/40 bg-peach/10 p-5 text-sm leading-relaxed text-ink/80">
+          <p class="font-medium text-forest">Vous avez reçu une carte cadeau ?</p>
+          <p class="mt-2">
+            Il ne reste qu’à <a
+              href={u('/reservation')}
+              class="font-medium text-forest underline underline-offset-4">réserver votre séance</a
+            > : au cabinet, présentez simplement votre carte ; à distance, indiquez le code inscrit
+            sur la carte au moment de la réservation.
+          </p>
+        </div>
+      </div>
+
+      <div class="lg:col-span-7">
+        <form
+          id="carte-form"
+          class="rounded-3xl border border-line bg-white p-6 md:p-8"
+          method="post"
+          action={SITE.formEndpoint || undefined}
+        >
+          <input type="hidden" name="objet" value="Commande de carte cadeau" />
+          <input type="hidden" name="retour" value="cartes-cadeaux" />
+
+          <div class="grid gap-4 sm:grid-cols-2">
+            <label class="block text-sm">
+              <span class="font-medium text-forest">Prénom *</span>
+              <input
+                required
+                name="prenom"
+                autocomplete="given-name"
+                class="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+              />
+            </label>
+            <label class="block text-sm">
+              <span class="font-medium text-forest">Nom *</span>
+              <input
+                required
+                name="nom"
+                autocomplete="family-name"
+                class="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+              />
+            </label>
+            <label class="block text-sm">
+              <span class="font-medium text-forest">E-mail *</span>
+              <input
+                required
+                type="email"
+                name="email"
+                autocomplete="email"
+                class="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+              />
+            </label>
+            <label class="block text-sm">
+              <span class="font-medium text-forest"
+                >Téléphone <span class="font-normal text-slate-soft">(facultatif)</span></span
+              >
+              <input
+                name="telephone"
+                autocomplete="tel"
+                class="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+              />
+            </label>
+          </div>
+
+          <label class="mt-4 block text-sm">
+            <span class="font-medium text-forest">Formule à offrir *</span>
+            <select
+              required
+              name="formule"
+              class="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+            >
+              {CARTE_CADEAU_CHOIX.map((c) => <option value={c}>{c}</option>)}
+            </select>
+          </label>
+
+          <label class="mt-4 block text-sm">
+            <span class="font-medium text-forest"
+              >Pour qui ? <span class="font-normal text-slate-soft"
+                >(prénom de la personne, facultatif)</span
+              ></span
+            >
+            <input
+              name="beneficiaire"
+              class="mt-1.5 w-full rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+            />
+          </label>
+
+          <label class="mt-4 block text-sm">
+            <span class="font-medium text-forest"
+              >Votre message <span class="font-normal text-slate-soft"
+                >(un mot à inscrire sur la carte, un montant libre, une question…)</span
+              ></span
+            >
+            <textarea
+              name="message"
+              rows="4"
+              class="mt-1.5 w-full resize-y rounded-xl border border-line bg-white px-3 py-2.5 outline-none focus:border-forest focus:ring-2 focus:ring-forest/40"
+            ></textarea>
+          </label>
+
+          <label class="mt-4 flex items-start gap-3 text-sm text-ink/80">
+            <input
+              required
+              type="checkbox"
+              name="consentement"
+              value="oui"
+              class="mt-1 h-4 w-4 rounded border-line"
+            />
+            <span>
+              J’accepte que mes données soient utilisées pour répondre à ma demande, conformément à
+              la <a href={u('/politique-de-confidentialite')} class="underline"
+                >politique de confidentialité</a
+              >.
+            </span>
+          </label>
+
+          <!-- Piège à robots : laissé vide par les humains. -->
+          <div class="hidden" aria-hidden="true">
+            <label>Ne pas remplir<input name="_gotcha" tabindex="-1" autocomplete="off" /></label>
+          </div>
+
+          <p id="form-status" class="mt-4 hidden text-sm" role="status"></p>
+
+          <button
+            type="submit"
+            class="mt-6 inline-flex min-h-12 items-center justify-center rounded-full bg-forest px-7 py-3 text-sm font-medium text-white transition hover:bg-forest-deep disabled:opacity-60"
+          >
+            Envoyer ma commande
+          </button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <script define:vars={{ endpoint: SITE.formEndpoint, telephone: SITE.phone, sentEvent: TRACK.formSent }}>
+    const form = document.getElementById('carte-form');
+    const status = document.getElementById('form-status');
+
+    const show = (message, ok) => {
+      if (!status) return;
+      status.textContent = message;
+      status.classList.remove('hidden');
+      status.classList.toggle('text-forest', Boolean(ok));
+      status.classList.toggle('text-peach-deep', !ok);
+    };
+
+    // Retour du formulaire posté sans JavaScript (voir envoi-message.php).
+    const retour = new URLSearchParams(window.location.search).get('message');
+    if (retour === 'envoye') {
+      show('Commande envoyée. Merci, je vous recontacte très vite pour la suite.', true);
+    } else if (retour === 'erreur') {
+      show(
+        `L’envoi n’a pas abouti. Vous pouvez m’appeler ou m’envoyer un SMS au ${telephone} : je réponds facilement aux SMS.`,
+        false,
+      );
+    }
+
+    form?.addEventListener('submit', async (event) => {
+      if (!form.reportValidity()) return;
+      const data = new FormData(form);
+      if (data.get('_gotcha')) {
+        event.preventDefault();
+        return;
+      }
+
+      event.preventDefault();
+      const bouton = form.querySelector('button[type="submit"]');
+      if (bouton) bouton.disabled = true;
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          body: data,
+          headers: { Accept: 'application/json' },
+        });
+        const reponse = await res.json().catch(() => ({}));
+        if (!res.ok || reponse.ok !== true) {
+          throw new Error(reponse.erreur || 'HTTP ' + res.status);
+        }
+        form.reset();
+        if (typeof window.clTrack === 'function')
+          window.clTrack(sentEvent, { mode: 'carte-cadeau', objet: 'Commande de carte cadeau' });
+        show('Commande envoyée. Merci, je vous recontacte très vite pour la suite.', true);
+      } catch (erreur) {
+        const detail = erreur && erreur.message ? erreur.message + ' ' : '';
+        show(
+          `${detail}Vous pouvez aussi m’appeler ou m’envoyer un SMS au ${telephone} : je réponds facilement aux SMS.`,
+          false,
+        );
+      } finally {
+        if (bouton) bouton.disabled = false;
+      }
+    });
+  </script>
+</BaseLayout>

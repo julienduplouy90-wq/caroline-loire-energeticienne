@@ -13,7 +13,11 @@ export default defineConfig({
   site: 'https://purple-raven-386267.hostingersite.com',
   base: '/',
   trailingSlash: 'always',
-  integrations: [sitemap()],
+  integrations: [
+    // /outils/ regroupe les pages privées de Caroline (générateur de cartes
+    // cadeaux) : jamais dans le sitemap, en plus de leur noindex.
+    sitemap({ filter: (page) => !page.includes('/outils/') }),
+  ],
   vite: {
     plugins: [tailwindcss()],
   },
