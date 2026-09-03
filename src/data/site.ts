@@ -143,8 +143,12 @@ export const NAV = [
 /** Page partenaire : absente de la barre du haut (déjà pleine sur ordinateur). */
 export const ATELIERS = { to: '/ateliers-chamaniques', label: 'Ateliers chamaniques' };
 
+/** Cartes cadeaux : même traitement que la page partenaire — menu complet
+ * seulement, la barre du haut restant réservée aux sept entrées principales. */
+export const CARTES_CADEAUX = { to: '/cartes-cadeaux', label: 'Cartes cadeaux' };
+
 /** Navigation complète : menu du téléphone et pied de page. */
-export const NAV_FULL = [...NAV.slice(0, 3), ATELIERS, ...NAV.slice(3)];
+export const NAV_FULL = [...NAV.slice(0, 3), ATELIERS, ...NAV.slice(3, 6), CARTES_CADEAUX, ...NAV.slice(6)];
 
 export const RESOURCES = [
   { to: '/reiki', label: 'Reiki' },

@@ -30,9 +30,13 @@ header('X-Content-Type-Options: nosniff');
  *
  * Avec JavaScript, le formulaire envoie `Accept: application/json` et reste
  * sur la page. Sans JavaScript, le navigateur poste le formulaire « à
- * l'ancienne » : on le renvoie alors sur /contact/ avec un paramètre que la
- * page sait afficher, plutôt que de lui montrer du JSON brut.
+ * l'ancienne » : on le renvoie alors sur la page d'origine avec un paramètre
+ * qu'elle sait afficher, plutôt que de lui montrer du JSON brut. La page de
+ * retour vient du champ `retour`, limité à une liste fermée : jamais une
+ * valeur libre dans un en-tête Location.
  */
+const PAGES_RETOUR = ['contact', 'cartes-cadeaux'];
+
 function repondre(int $code, array $corps)
 {
     $veutJson = strpos((string) ($_SERVER['HTTP_ACCEPT'] ?? ''), 'application/json') !== false;
@@ -44,8 +48,13 @@ function repondre(int $code, array $corps)
         exit;
     }
 
+    $retour = (string) ($_POST['retour'] ?? '');
+    if (!in_array($retour, PAGES_RETOUR, true)) {
+        $retour = 'contact';
+    }
+
     $etat = !empty($corps['ok']) ? 'envoye' : 'erreur';
-    header('Location: /contact/?message=' . $etat . '#form-status', true, 303);
+    header('Location: /' . $retour . '/?message=' . $etat . '#form-status', true, 303);
     exit;
 }
 
@@ -79,7 +88,12 @@ $message = trim(str_replace("\0", '', (string) ($_POST['message'] ?? '')));
 $message = mb_substr($message, 0, 5000);
 $nouvelles = ($_POST['nouvelles'] ?? '') !== '' ? 'oui' : 'non';
 
-if ($prenom === '' || $nom === '' || $message === '') {
+// Commande de carte cadeau (page /cartes-cadeaux/) : la formule remplace le
+// message obligatoire — commander sans écrire un mot est un cas normal.
+$formule      = champ('formule', 160);
+$beneficiaire = champ('beneficiaire', 120);
+
+if ($prenom === '' || $nom === '' || ($message === '' && $formule === '')) {
     repondre(422, ['ok' => false, 'erreur' => 'Merci de remplir votre nom, votre prénom et votre message.']);
 }
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -100,7 +114,7 @@ if ($destinataire === false || $destinataire === '') {
 
 $sujet = sprintf('[Site] %s — %s %s', $objet, $prenom, $nom);
 
-$corps = implode("\n", [
+$lignes = [
     'Nouveau message envoyé depuis le formulaire du site.',
     '',
     'Prénom    : ' . $prenom,
@@ -109,13 +123,23 @@ $corps = implode("\n", [
     'Téléphone : ' . ($tel !== '' ? $tel : '—'),
     'Objet     : ' . $objet,
     'Souhaite recevoir des nouvelles : ' . $nouvelles,
+];
+
+if ($formule !== '' || $beneficiaire !== '') {
+    $lignes[] = '';
+    $lignes[] = '--- Carte cadeau ---';
+    $lignes[] = 'Formule     : ' . ($formule !== '' ? $formule : '—');
+    $lignes[] = 'Pour        : ' . ($beneficiaire !== '' ? $beneficiaire : '—');
+}
+
+$corps = implode("\n", array_merge($lignes, [
     '',
     '--- Message ---',
-    $message,
+    $message !== '' ? $message : '—',
     '',
     '---',
     'Répondre à ce courriel écrit directement à la personne.',
-]);
+]));
 
 $entetes = implode("\r\n", [
     'From: Site Caroline Loire <' . $expediteur . '>',

@@ -84,8 +84,12 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
   domaine historique (et ce n'est pas prévu).
 - **Données centralisées** : coordonnées, navigation et tarifs dans `src/data/site.ts` ;
   contenu des pages Ressources dans `src/data/resources.ts` ; URLs et réglages Systeme.io dans
-  `src/data/systeme.ts` ; identifiants de mesure dans `src/data/analytics.ts`. Modifier la
+  `src/data/systeme.ts` ; formules et lien de paiement des cartes cadeaux dans
+  `src/data/cartes-cadeaux.ts` ; identifiants de mesure dans `src/data/analytics.ts`. Modifier la
   donnée, pas le gabarit.
+- **Pages privées** : tout ce qui vit sous `/outils/` (ex. générateur de cartes cadeaux de
+  Caroline) est hors sitemap (filtre dans `astro.config.mjs`), en `noindex`, et jamais relié aux
+  menus publics.
 - **CTA mesurés** : poser `data-track="<événement>"` (+ `data-track-label`) sur le lien ; le
   script de `BaseLayout.astro` fait le reste. Ne pas appeler `gtag` directement.
 - **Images** : servies depuis `public/images/`, jamais depuis un CDN externe.
