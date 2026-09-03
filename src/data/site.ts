@@ -52,10 +52,10 @@ export const SITE = {
    */
   smsHref: `sms:${phoneE164}`,
   /**
-   * Horaires communiqués par Caroline le 28/08/2026 : lundi, mercredi et
-   * samedi 13 h–16 h 30, et cabinet disponible tous les soirs si besoin —
-   * d'où la note qui invite à appeler plutôt qu'à renoncer. Ne pas remettre
-   * de précision « à distance » ici : demande de Caroline.
+   * Horaires communiqués par Caroline le 03/09/2026 : lundi et mercredi
+   * 9 h 30–16 h 30, samedi 10 h 30–18 h 30, et cabinet disponible en soirée
+   * si besoin — d'où la note qui invite à appeler plutôt qu'à renoncer.
+   * Ne pas remettre de précision « à distance » ici : demande de Caroline.
    */
   hours: {
     cabinet: C.horairesCabinet,

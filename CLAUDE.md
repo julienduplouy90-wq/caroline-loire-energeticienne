@@ -105,5 +105,4 @@ Typographie : **Poppins** pour les titres (`font-display`), **Inter** pour le te
 ## À compléter avant une mise en ligne définitive
 
 - Statut juridique et numéro SIRET dans les mentions légales.
-- Horaires d'ouverture (non communiqués à ce jour).
 - Hostinger : déploiement Git en place (voir README, section Mise en ligne).
