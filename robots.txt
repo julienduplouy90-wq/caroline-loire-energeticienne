@@ -1,0 +1,5 @@
+# Domaine temporaire Hostinger : site non indexé tant que le WordPress
+# historique (carolineloire-energeticienne.fr) reste le site de référence.
+# À remplacer par « Allow: / » + la ligne Sitemap le jour du vrai domaine.
+User-agent: *
+Disallow: /

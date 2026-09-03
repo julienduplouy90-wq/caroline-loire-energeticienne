@@ -1,0 +1,237 @@
+# Sveltia CMS — organisé comme le site : une rubrique par page.
+#
+# La première rubrique regroupe ce qui apparaît sur TOUTES les pages
+# (coordonnées, tarifs) : modifié une fois, changé partout.
+# Les rubriques suivantes suivent l'ordre du menu du site.
+#
+# Chaque « Publier » fait un commit sur GitHub ; l'action « Construire et
+# publier pour Hostinger » reconstruit le site et le met en ligne toute seule.
+# Compter deux à trois minutes entre « Publier » et la mise à jour du site.
+
+backend:
+  name: github
+  repo: julienduplouy90-wq/caroline-loire-energeticienne
+  branch: main
+  commit_messages:
+    create: 'Ajoute {{collection}} depuis le CMS'
+    update: 'Modifie {{collection}} depuis le CMS'
+    delete: 'Supprime {{collection}} depuis le CMS'
+    uploadMedia: 'Ajoute l’image {{path}} depuis le CMS'
+    deleteMedia: 'Supprime l’image {{path}} depuis le CMS'
+
+publish_mode: simple
+locale: fr
+media_folder: public/images
+public_folder: /images
+
+collections:
+  # ------------------------------------------------ VALABLE SUR TOUTES LES PAGES
+  - name: partout
+    label: '⭐ Sur tout le site'
+    description: Coordonnées et tarifs. Modifiés ici, ils changent sur toutes les pages du site en même temps.
+    files:
+      - name: base
+        label: Coordonnées et tarifs
+        file: src/data/contenu.json
+        fields:
+          - name: coordonnees
+            label: Coordonnées
+            widget: object
+            fields:
+              - { name: nom, label: Nom, widget: string }
+              - { name: sousTitre, label: Sous-titre (métier), widget: string }
+              - { name: adresse, label: Adresse, widget: string }
+              - { name: codePostal, label: Code postal, widget: string }
+              - { name: ville, label: Ville, widget: string }
+              - { name: horairesCabinet, label: Horaires au cabinet, widget: string, hint: 'Ex. : Lundi et mercredi de 9 h 30 à 16 h 30, samedi de 10 h 30 à 18 h 30' }
+              - { name: horairesNote, label: Phrase de souplesse sur les horaires, widget: text, hint: 'Affichée sur la page Contact, sous les horaires.' }
+              - { name: telephone, label: Téléphone, widget: string, hint: 'Format : 07 44 73 34 35. Sert aussi au bouton « Envoyer un SMS ».' }
+              - { name: instagram, label: Lien Instagram, widget: string }
+              - { name: facebook, label: Lien Facebook, widget: string }
+          - name: accompagnement
+            label: Accompagnement
+            widget: object
+            fields:
+              - name: rythmeConseille
+                label: Rythme conseillé
+                widget: text
+                required: false
+                hint: >-
+                  Ce que vous conseillez pour un accompagnement, par exemple « deux séances
+                  espacées de trois semaines pour commencer ». Affiché en encart sur la page
+                  Soins énergétiques. Laissez vide si vous ne voulez rien annoncer.
+          - name: tarifs
+            label: Tarifs
+            widget: object
+            hint: Ces montants s’affichent sur la page Tarifs, sur les pages de chaque accompagnement et sur l’accueil.
+            fields:
+              - name: soin
+                label: Soin énergétique
+                widget: object
+                fields:
+                  - { name: full, label: Tarif plein (€), widget: number, value_type: int }
+                  - { name: solidaire, label: Tarif solidaire (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - name: soinEnfant
+                label: Soin enfant
+                widget: object
+                fields:
+                  - { name: full, label: Tarif (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - name: chamanisme
+                label: Soin chamanique
+                widget: object
+                fields:
+                  - { name: full, label: Tarif plein (€), widget: number, value_type: int }
+                  - { name: solidaire, label: Tarif solidaire (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - name: chamanismeEnfant
+                label: Soin chamanique enfant
+                widget: object
+                fields:
+                  - { name: full, label: Tarif (€), widget: number, value_type: int }
+                  - { name: duration, label: Durée, widget: string }
+              - { name: reiki1, label: 'Formation Reiki 1er degré (€)', widget: number, value_type: int }
+              - { name: reiki2, label: 'Formation Reiki 2e degré (€)', widget: number, value_type: int }
+              - { name: reiki3, label: 'Formation Reiki 3e degré (€)', widget: number, value_type: int }
+          - name: avisGoogle
+            label: Avis Google
+            widget: object
+            fields:
+              - { name: score, label: Note sur 5, widget: number, value_type: float, step: 0.1 }
+              - { name: nombre, label: Nombre d’avis, widget: number, value_type: int }
+
+  # -------------------------------------------------------------- AVIS GOOGLE
+  - name: avis
+    label: '⭐ Avis Google qui défilent'
+    description: >-
+      Le bandeau d’avis qui défile sous la note globale, sur la page d’accueil. Recopier ici de
+      VRAIS avis de la fiche Google, tels qu’ils sont écrits. En dessous de trois avis, le bandeau
+      ne s’affiche pas : c’est voulu. Un faux avis est interdit par la loi.
+    files:
+      - name: liste
+        label: Avis Google
+        file: src/data/avis.json
+        fields:
+          - name: avis
+            label: Avis
+            widget: list
+            label_singular: avis
+            summary: '{{fields.auteur}} — {{fields.texte}}'
+            fields:
+              - { name: auteur, label: Prénom ou nom affiché sur Google, widget: string }
+              - { name: note, label: Note (sur 5), widget: number, value_type: int, min: 1, max: 5, default: 5 }
+              - { name: texte, label: Texte de l’avis, widget: text }
+              - { name: date, label: Date (facultatif), widget: string, required: false, hint: 'Ex. : juin 2026' }
+
+  # ------------------------------------------------------------------- ACCUEIL
+  - name: page_accueil
+    label: '1. Page Accueil'
+    description: Le grand titre en haut de la page d’accueil.
+    files:
+      - name: accueil
+        label: Page Accueil
+        file: src/data/pages/accueil.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction (ordinateur), widget: text }
+          - { name: texteMobile, label: Texte d’introduction (téléphone), widget: text, hint: 'Version courte, affichée sur les petits écrans.' }
+
+  # -------------------------------------------------------- SOINS ÉNERGÉTIQUES
+  - name: page_soins
+    label: '2. Page Soins énergétiques'
+    files:
+      - name: soins
+        label: Page Soins énergétiques
+        file: src/data/pages/soins-energetiques.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo, widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string, hint: 'Lue par Google et par les lecteurs d’écran.' }
+
+  # ---------------------------------------------------------------- CHAMANISME
+  - name: page_chamanisme
+    label: '3. Page Chamanisme'
+    files:
+      - name: chamanisme
+        label: Page Chamanisme
+        file: src/data/pages/chamanisme.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo, widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string }
+
+  # ----------------------------------------------------------- FORMATIONS REIKI
+  - name: page_reiki
+    label: '4. Page Formations Reiki'
+    files:
+      - name: reiki
+        label: Page Formations Reiki
+        file: src/data/pages/formations-reiki.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo, widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string }
+
+  # ----------------------------------------------------------------- À PROPOS
+  - name: page_apropos
+    label: '5. Page À propos'
+    files:
+      - name: apropos
+        label: Page À propos
+        file: src/data/pages/a-propos.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+          - { name: photo, label: Photo (portrait), widget: image }
+          - { name: photoAlt, label: Description de la photo, widget: string }
+
+  # ------------------------------------------------------------------- TARIFS
+  - name: page_tarifs
+    label: '6. Page Tarifs'
+    description: Le titre de la page. Les montants se modifient dans « ⭐ Sur tout le site ».
+    files:
+      - name: tarifs
+        label: Page Tarifs
+        file: src/data/pages/tarifs.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+
+  # -------------------------------------------------------- ATELIERS TAMBOULOUP
+  - name: page_ateliers
+    label: '7. Page Ateliers chamaniques'
+    description: >-
+      Page partenaire sur les ateliers d’Alexandre Godgenger (Tambouloup). Seuls le titre et
+      l’introduction se modifient ici : les informations pratiques (dates, tarif, lieu) viennent
+      de tambouloup.fr et se changent dans le code, après vérification auprès d’Alexandre.
+    files:
+      - name: ateliers
+        label: Page Ateliers chamaniques
+        file: src/data/pages/ateliers-chamaniques.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }
+
+  # ------------------------------------------------------------------ CONTACT
+  - name: page_contact
+    label: '8. Page Contact'
+    description: Le titre de la page. Le téléphone se modifie dans « ⭐ Sur tout le site ».
+    files:
+      - name: contact
+        label: Page Contact
+        file: src/data/pages/contact.json
+        fields:
+          - { name: surtitre, label: Petite ligne au-dessus du titre, widget: string }
+          - { name: titre, label: Grand titre, widget: string }
+          - { name: texte, label: Texte d’introduction, widget: text }

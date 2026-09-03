@@ -1,0 +1,42 @@
+# Caroline Loire — site statique Astro hébergé chez Hostinger (Apache / LiteSpeed)
+# Aucune redirection de domaine ici : l'ancien site WordPress
+# (carolineloire-energeticienne.fr, o2switch) n'est pas concerné.
+
+# --- HTTPS ----------------------------------------------------------------
+RewriteEngine On
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# --- Page 404 -------------------------------------------------------------
+ErrorDocument 404 /404.html
+
+# --- Cache navigateur -----------------------------------------------------
+<IfModule mod_expires.c>
+  ExpiresActive On
+  # Le HTML est toujours revalidé : sans cela, une modification publiée
+  # depuis le CMS n'apparaît pas chez les visiteurs déjà venus sur le site.
+  ExpiresByType text/html "access plus 0 seconds"
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/jpeg "access plus 1 year"
+  ExpiresByType image/png "access plus 1 year"
+  ExpiresByType image/webp "access plus 1 year"
+  ExpiresByType image/svg+xml "access plus 1 year"
+</IfModule>
+
+# --- En-têtes de sécurité -------------------------------------------------
+<IfModule mod_headers.c>
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+
+  # Ceinture et bretelles avec le bloc mod_expires ci-dessus : les pages HTML
+  # sont revérifiées à chaque visite, les fichiers construits (empreinte dans
+  # le nom) restent en cache longtemps.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+  <FilesMatch "\.(js|css|woff2)$">
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+</IfModule>
