@@ -1,9 +1,13 @@
 # Caroline Loire — site statique Astro hébergé chez Hostinger (Apache / LiteSpeed)
-# Aucune redirection de domaine ici : l'ancien site WordPress
-# (carolineloire-energeticienne.fr, o2switch) n'est pas concerné.
+# Domaine principal : https://carolineloire-energeticienne.fr
 
 # --- HTTPS ----------------------------------------------------------------
 RewriteEngine On
+
+# Consolider les variantes www sur le domaine principal, en conservant le chemin.
+RewriteCond %{HTTP_HOST} ^www\.carolineloire-energeticienne\.fr$ [NC]
+RewriteRule ^ https://carolineloire-energeticienne.fr%{REQUEST_URI} [L,R=301]
+
 RewriteCond %{HTTPS} off
 RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 
